@@ -2,15 +2,15 @@
 
 <aside id="sidebar" class="w-64 bg-white min-h-screen flex flex-col fixed top-0 left-0 bottom-0 z-20 shadow-lg">
 
-    <!-- Logo & Brand -->
+    <!-- Logo -->
     <div class="px-5 py-5">
         <div class="flex items-center gap-3">
             <div class="w-12 h-12 shrink-0">
                 <img src="{{ asset('logo_kantor.png') }}" class="h-27 w-24 object-contain drop-shadow-md">
             </div>
             <div>
-                <p class="text-primary font-800 text-base font-extrabold leading-tight">Arsip Surat Digital</p>
-                <p class="text-gray-500 text-xs leading-tight">Kantor Desa Teluk Kapuas</p>
+                <p class="text-primary font-800 text-base font-extrabold leading-tight mb-1">Arsip Surat Digital</p>
+                <p class="text-primary text-xs leading-tight">Kantor Desa Teluk Kapuas</p>
             </div>
         </div>
         <hr class="mt-4 border-gray-200">

@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto">
-    {{-- Page Title --}}
+    <!-- Judul Halaman -->
     <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -16,6 +16,8 @@
                 <p class="text-xs text-gray-500">Lihat informasi detail surat masuk</p>
             </div>
         </div>
+        
+        <!-- Tombol kembali -->
         <a href="{{ route('suratmasuk.index') }}"
             class="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -25,24 +27,21 @@
         </a>
     </div>
 
-    {{-- Two-Column Layout dengan proporsi 3:2 agar seimbang --}}
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
-
-        {{-- LEFT: Mail Info Card (3 kolom) --}}
+        <!-- Informasi Surat -->
         <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100">
                 <h2 class="font-bold text-gray-800">Informasi Surat</h2>
             </div>
             <div class="divide-y divide-gray-50" id="detail-content">
-                <!-- Data akan diisi oleh JavaScript -->
+                <!-- Data diisi JavaScript -->
             </div>
         </div>
 
-        {{-- RIGHT: File Attachment Card (2 kolom) dengan tinggi yang sama --}}
+        <!-- File Surat -->
         <div class="lg:col-span-2 flex">
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col w-full">
                 <div class="flex-1 flex flex-col items-center justify-center">
-                    <!-- Logo File di tengah -->
                     <div class="w-24 h-24 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
                         <svg class="w-12 h-12 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                             <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
@@ -50,12 +49,12 @@
                         </svg>
                     </div>
                     
-                    <!-- Nama File di tengah -->
+                    <!-- Nama File -->
                     <p class="text-base font-bold text-gray-800 mb-1 text-center" id="file-name">-</p>
                     
-                    <!-- Metadata File di tengah -->
+                    <!-- Metadata File -->
                     <div class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" id="file-meta">
-                        <!-- Metadata akan diisi JS -->
+                        <!-- Metadata diisi JS -->
                     </div>
                     
                     <!-- Tombol Download -->
@@ -73,7 +72,7 @@
 </div>
 
 <script>
-// Data dummy sama persis dengan yang di index
+// Data dummy
 const allData = [
     { id:1,  nomor:'001/SM/2026', tanggal:'2026-11-01', perihal:'Pembuatan Surat Keterangan',     asal:'Dinas Kebudayaan',       keterangan:'Dibuat disposisi ke bagian umum' },
     { id:2,  nomor:'002/SM/2026', tanggal:'2026-10-28', perihal:'Permohonan Izin Keramaian',      asal:'Dinas Pariwisata',       keterangan:'Segera ditindaklanjuti' },
@@ -88,14 +87,12 @@ const allData = [
     { id:11, nomor:'011/SM/2026', tanggal:'2026-10-01', perihal:'Surat Edaran Pilkades',          asal:'Dinas PMD',              keterangan:'Disebarkan ke seluruh desa' },
 ];
 
-// Format tanggal
 function formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);
     return date.toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric' });
 }
 
-// Load data berdasarkan ID dari URL
 const urlParams = new URLSearchParams(window.location.search);
 const mailId = parseInt(urlParams.get('id'));
 
@@ -139,7 +136,6 @@ function loadDetailData() {
             </div>
         `;
         
-        // Set file info
         document.getElementById('file-name').innerHTML = `Surat_${mail.nomor}.pdf`;
         document.getElementById('file-meta').innerHTML = `
             <span class="inline-flex items-center gap-1">
@@ -159,7 +155,6 @@ function loadDetailData() {
             </span>
         `;
     } else {
-        // Jika ID tidak ditemukan
         const detailContent = document.getElementById('detail-content');
         detailContent.innerHTML = `
             <div class="flex items-start gap-4 px-6 py-4">
@@ -171,7 +166,6 @@ function loadDetailData() {
     }
 }
 
-// Load data saat halaman dibuka
 if (mailId) {
     loadDetailData();
 } else {

@@ -1,8 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
+
+<div class="max-w-7xl mx-auto">
     <!-- Page Heading -->
-    <div class="flex items-center gap-3 mb-6 fade-up">
+    <div class="flex items-center gap-3 mb-6">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <rect x="3" y="3" width="7" height="7" rx="1"/>
@@ -20,7 +21,7 @@
     <!-- Stat Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
 
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 fade-up">
+        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-start justify-between mb-4">
                 <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-[#4C83AC]">
@@ -29,10 +30,10 @@
                 </div>
             </div>
             <p class="text-sm text-gray-500 font-medium">Total Surat Masuk</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">40</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">142</p>
         </div>
 
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 fade-up-delay-1">
+        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-start justify-between mb-4">
                 <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-[#4C83AC]">
@@ -41,10 +42,10 @@
                 </div>
             </div>
             <p class="text-sm text-gray-500 font-medium">Total Surat Keluar</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">40</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">92</p>
         </div>
 
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 fade-up-delay-2">
+        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-start justify-between mb-4">
                 <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-[#4C83AC]">
@@ -53,10 +54,10 @@
                 </div>
             </div>
             <p class="text-sm text-gray-500 font-medium">Total Galeri Surat</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">40</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">234</p>
         </div>
 
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 fade-up-delay-3">
+        <div class="stat-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-start justify-between mb-4">
                 <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-[#4C83AC]">
@@ -65,13 +66,12 @@
                 </div>
             </div>
             <p class="text-sm text-gray-500 font-medium">Total Pengguna</p>
-            <p class="text-3xl font-extrabold text-gray-800 mt-1">40</p>
+            <p class="text-3xl font-extrabold text-gray-800 mt-1">7</p>
         </div>
-
     </div>
 
     <!-- Recent Mail Tables -->
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 fade-up-delay-4">
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
 
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
@@ -92,6 +92,7 @@
         </div>
 
     </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -113,7 +114,7 @@
         { nomor: '005/SK/2026', perihal: 'Pemberitahuan Dana Bansos', tanggal: '13 Okt 2026' },
     ];
 
-    // SVG Icon untuk Surat Masuk (amplop dengan panah masuk)
+    // SVG Icon untuk Surat Masuk
     const suratMasukIcon = `
         <svg class="w-4 h-4 text-[#4C83AC]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -121,7 +122,7 @@
         </svg>
     `;
 
-    // SVG Icon untuk Surat Keluar (amplop dengan panah keluar) - sama dengan card total surat keluar
+    // SVG Icon untuk Surat Keluar
     const suratKeluarIcon = `
         <svg class="w-4 h-4 text-[#4C83AC]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z" />
@@ -133,15 +134,16 @@
         const empty = document.getElementById(emptyId);
 
         if (!data.length) {
-            empty?.classList.remove('hidden');
+            if (empty) empty.classList.remove('hidden');
             return;
         }
 
-        // Pilih icon berdasarkan tipe surat
+        if (empty) empty.classList.add('hidden');
+
         const iconSvg = type === 'masuk' ? suratMasukIcon : suratKeluarIcon;
 
         container.innerHTML = data.map(item => `
-            <div class="mail-row flex items-center gap-4 px-5 py-3 cursor-pointer hover:bg-gray-50 transition-colors">
+            <div class="flex items-center gap-4 px-5 py-3 cursor-pointer hover:bg-gray-50 transition-colors">
                 <div class="w-9 h-9 rounded-lg bg-blue-50 flex-shrink-0 flex items-center justify-center">
                     ${iconSvg}
                 </div>
@@ -156,7 +158,7 @@
         `).join('');
     }
 
-    // Render tabel dengan tipe yang berbeda
+    // Render tabel
     renderMailTable(suratMasuk, 'table-masuk', 'empty-masuk', 'masuk');
     renderMailTable(suratKeluar, 'table-keluar', 'empty-keluar', 'keluar');
 </script>

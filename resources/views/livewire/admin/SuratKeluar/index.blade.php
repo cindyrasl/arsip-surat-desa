@@ -1,9 +1,9 @@
+<!-- resources/views/livewire/admin/SuratKeluar/index.blade.php -->
 @extends('layouts.app')
-
 @section('content')
-<div class="max-w-7xl mx-auto">
 
-    {{-- Page Title Row --}}
+<div class="max-w-7xl mx-auto">
+    <!-- Page Title -->
     <div class="flex items-center mb-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -18,10 +18,11 @@
         </div>
     </div>
 
-    {{-- Filter Bar --}}
+    <!-- Filter Bar -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 mb-4">
         <div class="flex flex-wrap items-end gap-4">
-            {{-- Search --}}
+
+            <!-- Search / Pencarian -->
             <div class="flex-1 min-w-50">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Pencarian</label>
                 <div class="relative">
@@ -36,25 +37,25 @@
                 </div>
             </div>
 
-            {{-- Tanggal Surat (Dari) --}}
+            <!-- Tanggal Surat (Dari) -->
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Dari)</label>
                 <input id="date-start" type="date"
-                    class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
                     onchange="applyFilters()">
             </div>
 
-            {{-- Tanggal Surat (Sampai) --}}
+            <!-- Tanggal Surat (Sampai) -->
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Sampai)</label>
                 <input id="date-end" type="date"
-                    class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
                     onchange="applyFilters()">
             </div>
         </div>
     </div>
 
-    {{-- Table Card --}}
+    <!-- Table Card -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
             <h2 class="font-bold text-gray-800">Daftar Surat Keluar</h2>
@@ -73,7 +74,19 @@
                     <tr class="bg-gray-100 border-b border-gray-100">
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide w-14">No</th>
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Nomor Surat</th>
-                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Tanggal Surat</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                            <div class="flex items-center gap-2 cursor-pointer group" onclick="toggleSort()">
+                                <span>Tanggal Surat</span>
+                                <div class="flex flex-col">
+                                    <svg id="sort-asc" class="w-3 h-3 -mb-1 text-gray-400 group-hover:text-gray-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 5l4 5H6l4-5z"/>
+                                    </svg>
+                                    <svg id="sort-desc" class="w-3 h-3 text-gray-400 group-hover:text-gray-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 15l-4-5h8l-4 5z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </th>
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Perihal</th>
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Tujuan Surat</th>
                         <th class="text-center px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wide">Aksi</th>
@@ -89,14 +102,14 @@
             </div>
         </div>
 
-        {{-- Pagination Footer --}}
+        <!-- Pagination Footer -->
         <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
             <p class="text-sm text-gray-500" id="pagination-info"></p>
             <div id="pagination-controls" class="flex items-center gap-1"></div>
         </div>
     </div>
 
-    {{-- Delete Modal --}}
+    <!-- Delete Modal -->
     <div id="delete-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center" onclick="event.stopPropagation()">
             <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
@@ -132,10 +145,48 @@ let currentPage = 1;
 let perPage = 10;
 let filtered = [...allData];
 let deleteTarget = null;
+let sortOrder = 'desc';
 
 function fmt(str) {
     if (!str) return '-';
     return new Date(str).toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+// Fungsi sorting
+function applySort() {
+    filtered.sort((a, b) => {
+        const dateA = new Date(a.tanggal);
+        const dateB = new Date(b.tanggal);
+        
+        if (sortOrder === 'desc') {
+            return dateB - dateA;
+        } else {
+            return dateA - dateB;
+        }
+    });
+}
+
+function updateSortIcons() {
+    const ascIcon = document.getElementById('sort-asc');
+    const descIcon = document.getElementById('sort-desc');
+    
+    if (sortOrder === 'asc') {
+        ascIcon.classList.add('text-primary');
+        ascIcon.classList.remove('text-gray-400');
+        descIcon.classList.remove('text-primary');
+        descIcon.classList.add('text-gray-400');
+    } else {
+        descIcon.classList.add('text-primary');
+        descIcon.classList.remove('text-gray-400');
+        ascIcon.classList.remove('text-primary');
+        ascIcon.classList.add('text-gray-400');
+    }
+}
+
+function toggleSort() {
+    sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+    updateSortIcons();
+    applyFilters();
 }
 
 function renderTable() {
@@ -234,12 +285,16 @@ function applyFilters() {
     const q  = document.getElementById('search-input').value.toLowerCase();
     const ds = document.getElementById('date-start').value;
     const de = document.getElementById('date-end').value;
+    
     filtered = allData.filter(r => {
         const mq = !q || r.nomor.toLowerCase().includes(q) || r.perihal.toLowerCase().includes(q) || r.tujuan.toLowerCase().includes(q);
         const ms = !ds || r.tanggal >= ds;
         const me = !de || r.tanggal <= de;
         return mq && ms && me;
     });
+    
+    applySort();
+    
     currentPage = 1;
     renderTable();
 }
@@ -283,6 +338,9 @@ window.addEventListener('storage', function(e) {
     }
 });
 
+// Initialize sort 
+updateSortIcons();
+applySort();
 renderTable();
 </script>
 @endpush
