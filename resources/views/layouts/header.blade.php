@@ -39,10 +39,6 @@
         const confirmLogout = confirm('Apakah Anda yakin ingin keluar dari sistem?');
         
         if (confirmLogout) {
-            // Hapus data session/localStorage jika ada (untuk frontend)
-            // localStorage.removeItem('userData');
-            // sessionStorage.clear();
-            
             // Redirect ke halaman login
             window.location.href = '/';
         }

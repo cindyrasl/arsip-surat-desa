@@ -1,5 +1,4 @@
 <!-- admin/JenisSurat/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -74,7 +73,7 @@
         </div>
     </div>
 
-    <!-- ============= ADD / EDIT MODAL ============= -->
+    <!-- ADD / EDIT MODAL -->
     <div id="modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md" onclick="event.stopPropagation()">
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
@@ -132,7 +131,7 @@
 
 @push('scripts')
 <script>
-// ── Dummy Data ──────────────────────────────────────────────────────
+// Dummy Data 
 let allData = [
     { id:1,  nama:'Surat Keterangan Usaha',       keterangan:'Digunakan untuk warga yang ingin membuat usaha' },
     { id:2,  nama:'Surat Tugas Perangkat',        keterangan:'Surat penugasan untuk perangkat desa' },
@@ -145,13 +144,13 @@ let allData = [
 ];
 let nextId = 9;
 
-// ── State ─────────────────────────────────────────────────────────
+// State
 let currentPage = 1;
 let perPage = 10;
 let filtered = [...allData];
 let deleteTarget = null;
 
-// ── Render ────────────────────────────────────────────────────────
+// Render
 function renderTable() {
     const tbody = document.getElementById('table-body');
     const empty = document.getElementById('empty-state');
@@ -242,7 +241,7 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ── Filters ───────────────────────────────────────────────────────
+// Filters
 function applyFilters() {
     const q = document.getElementById('search-input').value.toLowerCase();
     filtered = allData.filter(r => {
@@ -253,7 +252,7 @@ function applyFilters() {
     renderTable();
 }
 
-// ── Add/Edit Modal ────────────────────────────────────────────────
+// Add/Edit Modal 
 function openAddModal() {
     document.getElementById('modal-title').textContent = 'Tambah Jenis Surat';
     document.getElementById('edit-id').value = '';
@@ -312,7 +311,7 @@ function saveForm() {
     closeModal();
 }
 
-// ── Delete Modal ──────────────────────────────────────────────────
+// Delete Modal
 function openDelete(id) {
     deleteTarget = id;
     const modal = document.getElementById('delete-overlay');
@@ -333,7 +332,7 @@ function confirmDelete() {
     applyFilters();
 }
 
-// ── Close modal on outside click ─────────────────────────────────
+// Close modal on outside click
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
@@ -341,7 +340,7 @@ document.getElementById('delete-overlay').addEventListener('click', function(e) 
     if (e.target === this) closeDelete();
 });
 
-// ── Init ──────────────────────────────────────────────────────────
+// Init
 renderTable();
 </script>
 @endpush

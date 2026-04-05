@@ -1,8 +1,9 @@
+<!-- views/livewire/admin/SuratKeluar/create.blade.php -->
 @extends('layouts.app')
 
 @section('content')
 <div class="max-w-7xl mx-auto fade-up">
-    {{-- Page Title --}}
+    <!-- Judul Halaman -->
     <div class="flex items-center gap-3 mb-5 fade-up">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -15,10 +16,10 @@
         </div>
     </div>
 
-    {{-- Form Card --}}
+    <!-- Kartu Form -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden fade-up2">
         <form class="p-6 space-y-5" onsubmit="saveData(event)">
-            {{-- Row 1: Mail Number, Destination, Mail Type --}}
+            <!-- Nomor Surat, Asal Surat, Jenis Surat -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nomor Surat <span class="text-red-500">*</span></label>
@@ -45,7 +46,7 @@
                 </div>
             </div>
 
-            {{-- Row 2: Mail Date, Sent Date, File Upload --}}
+            <!-- Tanggal Surat, Tanggal Diterima, Lampiran -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal Surat <span class="text-red-500">*</span></label>
@@ -64,7 +65,7 @@
                 </div>
             </div>
 
-            {{-- Row 3: Subject --}}
+            <!-- Perihal -->
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Perihal <span class="text-red-500">*</span></label>
                 <input type="text" id="perihal" name="perihal" 
@@ -72,7 +73,7 @@
                        placeholder="Isi perihal surat">
             </div>
 
-            {{-- Row 4: Description --}}
+            <!-- Keterangan -->
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Keterangan</label>
                 <textarea id="keterangan" name="keterangan" rows="4" 
@@ -80,10 +81,10 @@
                           placeholder="Keterangan tambahan (opsional)"></textarea>
             </div>
 
-            {{-- Error Message --}}
+            <!-- Pesan Error -->
             <div id="error-message" class="hidden text-red-500 text-sm font-medium">Harap isi semua kolom yang wajib diisi.</div>
 
-            {{-- Action Buttons --}}
+            <!-- Tombol Aksi -->
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
                 <a href="{{ route('suratkeluar.index') }}" 
                    class="px-6 py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">

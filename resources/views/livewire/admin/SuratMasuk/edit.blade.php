@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto">
-    {{-- Page Title --}}
+    <!-- Judul Halaman -->
     <div class="flex items-center gap-3 mb-5 transition-all duration-300 ease-out translate-y-0 opacity-100">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -16,12 +16,12 @@
         </div>
     </div>
 
-    {{-- Form Card --}}
+    <!-- Card Edit -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <form class="p-6 space-y-5" onsubmit="updateData(event)">
             <input type="hidden" id="edit-id">
             
-            {{-- Row 1: Mail Number, Sender, Mail Type --}}
+            <!-- Nomor surat, Asal surat, Jenis surat -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nomor Surat <span class="text-red-500">*</span></label>
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            {{-- Row 2: Mail Date, Received Date, File Upload --}}
+            <!-- Tanggal Surat, Tanggal Diterima, Lampiran FIle-->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tanggal Surat <span class="text-red-500">*</span></label>
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            {{-- Row 3: Subject --}}
+            <!-- Perihal -->
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Perihal <span class="text-red-500">*</span></label>
                 <input type="text" id="perihal" name="perihal" 
@@ -75,7 +75,7 @@
                        placeholder="Isi perihal surat">
             </div>
 
-            {{-- Row 4: Description --}}
+            <!-- Keterangan -->
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Keterangan</label>
                 <textarea id="keterangan" name="keterangan" rows="4" 
@@ -83,10 +83,10 @@
                           placeholder="Keterangan tambahan (opsional)"></textarea>
             </div>
 
-            {{-- Error Message --}}
+            <!-- Error Message -->
             <div id="error-message" class="hidden text-red-500 text-sm font-medium">Harap isi semua kolom yang wajib diisi.</div>
 
-            {{-- Action Buttons --}}
+            <!-- Action Buttons -->
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
                 <a href="{{ route('suratmasuk.index') }}" 
                    class="px-6 py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
@@ -102,7 +102,7 @@
 </div>
 
 <script>
-// Data dummy sama persis dengan yang di index
+// Data dummy
 let allData = [
     { id:1,  nomor:'001/SM/2026', tanggal:'2026-11-01', perihal:'Pembuatan Surat Keterangan',     asal:'Dinas Kebudayaan',       keterangan:'Dibuat disposisi ke bagian umum' },
     { id:2,  nomor:'002/SM/2026', tanggal:'2026-10-28', perihal:'Permohonan Izin Keramaian',      asal:'Dinas Pariwisata',       keterangan:'Segera ditindaklanjuti' },
@@ -197,7 +197,7 @@ if (mailId) {
     window.location.href = '{{ route("suratmasuk.index") }}';
 }
 
-// Listen for storage events jika diperlukan
+// Listen for storage events 
 window.addEventListener('storage', function(e) {
     if (e.key === 'suratMasukUpdated') {
         const updated = JSON.parse(e.newValue);

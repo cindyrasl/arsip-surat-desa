@@ -1,9 +1,8 @@
 <!-- admin/Pengguna/index.blade.php -->
 @extends('layouts.app')
-
 @section('content')
 
-{{-- ── Page Title Row ──────────────────────────────────────────────── --}}
+<!-- Page Title  -->
 <div class="flex items-center justify-between mb-5">
     <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -18,29 +17,26 @@
     </div>
 </div>
 
-{{-- ── Filter Bar (di atas, sebelum card) ─────────────────────────────── --}}
+<!-- Filter Bar  -->
 <div class="flex flex-wrap items-center gap-3 mb-5">
-    {{-- Search --}}
+    <!-- Search -->
     <div class="relative flex-1 min-w-50">
         <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
             </svg>
         </span>
-        <input id="search-input" type="text" placeholder="Cari username atau nama..."
-            class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-            oninput="applyFilters()">
+        <input id="search-input" type="text" placeholder="Cari username atau nama..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
     </div>
 
-    {{-- Role Filter --}}
+    <!-- Role Filter -->
     <div class="relative">
         <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M3 4h18M7 8h10M11 12h4M13 16h2" stroke-linecap="round"/>
             </svg>
         </span>
-        <select id="filter-role" onchange="applyFilters()"
-            class="pl-9 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-44">
+        <select id="filter-role" onchange="applyFilters()" class="pl-9 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-44">
             <option value="">Semua Peran</option>
             <option value="Admin">Admin</option>
             <option value="Staff">Staff</option>
@@ -53,13 +49,12 @@
     </div>
 </div>
 
-{{-- ── Card dengan Header (seperti halaman jenis surat) ─────────────────── --}}
+<!-- Card Header -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
-    {{-- Card Header dengan judul dan tombol tambah --}}
+    <!-- Card Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
         <h2 class="font-bold text-gray-800">Daftar Nama Pengguna</h2>
-        <button onclick="openAddModal()"
-            class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
+        <button onclick="openAddModal()" class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
             </svg>
@@ -67,7 +62,7 @@
         </button>
     </div>
 
-    {{-- Table --}}
+    <!-- Table -->
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
@@ -83,7 +78,7 @@
             <tbody id="table-body" class="divide-y divide-gray-50"></tbody>
         </table>
 
-        {{-- Empty State --}}
+        <!-- Empty State -->
         <div id="empty-state" class="hidden py-16 text-center">
             <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
                 <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -94,7 +89,7 @@
         </div>
     </div>
 
-    {{-- Pagination Footer --}}
+    <!-- Pagination Footer -->
     <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
         <p class="text-sm text-gray-500" id="pagination-info"></p>
         <div id="pagination-controls" class="flex items-center gap-1"></div>
@@ -105,7 +100,7 @@
 <div id="modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md" onclick="event.stopPropagation()">
 
-        {{-- Modal Header --}}
+        <!-- Modal Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
             <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -122,48 +117,44 @@
             </button>
         </div>
 
-        {{-- Modal Body --}}
+        <!-- Modal Body -->
         <div class="px-6 py-5 space-y-4">
             <input type="hidden" id="edit-id">
 
-            {{-- Username --}}
+            <!-- Username -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
                     Username <span class="text-red-400">*</span>
                 </label>
-                <input id="form-username" type="text" placeholder="Contoh: barbarapalvin"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                <input id="form-username" type="text" placeholder="Contoh: barbarapalvin" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
                 <p id="err-username" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            {{-- Nama --}}
+            <!-- Nama -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
                     Nama Lengkap <span class="text-red-400">*</span>
                 </label>
-                <input id="form-nama" type="text" placeholder="Nama lengkap pengguna"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                <input id="form-nama" type="text" placeholder="Nama lengkap pengguna" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
                 <p id="err-nama" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            {{-- Password --}}
+            <!-- Password -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
                     Password <span class="text-red-400" id="pass-required">*</span>
                     <span id="pass-optional" class="hidden text-gray-400 font-normal">(kosongkan jika tidak diubah)</span>
                 </label>
                 <div class="relative">
-                    <input id="form-password" type="password" placeholder="Min. 8 karakter, huruf, angka &amp; simbol"
-                        class="w-full px-3 py-2.5 pr-10 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
-                    <button type="button" onclick="togglePassword('form-password', 'eye-pass')"
-                        class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
+                    <input id="form-password" type="password" placeholder="Min. 8 karakter, huruf, angka &amp; simbol" class="w-full px-3 py-2.5 pr-10 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    <button type="button" onclick="togglePassword('form-password', 'eye-pass')" class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
                         <svg id="eye-pass" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                     </button>
                 </div>
-                {{-- Password strength meter --}}
+                <!-- Password strength meter -->
                 <div class="mt-2 space-y-1">
                     <div class="flex gap-1">
                         <div id="str-1" class="h-1 flex-1 rounded-full bg-gray-100 transition-colors duration-300"></div>
@@ -176,16 +167,14 @@
                 <p id="err-password" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            {{-- Confirm Password --}}
+            <!-- Confirm Password -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
                     Konfirmasi Password <span class="text-red-400" id="confirm-required">*</span>
                 </label>
                 <div class="relative">
-                    <input id="form-confirm" type="password" placeholder="Ulangi password"
-                        class="w-full px-3 py-2.5 pr-10 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
-                    <button type="button" onclick="togglePassword('form-confirm', 'eye-confirm')"
-                        class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
+                    <input id="form-confirm" type="password" placeholder="Ulangi password" class="w-full px-3 py-2.5 pr-10 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    <button type="button" onclick="togglePassword('form-confirm', 'eye-confirm')" class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
                         <svg id="eye-confirm" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -195,14 +184,13 @@
                 <p id="err-confirm" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            {{-- Role --}}
+            <!-- Role -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
                     Peran <span class="text-red-400">*</span>
                 </label>
                 <div class="relative">
-                    <select id="form-role"
-                        class="w-full px-3 py-2.5 pr-9 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
+                    <select id="form-role" class="w-full px-3 py-2.5 pr-9 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
                         <option value="">-- Pilih Peran --</option>
                         <option value="Admin">Admin</option>
                         <option value="Staff">Staff</option>
@@ -218,14 +206,12 @@
 
         </div>
 
-        {{-- Modal Footer --}}
+        <!-- Modal Footer -->
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
-            <button onclick="closeModal()"
-                class="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-xl transition-colors">
+            <button onclick="closeModal()" class="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-xl transition-colors">
                 Batal
             </button>
-            <button onclick="saveForm()"
-                class="px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-colors shadow-sm">
+            <button onclick="saveForm()" class="px-5 py-2.5 text-sm font-semibold bg-primary hover:bg-primary-dark text-white rounded-xl transition-colors shadow-sm">
                 Simpan
             </button>
         </div>
@@ -244,12 +230,10 @@
         <p class="text-sm text-gray-500 mb-1">Akun <span id="delete-name" class="font-semibold text-gray-700"></span> akan dihapus secara permanen.</p>
         <p class="text-xs text-gray-400 mb-6">Tindakan ini tidak dapat dibatalkan.</p>
         <div class="flex gap-3">
-            <button onclick="closeDelete()"
-                class="flex-1 py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
+            <button onclick="closeDelete()" class="flex-1 py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
                 Batal
             </button>
-            <button onclick="confirmDelete()"
-                class="flex-1 py-2.5 text-sm font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl transition-colors">
+            <button onclick="confirmDelete()" class="flex-1 py-2.5 text-sm font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl transition-colors">
                 Hapus
             </button>
         </div>
@@ -260,7 +244,7 @@
 
 @push('scripts')
 <script>
-// ── DUMMY DATA  ──────────────────────
+// ── DUMMY DATA ──────────────────────────────────────────────────────
 let allData = [
     { id:1, username:'barbarap4lvin', nama:'Barbara Palvin', peran:'Admin', dibuat:'2026-11-01T21:23:00' },
     { id:2, username:'aswedqa',       nama:'Louise',         peran:'Admin', dibuat:'2026-11-01T21:23:00' },
@@ -329,15 +313,13 @@ function renderTable() {
                 <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">${fmtDateTime(r.dibuat)}</td>
                 <td class="px-6 py-3.5">
                     <div class="flex items-center justify-center gap-2">
-                        <button onclick="openEditModal(${r.id})" title="Edit"
-                            class="w-8 h-8 rounded-lg bg-amber-50 hover:bg-amber-100 flex items-center justify-center transition-colors">
+                        <button onclick="openEditModal(${r.id})" title="Edit" class="w-8 h-8 rounded-lg bg-amber-50 hover:bg-amber-100 flex items-center justify-center transition-colors">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/>
                                 <path d="M17.586 3.586a2 2 0 012.828 2.828L12 15l-4 1 1-4 8.586-8.414z"/>
                             </svg>
                         </button>
-                        <button onclick="openDelete(${r.id})" title="Hapus"
-                            class="w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 flex items-center justify-center transition-colors">
+                        <button onclick="openDelete(${r.id})" title="Hapus" class="w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 flex items-center justify-center transition-colors">
                             <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -361,18 +343,15 @@ function renderTable() {
 function renderPagination(pages) {
     const el = document.getElementById('pagination-controls');
     let h = '';
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all"
-              onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all" onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
           </button>`;
     let ps = Math.max(1, currentPage-2), pe = Math.min(pages, ps+4);
     ps = Math.max(1, pe-4);
     for (let p = ps; p <= pe; p++) {
-        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all ${p===currentPage?'bg-primary text-white border-primary':'border-gray-200 bg-white text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}"
-                  onclick="gp(${p})">${p}</button>`;
+        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all ${p===currentPage?'bg-primary text-white border-primary':'border-gray-200 bg-white text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}" onclick="gp(${p})">${p}</button>`;
     }
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all"
-              onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all" onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
           </button>`;
     el.innerHTML = h;
@@ -398,7 +377,7 @@ function applyFilters() {
     renderTable();
 }
 
-// ── Password Helpers ────────────────────────────────────────────────────
+// ── Password Helpers 
 function togglePassword(inputId, eyeId) {
     const passwordInput = document.getElementById(inputId);
     const eyeIcon = document.getElementById(eyeId);
@@ -423,7 +402,7 @@ function checkStrength(pw) {
     return score;
 }
 
-// ── Clear / Reset form errors ──────────────────────────────────────────
+// ── Clear / Reset form errors 
 function clearErrors() {
     ['err-username','err-nama','err-password','err-confirm','err-role'].forEach(id => {
         const el = document.getElementById(id);
@@ -454,7 +433,7 @@ function setFieldError(inputId, hasError) {
     }
 }
 
-// ── Add Modal ──────────────────────────────────────────────────────────
+// ── Add Modal 
 function openAddModal() {
     isEditMode = false;
     document.getElementById('modal-title').textContent = 'Tambah Pengguna';
@@ -661,7 +640,7 @@ document.getElementById('form-password').addEventListener('input', function() {
     document.getElementById('str-label').textContent = pw.length ? labels[score] : '';
 });
 
-// ── Init ───────────────────────────────────────────────────────────────
+// ── Init 
 renderTable();
 </script>
 @endpush

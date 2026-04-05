@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto">
 
-    {{-- ── Page Title Row ──────────────────────────────────────────── --}}
+    <!-- Page Title Row -->
     <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -18,25 +18,22 @@
         </div>
     </div>
 
-    {{-- ── Filter Bar ───────────────────────────────────────────────── --}}
+    <!-- Filter Bar -->
     <div class="flex flex-wrap items-center gap-3 mb-5">
 
-        {{-- Search --}}
+        <!-- Search -->
         <div class="relative flex-1">
             <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
                 </svg>
             </span>
-            <input id="search-input" type="text" placeholder="Cari aktivitas atau pengguna..."
-                class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                oninput="applyFilters()">
+            <input id="search-input" type="text" placeholder="Cari aktivitas atau pengguna..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
         </div>
 
-        {{-- Filter by action type --}}
+        <!-- Filter by action type -->
         <div class="relative">
-            <select id="filter-type" onchange="applyFilters()"
-                class="pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-48">
+            <select id="filter-type" onchange="applyFilters()" class="pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-48">
                 <option value="">Semua Aktivitas</option>
                 <option value="login">Login</option>
                 <option value="logout">Logout</option>
@@ -53,24 +50,15 @@
             </span>
         </div>
 
-        {{-- Date filter --}}
-        <div class="relative">
-            <input id="date-filter" type="date"
-                class="pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-52"
-                onchange="applyFilters()">
-            <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-                </svg>
-            </span>
-        </div>
+        <!-- Date filter -->
+        <input id="date-filter" type="date" class="pl-5 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-52" onchange="applyFilters()">
 
     </div>
 
-    {{-- ── Activity Feed Card ───────────────────────────────────────── --}}
+    <!-- Activity Feed Card -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
 
-        {{-- Card Header --}}
+        <!-- Card Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
             <div class="flex items-center gap-2">
                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -81,10 +69,10 @@
             <span id="activity-count" class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">0 Aktivitas</span>
         </div>
 
-        {{-- Feed --}}
+        <!-- Feed -->
         <div id="activity-feed" class="divide-y divide-gray-50 px-6 py-2"></div>
 
-        {{-- Empty State --}}
+        <!-- Empty State -->
         <div id="empty-state" class="hidden py-16 text-center px-6">
             <div class="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
                 <svg class="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -96,7 +84,7 @@
             <p class="text-gray-300 text-xs mt-1">Coba ubah filter pencarian.</p>
         </div>
 
-        {{-- Pagination Footer --}}
+        <!-- Pagination Footer -->
         <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
             <p class="text-sm text-gray-500" id="pagination-info"></p>
             <div id="pagination-controls" class="flex items-center gap-1"></div>
@@ -106,7 +94,7 @@
 </div>
 
 <script>
-// ── Dummy Data (Hardcoded - No PHP variable) ─────────────────────────
+// ── Dummy Data 
 const allActivities = [
     // --- 2026-12-05 ---
     { id:1,  user:'Barbara Palvin', initial:'B', waktu:'2026-12-05 08:02:00', tipe:'login',   pesan:'masuk ke sistem' },
@@ -138,12 +126,12 @@ const allActivities = [
     { id:35, user:'Ahmad Fauzi',    initial:'A', waktu:'2026-12-03 16:00:00', tipe:'logout',  pesan:'keluar dari sistem' },
 ];
 
-// ── State ──────────────────────────────────────────────────────────────
+// State 
 let filtered    = [...allActivities];
 let currentPage = 1;
 const perPage   = 15;
 
-// ── Helpers ────────────────────────────────────────────────────────────
+// Helpers 
 function fmtDate(str) {
     return new Date(str).toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 }
@@ -199,7 +187,7 @@ function avatarColor(name) {
     return colors[hash % colors.length];
 }
 
-// ── Render ────────────────────────────────────────────────────────────
+// Render
 function renderFeed() {
     const feed   = document.getElementById('activity-feed');
     const empty  = document.getElementById('empty-state');
@@ -230,7 +218,7 @@ function renderFeed() {
 
         let html = '';
         Object.keys(groups).sort((a,b) => b.localeCompare(a)).forEach(day => {
-            // Day divider with Tailwind
+            // Day divider
             html += `<div class="flex items-center gap-2.5 text-gray-400 text-xs font-semibold uppercase tracking-wide py-4 pb-2">
                         <span class="flex-1 h-px bg-gray-200"></span>
                         <span>${fmtDate(day + 'T00:00:00')}</span>
@@ -241,7 +229,7 @@ function renderFeed() {
                 const avColor = avatarColor(a.user);
                 const badgeClass = getBadgeClass(a.tipe);
                 const isLast  = idx === groups[day].length - 1;
-                // Activity row with hover effect using Tailwind
+                // Activity row 
                 html += `
                 <div class="flex items-start gap-4 py-3 px-3 -mx-3 rounded-xl hover:bg-sky-50 transition-colors duration-150">
                     <div class="flex flex-col items-center flex-shrink-0">
@@ -286,8 +274,7 @@ function renderPagination(pages) {
     const el = document.getElementById('pagination-controls');
     let h = '';
 
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white transition-all duration-150 hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200"
-              onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white transition-all duration-150 hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200" onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
           </button>`;
 
@@ -295,12 +282,10 @@ function renderPagination(pages) {
     let pe = Math.min(pages, ps+4);
     ps = Math.max(1, pe-4);
     for (let p = ps; p <= pe; p++) {
-        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all duration-150 ${p===currentPage?'bg-primary text-white border-primary':'bg-white text-gray-600 border-gray-200 hover:bg-primary hover:text-white hover:border-primary'}"
-                  onclick="gp(${p})">${p}</button>`;
+        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all duration-150 ${p===currentPage?'bg-primary text-white border-primary':'bg-white text-gray-600 border-gray-200 hover:bg-primary hover:text-white hover:border-primary'}" onclick="gp(${p})">${p}</button>`;
     }
 
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white transition-all duration-150 hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200"
-              onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white transition-all duration-150 hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200" onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
           </button>`;
 
@@ -315,7 +300,7 @@ function gp(p) {
     document.getElementById('activity-feed').scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-// ── Filters ────────────────────────────────────────────────────────────
+// Filters 
 function applyFilters() {
     const q    = document.getElementById('search-input').value.toLowerCase();
     const type = document.getElementById('filter-type').value;
@@ -331,7 +316,7 @@ function applyFilters() {
     renderFeed();
 }
 
-// ── Init ───────────────────────────────────────────────────────────────
+// Init 
 renderFeed();
 </script>
 @endsection

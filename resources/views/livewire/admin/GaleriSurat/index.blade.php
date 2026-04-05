@@ -1,11 +1,10 @@
 <!-- resources/views/livewire/admin/GaleriSurat/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
 <div class="max-w-7xl mx-auto">
 
-    {{-- ── Page Title Row ─────────────────────────────────────────── --}}
+    <!-- Page Title -->
     <div class="flex items-center mb-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -20,11 +19,11 @@
         </div>
     </div>
 
-    {{-- ── Filter Bar ──────────────────────────────────────────────── --}}
+    <!-- Filter Bar -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 mb-4">
         <div class="flex flex-wrap items-end gap-4">
 
-            {{-- Search / Pencarian --}}
+            <!-- Search / Pencarian -->
             <div class="flex-1 min-w-50">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Pencarian</label>
                 <div class="relative">
@@ -33,34 +32,27 @@
                             <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
                         </svg>
                     </span>
-                    <input id="search-input" type="text" placeholder="Cari nomor surat, asal, atau perihal..."
-                        class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                        oninput="applyFilters()">
+                    <input id="search-input" type="text" placeholder="Cari nomor surat, asal, atau perihal..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
                 </div>
             </div>
 
-            {{-- Tanggal Surat (Dari) --}}
+            <!-- Tanggal Surat (Dari) -->
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Dari)</label>
-                <input id="date-start" type="date"
-                    class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                    onchange="applyFilters()">
+                <input id="date-start" type="date" class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" onchange="applyFilters()">
             </div>
 
-            {{-- Tanggal Surat (Sampai) --}}
+            <!-- Tanggal Surat (Sampai) -->
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Sampai)</label>
-                <input id="date-end" type="date"
-                    class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                    onchange="applyFilters()">
+                <input id="date-end" type="date" class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" onchange="applyFilters()">
             </div>
 
-            {{-- Kategori Surat --}}
+            <!-- Kategori Surat -->
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kategori Surat</label>
                 <div class="relative">
-                    <select id="kategori-filter" onchange="applyFilters()"
-                        class="w-full pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
+                    <select id="kategori-filter" onchange="applyFilters()" class="w-full pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
                         <option value="all">Semua Surat</option>
                         <option value="masuk">Surat Masuk</option>
                         <option value="keluar">Surat Keluar</option>
@@ -75,10 +67,10 @@
         </div>
     </div>
 
-    {{-- ── Gallery Card ─────────────────────────────────────────────── --}}
+    <!-- Gallery Card -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
 
-        {{-- Card Header --}}
+        <!-- Card Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
             <div class="flex items-center gap-2">
                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -89,13 +81,13 @@
             <span id="file-count-badge" class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">0 File</span>
         </div>
 
-        {{-- Grid - 5 kolom di desktop --}}
+        <!-- Grid - 5 kolom di desktop -->
         <div class="p-6">
             <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-                {{-- Cards rendered by JS --}}
+                <!-- Cards rendered by JS -->
             </div>
 
-            {{-- Empty State --}}
+            <!-- Empty State -->
             <div id="empty-state" class="hidden py-16 text-center">
                 <svg class="w-14 h-14 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                     <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
@@ -105,7 +97,7 @@
             </div>
         </div>
 
-        {{-- Pagination Footer --}}
+        <!-- Pagination Footer -->
         <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
             <p class="text-sm text-gray-500" id="pagination-info"></p>
             <div id="pagination-controls" class="flex items-center gap-1"></div>
@@ -113,10 +105,10 @@
     </div>
 </div>
 
-{{-- ── File Preview Modal ────────────────────────────────────────── --}}
+<!-- File Preview Modal  -->
 <div id="preview-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex-col">
 
-    {{-- Modal Header --}}
+    <!-- Modal Header -->
     <div class="flex items-center justify-between px-6 py-3 bg-gray-900/95 border-b border-white/10 shrink-0">
         <div class="flex items-center gap-3">
             <div id="modal-icon" class="w-8 h-8 rounded-lg flex items-center justify-center"></div>
@@ -126,15 +118,13 @@
             </div>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="downloadFile()"
-                class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
+            <button onclick="downloadFile()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12M8 12l4 4 4-4"/>
                 </svg>
                 Download
             </button>
-            <button onclick="closePreview()"
-                class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+            <button onclick="closePreview()" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -143,11 +133,11 @@
         </div>
     </div>
 
-    {{-- Modal Body --}}
+    <!-- Modal Body -->
     <div class="flex-1 overflow-hidden flex items-center justify-center bg-gray-800">
         <iframe id="preview-iframe" src="" class="w-full h-full border-0 hidden" title="File Preview"></iframe>
 
-        {{-- Fallback / DOCX viewer --}}
+        <!-- Fallback / File viewer -->
         <div id="preview-fallback" class="w-full h-full overflow-auto flex items-center justify-center p-6">
             <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
                 <div class="px-8 py-6 bg-primary text-center">
@@ -172,7 +162,7 @@
 </div>
 
 <script>
-// ── Dummy Data (Hardcoded - No PHP variable) ─────────────────────────
+// ── Dummy Data 
 const allFiles = [
     { id:1,  nomor:'001/SM/2025', asal:'Disporapar',         tanggal:'2025-11-25', perihal:'Undangan Rapat',              tipe:'DOCX', kategori:'masuk',  file:'' },
     { id:2,  nomor:'002/SM/2025', asal:'Dinas Sosial',       tanggal:'2025-11-20', perihal:'Pemberitahuan Kegiatan',      tipe:'PDF',  kategori:'masuk',  file:'' },
@@ -187,13 +177,13 @@ const allFiles = [
     { id:11, nomor:'007/SM/2025', asal:'BPBD Kalbar',        tanggal:'2025-10-18', perihal:'Bantuan Bencana',             tipe:'PDF',  kategori:'masuk',  file:'' },
 ];
 
-// ── State ──────────────────────────────────────────────────────────────
+// State 
 let filtered     = [...allFiles];
 let currentPage  = 1;
-const perPage    = 10;  // 10 file per halaman
+const perPage    = 10; 
 let activeFile   = null;
 
-// ── Helpers ────────────────────────────────────────────────────────────
+// Helpers 
 function fmtDate(str) {
     if (!str) return '-';
     return new Date(str).toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
@@ -206,7 +196,7 @@ function fileConfig(tipe) {
     return { bg:'bg-gray-50', icon:'text-gray-400', label:tipe, ext:'' };
 }
 
-// ── Render Gallery ─────────────────────────────────────────────────────
+// Render Gallery 
 function renderGallery() {
     const grid   = document.getElementById('gallery-grid');
     const empty  = document.getElementById('empty-state');
@@ -230,15 +220,14 @@ function renderGallery() {
         grid.innerHTML = slice.map(f => {
             const cfg  = fileConfig(f.tipe);
             const cat  = f.kategori === 'masuk'
-                ? '<span class="bg-blue-50 text-primary text-xs font-semibold px-2 py-0.5 rounded-full">Surat Masuk</span>'
-                : '<span class="bg-amber-50 text-amber-600 text-xs font-semibold px-2 py-0.5 rounded-full">Surat Keluar</span>';
+                ? '<span class="bg-indigo-100 text-indigo-600 border border-indigo-200 text-xs font-semibold px-2 py-0.5 rounded-full">Surat Masuk</span>'
+                : '<span class="bg-yellow-100 text-yellow-600 border border-yellow-200 text-xs font-semibold px-2 py-0.5 rounded-full">Surat Keluar</span>';
             return `
-            <div class="bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                 onclick="openPreview(${f.id})">
+            <div class="bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer" onclick="openPreview(${f.id})">
 
-                {{-- Thumbnail area --}}
+                <!-- Thumbnail area -->
                 <div class="relative flex flex-col items-center justify-center py-10 px-4 ${cfg.bg} flex-1 min-h-[160px]">
-                    {{-- File icon --}}
+                    <!-- File icon -->
                     <div class="w-20 h-20 rounded-2xl ${cfg.bg} border border-white shadow-sm flex items-center justify-center mb-3">
                         <svg class="w-11 h-11 ${cfg.icon}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                             <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
@@ -247,7 +236,7 @@ function renderGallery() {
                     </div>
                     <span class="text-xs font-bold ${cfg.icon} tracking-widest">${cfg.label}</span>
 
-                    {{-- Hover overlay --}}
+                    <!-- Hover overlay -->
                     <div class="absolute inset-0 bg-primary/10 flex items-center justify-center rounded-t-none opacity-0 hover:opacity-100 transition-opacity duration-200">
                         <div class="bg-white/95 shadow-lg rounded-xl px-3 py-1.5 flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -259,7 +248,7 @@ function renderGallery() {
                     </div>
                 </div>
 
-                {{-- Info area --}}
+                <!-- Info area -->
                 <div class="px-3 py-3 bg-white border-t border-gray-100 flex flex-col gap-1.5">
                     ${cat}
                     <p class="text-xs font-bold text-gray-800 truncate">${f.nomor}</p>
@@ -293,13 +282,12 @@ function renderGallery() {
     renderPagination(pages);
 }
 
-// ── Pagination ────────────────────────────────────────────────────────
+// Pagination
 function renderPagination(pages) {
     const el = document.getElementById('pagination-controls');
     let h = '';
 
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all"
-              onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all" onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
           </button>`;
 
@@ -307,12 +295,10 @@ function renderPagination(pages) {
     let pe = Math.min(pages, ps+4);
     ps = Math.max(1, pe-4);
     for (let p = ps; p <= pe; p++) {
-        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all ${p===currentPage ? 'bg-primary text-white border-primary' : 'border-gray-200 bg-white text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}"
-                  onclick="gp(${p})">${p}</button>`;
+        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all ${p===currentPage ? 'bg-primary text-white border-primary' : 'border-gray-200 bg-white text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}" onclick="gp(${p})">${p}</button>`;
     }
 
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all"
-              onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all" onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
           </button>`;
 
@@ -327,7 +313,7 @@ function gp(p) {
     document.getElementById('gallery-grid').scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-// ── Filters ───────────────────────────────────────────────────────────
+// Filters 
 function applyFilters() {
     const q  = document.getElementById('search-input').value.toLowerCase();
     const ds = document.getElementById('date-start').value;
@@ -345,7 +331,7 @@ function applyFilters() {
     renderGallery();
 }
 
-// ── Preview Modal ─────────────────────────────────────────────────────
+// Preview Modal 
 function openPreview(id) {
     const f = allFiles.find(x => x.id === id);
     if (!f) return;

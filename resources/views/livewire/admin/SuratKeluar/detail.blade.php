@@ -1,8 +1,9 @@
+<!-- views/livewire/admin/SuratKeluar/detail.blade.php  -->
 @extends('layouts.app')
 
 @section('content')
 <div class="max-w-7xl mx-auto">
-    {{-- Page Title --}}
+    <!-- Judul Halaman -->
     <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -15,6 +16,8 @@
                 <p class="text-xs text-gray-500">Lihat informasi detail surat keluar</p>
             </div>
         </div>
+
+        <!-- Tombol kembali -->
         <a href="{{ route('suratkeluar.index') }}"
             class="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -24,20 +27,18 @@
         </a>
     </div>
 
-    {{-- Two-Column Layout --}}
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
-
-        {{-- LEFT: Mail Info Card --}}
+       <!-- Informasi Surat -->
         <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100">
                 <h2 class="font-bold text-gray-800">Informasi Surat</h2>
             </div>
             <div class="divide-y divide-gray-50" id="detail-content">
-                <!-- Data akan diisi oleh JavaScript -->
+                <!-- Data diisi JavaScript -->
             </div>
         </div>
 
-        {{-- RIGHT: File Attachment Card --}}
+        <!-- File Surat -->
         <div class="lg:col-span-2 flex">
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col w-full">
                 <div class="flex-1 flex flex-col items-center justify-center">
@@ -48,12 +49,15 @@
                         </svg>
                     </div>
                     
+                    <!-- Nama File -->
                     <p class="text-base font-bold text-gray-800 mb-1 text-center" id="file-name">-</p>
                     
+                    <!-- Metadata File -->
                     <div class="flex items-center justify-center gap-2 text-xs text-gray-400 mb-6" id="file-meta">
                         <!-- Metadata akan diisi JS -->
                     </div>
                     
+                    <!-- Tombol Download -->
                     <button onclick="alert('File akan dibuka. Implementasikan sesuai kebutuhan Anda.')"
                         class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -68,7 +72,7 @@
 </div>
 
 <script>
-// Data dummy surat keluar
+// Data dummy 
 const allData = [
     { id:1,  nomor:'001/SK/2026', tanggal_surat:'2026-11-01', tanggal_kirim:'2026-11-02', perihal:'Undangan Rapat Koordinasi',     tujuan:'Dinas Pendidikan Kabupaten',       keterangan:'Dikirim melalui pos', jenis:'Surat Undangan' },
     { id:2,  nomor:'002/SK/2026', tanggal_surat:'2026-10-28', tanggal_kirim:'2026-10-29', perihal:'Surat Tugas Verifikasi Lapangan',      tujuan:'Kecamatan Sungai Raya',       keterangan:'Segera ditindaklanjuti', jenis:'Surat Tugas' },

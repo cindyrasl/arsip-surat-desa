@@ -1,10 +1,9 @@
 <!-- resources/views/livewire/admin/Laporan/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
 
-{{-- ── Page Title Row ──────────────────────────────────────────────── --}}
+<!-- Page Title  -->
 <div class="flex items-center mb-5">
     <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -19,32 +18,27 @@
     </div>
 </div>
 
-{{-- ── Filter Bar ───────────────────────────────────────────────────── --}}
+<!-- Filter Bar -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 mb-4">
     <div class="flex flex-wrap items-end gap-4">
 
-        {{-- Tanggal Surat (Dari) --}}
+        <!-- Tanggal Surat (Dari) -->
         <div class="flex-1 min-w-45">
             <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Dari)</label>
-            <input id="date-start" type="date"
-                class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                onchange="applyFilters()">
+            <input id="date-start" type="date" class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" onchange="applyFilters()">
         </div>
 
-        {{-- Tanggal Surat (Sampai) --}}
+        <!-- Tanggal Surat (Sampai) -->
         <div class="flex-1 min-w-45">
             <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Sampai)</label>
-            <input id="date-end" type="date"
-                class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                onchange="applyFilters()">
+            <input id="date-end" type="date" class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" onchange="applyFilters()">
         </div>
 
-        {{-- Kategori Surat --}}
+        <!-- Kategori Surat -->
         <div class="flex-1 min-w-45">
             <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kategori Surat</label>
             <div class="relative">
-                <select id="filter-kategori" onchange="applyFilters()"
-                    class="w-full pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
+                <select id="filter-kategori" onchange="applyFilters()" class="w-full pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
                     <option value="">Semua Surat</option>
                     <option value="Surat Masuk">Surat Masuk</option>
                     <option value="Surat Keluar">Surat Keluar</option>
@@ -57,11 +51,10 @@
             </div>
         </div>
 
-        {{-- Export Excel Button --}}
+        <!-- Export Excel Button -->
         <div class="shrink-0">
             <label class="block text-xs font-semibold text-transparent mb-1.5 select-none">Export</label>
-            <button onclick="exportExcel()"
-                class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap">
+            <button onclick="exportExcel()" class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <rect x="3" y="3" width="18" height="18" rx="2"/>
                     <path d="M7 8h10M7 12h10M7 16h6"/>
@@ -73,10 +66,10 @@
     </div>
 </div>
 
-{{-- ── Report Table Card ────────────────────────────────────────────── --}}
+<!-- Report Table Card -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
 
-    {{-- Card Header --}}
+    <!-- Card Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
         <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -87,11 +80,11 @@
         <span id="report-count" class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">0 Data</span>
     </div>
 
-    {{-- Table --}}
+    <!-- Table -->
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
-                <tr class="bg-gray-100  border-b border-gray-100">
+                <tr class="bg-gray-100 border-b border-gray-100">
                     <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-14">No</th>
                     <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Kategori Surat</th>
                     <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nomor Surat</th>
@@ -103,7 +96,7 @@
             <tbody id="table-body" class="divide-y divide-gray-50"></tbody>
         </table>
 
-        {{-- Empty State --}}
+        <!-- Empty State -->
         <div id="empty-state" class="hidden py-16 text-center">
             <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
                 <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -115,7 +108,7 @@
         </div>
     </div>
 
-    {{-- Pagination Footer --}}
+    <!-- Pagination Footer -->
     <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
         <p class="text-sm text-gray-500" id="pagination-info"></p>
         <div id="pagination-controls" class="flex items-center gap-1"></div>
@@ -123,7 +116,7 @@
 
 </div>
 
-{{-- ── Export Success Toast ─────────────────────────────────────────── --}}
+<!-- Export Success Toast -->
 <div id="toast" class="fixed bottom-6 right-6 z-50 hidden">
     <div class="flex items-center gap-3 bg-gray-900 text-white text-sm font-medium px-4 py-3 rounded-xl shadow-xl">
         <svg class="w-4 h-4 text-green-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -137,8 +130,7 @@
 
 @push('scripts')
 <script>
-// ── DUMMY DATA (Hardcoded untuk testing tampilan) ──────────────────────
-// Data dummy untuk laporan (gabungan Surat Masuk dan Surat Keluar)
+// ── DUMMY DATA
 const allData = [
     { id:1,  kategori:'Surat Masuk',  nomor:'001/SM/2026', perihal:'Pembuatan Surat Keterangan',     jenis:'Surat Keterangan',      tanggal:'2026-11-01T21:23:00' },
     { id:2,  kategori:'Surat Keluar', nomor:'001/SK/2026', perihal:'Surat Penugasan Perangkat Desa', jenis:'Surat Tugas Perangkat',  tanggal:'2026-11-01T21:23:00' },
@@ -171,8 +163,8 @@ function fmtDateTime(str) {
 function dateOnly(str) { return str ? str.slice(0, 10) : ''; }
 
 function kategoriStyle(kat) {
-    if (kat === 'Surat Masuk')  return 'bg-blue-50 text-primary border border-blue-100';
-    if (kat === 'Surat Keluar') return 'bg-amber-50 text-amber-600 border border-amber-100';
+    if (kat === 'Surat Masuk')  return 'bg-indigo-100 text-indigo-600 border border-indigo-200';
+    if (kat === 'Surat Keluar') return 'bg-yellow-100 text-yellow-600 border border-yellow-200';
     return 'bg-gray-50 text-gray-500';
 }
 
@@ -226,18 +218,15 @@ function renderTable() {
 function renderPagination(pages) {
     const el = document.getElementById('pagination-controls');
     let h = '';
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-              onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed transition-all" onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
           </button>`;
     let ps = Math.max(1, currentPage-2), pe = Math.min(pages, ps+4);
     ps = Math.max(1, pe-4);
     for (let p = ps; p <= pe; p++) {
-        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all ${p===currentPage?'bg-primary text-white border-primary':'border-gray-200 bg-white text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}"
-                  onclick="gp(${p})">${p}</button>`;
+        h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-semibold transition-all ${p===currentPage?'bg-primary text-white border-primary':'border-gray-200 bg-white text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}" onclick="gp(${p})">${p}</button>`;
     }
-    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-              onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
+    h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed transition-all" onclick="gp(${currentPage+1})" ${currentPage>=pages?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
           </button>`;
     el.innerHTML = h;
