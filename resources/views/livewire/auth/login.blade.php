@@ -126,9 +126,9 @@
                             <input type="checkbox" class="accent-[#4a90b8]">
                             Ingat saya
                         </label>
-                        <!-- <a class="text-sm font-semibold text-[#4a90b8] hover:text-[#2d6e9e]">
+                        <a class="text-sm font-semibold text-[#4a90b8] hover:text-[#2d6e9e]">
                             Lupa password
-                        </a> -->
+                        </a>
                     </div>
 
                     <!-- Button -->

@@ -27,7 +27,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; font-variant-ligatures: no-common-ligatures; }
 
         /* Sidebar active item - PENTING! */
         .nav-item { transition: all 0.2s ease; }
@@ -49,17 +49,6 @@
 
         /* Sidebar scroll */
         #sidebar { overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(76,131,172,0.3) transparent; }
-
-        /* Page fade-in */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up { animation: fadeUp 0.4s ease forwards; }
-        .fade-up-delay-1 { animation: fadeUp 0.4s ease 0.1s forwards; opacity: 0; }
-        .fade-up-delay-2 { animation: fadeUp 0.4s ease 0.2s forwards; opacity: 0; }
-        .fade-up-delay-3 { animation: fadeUp 0.4s ease 0.3s forwards; opacity: 0; }
-        .fade-up-delay-4 { animation: fadeUp 0.4s ease 0.35s forwards; opacity: 0; }
 
         /* Modal styles */
         #modal-overlay, #delete-overlay {

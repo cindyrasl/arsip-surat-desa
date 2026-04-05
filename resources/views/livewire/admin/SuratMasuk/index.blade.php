@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto">
-
     <!-- Page Title Row -->
     <div class="flex items-center mb-5">
         <div class="flex items-center gap-3">
@@ -55,7 +54,6 @@
             </div>
         </div>
     </div>
-</div>
 
     <!-- Table Card -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
@@ -129,6 +127,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @push('scripts')

@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto">
-
     <!-- Page Title -->
     <div class="flex items-center mb-5">
         <div class="flex items-center gap-3">
@@ -22,7 +21,8 @@
     <!-- Filter Bar -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 mb-4">
         <div class="flex flex-wrap items-end gap-4">
-            <!-- Search -->
+
+            <!-- Search / Pencarian -->
             <div class="flex-1 min-w-50">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Pencarian</label>
                 <div class="relative">
@@ -41,7 +41,7 @@
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Dari)</label>
                 <input id="date-start" type="date"
-                    class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
                     onchange="applyFilters()">
             </div>
 
@@ -49,7 +49,7 @@
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Sampai)</label>
                 <input id="date-end" type="date"
-                    class="w-full pl-4 pr-10 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
                     onchange="applyFilters()">
             </div>
         </div>
