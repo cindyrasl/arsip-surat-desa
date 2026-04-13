@@ -1,7 +1,8 @@
 <!-- admin/JenisSurat/index.blade.php -->
 @extends('layouts.app')
-
 @section('content')
+<div class="max-w-7xl mx-auto">
+
     <!-- Page Title -->
     <div class="flex items-center gap-3 mb-5">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -72,6 +73,7 @@
             <div id="pagination-controls" class="flex items-center gap-1"></div>
         </div>
     </div>
+</div>
 
     <!-- ADD / EDIT MODAL -->
     <div id="modal-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">

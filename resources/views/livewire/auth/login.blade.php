@@ -127,7 +127,7 @@
                             Ingat saya
                         </label>
                         <a class="text-sm font-semibold text-[#4a90b8] hover:text-[#2d6e9e]">
-                            Lupa password
+                            Lupa password?
                         </a>
                     </div>
 
