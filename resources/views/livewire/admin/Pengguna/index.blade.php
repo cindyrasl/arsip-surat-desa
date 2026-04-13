@@ -2,97 +2,99 @@
 @extends('layouts.app')
 @section('content')
 
-<!-- Page Title  -->
-<div class="flex items-center justify-between mb-5">
-    <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-            </svg>
-        </div>
-        <div>
-            <h1 class="text-lg font-bold text-gray-800 leading-tight">Pengguna</h1>
-            <p class="text-xs text-gray-500">Kelola pengguna sistem</p>
-        </div>
-    </div>
-</div>
-
-<!-- Filter Bar  -->
-<div class="flex flex-wrap items-center gap-3 mb-5">
-    <!-- Search -->
-    <div class="relative flex-1 min-w-50">
-        <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-            </svg>
-        </span>
-        <input id="search-input" type="text" placeholder="Cari username atau nama..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
-    </div>
-
-    <!-- Role Filter -->
-    <div class="relative">
-        <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M3 4h18M7 8h10M11 12h4M13 16h2" stroke-linecap="round"/>
-            </svg>
-        </span>
-        <select id="filter-role" onchange="applyFilters()" class="pl-9 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-44">
-            <option value="">Semua Peran</option>
-            <option value="Admin">Admin</option>
-            <option value="Staff">Staff</option>
-        </select>
-        <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M6 9l6 6 6-6" stroke-linecap="round"/>
-            </svg>
-        </span>
-    </div>
-</div>
-
-<!-- Card Header -->
-<div class="bg-white rounded-2xl shadow-sm border border-gray-100">
-    <!-- Card Header -->
-    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-        <h2 class="font-bold text-gray-800">Daftar Nama Pengguna</h2>
-        <button onclick="openAddModal()" class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
-            </svg>
-            Tambah Pengguna
-        </button>
-    </div>
-
-    <!-- Table -->
-    <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-            <thead>
-                <tr class="bg-gray-100 border-b border-gray-100">
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-14">No</th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Username</th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nama</th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Peran</th>
-                    <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tanggal Dibuat</th>
-                    <th class="text-center px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="table-body" class="divide-y divide-gray-50"></tbody>
-        </table>
-
-        <!-- Empty State -->
-        <div id="empty-state" class="hidden py-16 text-center">
-            <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
-                <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+<div class="max-w-7xl mx-auto">
+    <!-- Page Title  -->
+    <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                 </svg>
             </div>
-            <p class="text-gray-400 text-sm font-medium">Tidak ada pengguna ditemukan.</p>
+            <div>
+                <h1 class="text-lg font-bold text-gray-800 leading-tight">Pengguna</h1>
+                <p class="text-xs text-gray-500">Kelola pengguna sistem</p>
+            </div>
         </div>
     </div>
 
-    <!-- Pagination Footer -->
-    <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
-        <p class="text-sm text-gray-500" id="pagination-info"></p>
-        <div id="pagination-controls" class="flex items-center gap-1"></div>
+    <!-- Filter Bar  -->
+    <div class="flex flex-wrap items-center gap-3 mb-5">
+        <!-- Search -->
+        <div class="relative flex-1 min-w-50">
+            <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
+            </span>
+            <input id="search-input" type="text" placeholder="Cari username atau nama..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
+        </div>
+
+        <!-- Role Filter -->
+        <div class="relative">
+            <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 4h18M7 8h10M11 12h4M13 16h2" stroke-linecap="round"/>
+                </svg>
+            </span>
+            <select id="filter-role" onchange="applyFilters()" class="pl-9 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-44">
+                <option value="">Semua Peran</option>
+                <option value="Admin">Admin</option>
+                <option value="Staff">Staff</option>
+            </select>
+            <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+
+    <!-- Card Header -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <!-- Card Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <h2 class="font-bold text-gray-800">Daftar Nama Pengguna</h2>
+            <button onclick="openAddModal()" class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
+                </svg>
+                Tambah Pengguna
+            </button>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-gray-100 border-b border-gray-100">
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-14">No</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Username</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nama</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Peran</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tanggal Dibuat</th>
+                        <th class="text-center px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="divide-y divide-gray-50"></tbody>
+            </table>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden py-16 text-center">
+                <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                    </svg>
+                </div>
+                <p class="text-gray-400 text-sm font-medium">Tidak ada pengguna ditemukan.</p>
+            </div>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
+            <p class="text-sm text-gray-500" id="pagination-info"></p>
+            <div id="pagination-controls" class="flex items-center gap-1"></div>
+        </div>
     </div>
 </div>
 
