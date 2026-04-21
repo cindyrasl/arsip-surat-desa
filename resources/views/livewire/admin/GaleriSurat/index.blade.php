@@ -165,7 +165,7 @@
 // ── Dummy Data 
 const allFiles = [
     { id:1,  nomor:'001/SM/2025', asal:'Disporapar',         tanggal:'2025-11-25', perihal:'Undangan Rapat',              tipe:'DOCX', kategori:'masuk',  file:'' },
-    { id:2,  nomor:'002/SM/2025', asal:'Dinas Sosial',       tanggal:'2025-11-20', perihal:'Pemberitahuan Kegiatan',      tipe:'PDF',  kategori:'masuk',  file:'' },
+    { id:2,  nomor:'002/SM/2025', asal:'Dinas Sosial',       tanggal:'2025-11-20', perihal:'Pemberitahuan Kegiatan',      tipe:'PNG',  kategori:'masuk',  file:'' },
     { id:3,  nomor:'001/SK/2025', asal:'Kec. Sungai Raya',   tanggal:'2025-11-18', perihal:'Surat Tugas Perangkat',       tipe:'PDF',  kategori:'keluar', file:'' },
     { id:4,  nomor:'003/SM/2025', asal:'BPS Kubu Raya',      tanggal:'2025-11-15', perihal:'Permohonan Data Penduduk',    tipe:'DOCX', kategori:'masuk',  file:'' },
     { id:5,  nomor:'002/SK/2025', asal:'Dinkes Kubu Raya',   tanggal:'2025-11-10', perihal:'Laporan Kesehatan',           tipe:'PDF',  kategori:'keluar', file:'' },
@@ -191,8 +191,9 @@ function fmtDate(str) {
 
 // File-type config: icon color, bg, label
 function fileConfig(tipe) {
-    if (tipe === 'PDF')  return { bg:'bg-red-50',  icon:'text-red-500',  label:'PDF',  ext:'.pdf' };
-    if (tipe === 'DOCX') return { bg:'bg-blue-50', icon:'text-blue-500', label:'DOCX', ext:'.docx' };
+    if (tipe === 'PDF')  return { bg:'bg-white-50',  icon:'text-red-500',  label:'PDF',  ext:'.pdf' };
+    if (tipe === 'DOCX') return { bg:'bg-white-50', icon:'text-blue-500', label:'DOCX', ext:'.docx' };
+    if (tipe === 'PNG') return { bg:'bg-white-50', icon:'text-gray-500', label:'PNG', ext:'.png' };
     return { bg:'bg-gray-50', icon:'text-gray-400', label:tipe, ext:'' };
 }
 

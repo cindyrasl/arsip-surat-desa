@@ -3,7 +3,7 @@
         <button onclick="toggleDropdown()" class="flex items-center gap-3 hover:bg-gray-50 rounded-xl px-3 py-2 transition-all">
             <div class="text-right">
                 <p class="text-sm font-bold text-gray-800 leading-tight" id="profile-name">Barbara Palvin</p>
-                <p class="text-xs text-gray-500 leading-tight" id="profile-role">Admin</p>
+                <p class="text-xs text-gray-500 leading-tight" id="profile-role">Sekretaris</p>
             </div>
             <div class="w-10 h-10 rounded-full bg-primary-light overflow-hidden border-2 border-primary/30">
                 <img id="profile-image" src="{{ asset('storage/profiles/profil.jpg') }}" alt="Profile" class="w-full h-full object-cover">
@@ -76,8 +76,8 @@
                             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500" readonly disabled>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Role / Jabatan</label>
-                        <input type="text" id="profile-role-input" value="Administrator" 
+                        <label class="block text-xs font-semibold text-gray-600 mb-1"> Jabatan</label>
+                        <input type="text" id="profile-role-input" value="Sekretais" 
                             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500" readonly disabled>
                     </div>
                 </div>

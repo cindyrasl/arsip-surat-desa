@@ -27,30 +27,11 @@
                     <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
                 </svg>
             </span>
-            <input id="search-input" type="text" placeholder="Cari username atau nama..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
-        </div>
-
-        <!-- Role Filter -->
-        <div class="relative">
-            <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M3 4h18M7 8h10M11 12h4M13 16h2" stroke-linecap="round"/>
-                </svg>
-            </span>
-            <select id="filter-role" onchange="applyFilters()" class="pl-9 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer w-44">
-                <option value="">Semua Peran</option>
-                <option value="Admin">Admin</option>
-                <option value="Staff">Staff</option>
-            </select>
-            <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M6 9l6 6 6-6" stroke-linecap="round"/>
-                </svg>
-            </span>
+            <input id="search-input" type="text" placeholder="Cari username, nama, jabatan, atau email..." class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all" oninput="applyFilters()">
         </div>
     </div>
 
-    <!-- Card Header -->
+    <!-- Card Table -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
         <!-- Card Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
@@ -71,23 +52,25 @@
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide w-14">No</th>
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Username</th>
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nama</th>
-                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Peran</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Jabatan</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Email</th>
                         <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tanggal Dibuat</th>
+                        <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Terakhir Login</th>
                         <th class="text-center px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="table-body" class="divide-y divide-gray-50"></tbody>
             </table>
+        </div>
 
-            <!-- Empty State -->
-            <div id="empty-state" class="hidden py-16 text-center">
-                <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
-                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                    </svg>
-                </div>
-                <p class="text-gray-400 text-sm font-medium">Tidak ada pengguna ditemukan.</p>
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden py-16 text-center">
+            <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
             </div>
+            <p class="text-gray-400 text-sm font-medium">Tidak ada pengguna ditemukan.</p>
         </div>
 
         <!-- Pagination Footer -->
@@ -132,7 +115,7 @@
                 <p id="err-username" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            <!-- Nama -->
+            <!-- Nama Lengkap -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
                     Nama Lengkap <span class="text-red-400">*</span>
@@ -141,11 +124,28 @@
                 <p id="err-nama" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            <!-- Password -->
+            <!-- Jabatan -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
-                    Password <span class="text-red-400" id="pass-required">*</span>
-                    <span id="pass-optional" class="hidden text-gray-400 font-normal">(kosongkan jika tidak diubah)</span>
+                    Jabatan <span class="text-red-400">*</span>
+                </label>
+                <input id="form-jabatan" type="text" placeholder="Contoh: Kepala Desa, Sekretaris, Bendahara" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                <p id="err-jabatan" class="hidden mt-1 text-xs text-red-500"></p>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1.5">
+                    Email <span class="text-red-400">*</span>
+                </label>
+                <input id="form-email" type="email" placeholder="contoh: email@domain.com" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                <p id="err-email" class="hidden mt-1 text-xs text-red-500"></p>
+            </div>
+
+            <!-- Password (hanya untuk tambah) -->
+            <div id="password-field">
+                <label class="block text-xs font-semibold text-gray-600 mb-1.5">
+                    Password <span class="text-red-400">*</span>
                 </label>
                 <div class="relative">
                     <input id="form-password" type="password" placeholder="Min. 8 karakter, huruf, angka &amp; simbol" class="w-full px-3 py-2.5 pr-10 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
@@ -169,10 +169,10 @@
                 <p id="err-password" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
 
-            <!-- Confirm Password -->
-            <div>
+            <!-- Confirm Password (hanya untuk tambah) -->
+            <div id="confirm-field">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">
-                    Konfirmasi Password <span class="text-red-400" id="confirm-required">*</span>
+                    Konfirmasi Password <span class="text-red-400">*</span>
                 </label>
                 <div class="relative">
                     <input id="form-confirm" type="password" placeholder="Ulangi password" class="w-full px-3 py-2.5 pr-10 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
@@ -185,27 +185,6 @@
                 </div>
                 <p id="err-confirm" class="hidden mt-1 text-xs text-red-500"></p>
             </div>
-
-            <!-- Role -->
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1.5">
-                    Peran <span class="text-red-400">*</span>
-                </label>
-                <div class="relative">
-                    <select id="form-role" class="w-full px-3 py-2.5 pr-9 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
-                        <option value="">-- Pilih Peran --</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Staff">Staff</option>
-                    </select>
-                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M6 9l6 6 6-6" stroke-linecap="round"/>
-                        </svg>
-                    </span>
-                </div>
-                <p id="err-role" class="hidden mt-1 text-xs text-red-500"></p>
-            </div>
-
         </div>
 
         <!-- Modal Footer -->
@@ -248,13 +227,13 @@
 <script>
 // ── DUMMY DATA ──────────────────────────────────────────────────────
 let allData = [
-    { id:1, username:'barbarap4lvin', nama:'Barbara Palvin', peran:'Admin', dibuat:'2026-11-01T21:23:00' },
-    { id:2, username:'aswedqa',       nama:'Louise',         peran:'Admin', dibuat:'2026-11-01T21:23:00' },
-    { id:3, username:'rahmat_ds',     nama:'Rahmat Setiawan', peran:'Staff', dibuat:'2026-11-05T08:00:00' },
-    { id:4, username:'siti_r',        nama:'Siti Rahayu',    peran:'Staff', dibuat:'2026-11-08T09:30:00' },
-    { id:5, username:'ahmad_fz',      nama:'Ahmad Fauzi',    peran:'Staff', dibuat:'2026-11-10T10:00:00' },
-    { id:6, username:'dian_s',        nama:'Dian Sastro',    peran:'Staff', dibuat:'2026-11-12T11:00:00' },
-    { id:7, username:'budi_gunawan',  nama:'Budi Gunawan',   peran:'Admin', dibuat:'2026-11-15T08:30:00' },
+    { id:1, username:'barbarap4lvin', nama:'Barbara Palvin', jabatan:'Kepala Desa', email:'barbara@desa.com', dibuat:'2026-11-01T21:23:00', last_login:'2026-12-10T09:30:00' },
+    { id:2, username:'aswedqa',       nama:'Louise',         jabatan:'Sekretaris', email:'louise@desa.com', dibuat:'2026-11-01T21:23:00', last_login:'2026-12-09T14:15:00' },
+    { id:3, username:'rahmat_ds',     nama:'Rahmat Setiawan', jabatan:'Bendahara', email:'rahmat@desa.com', dibuat:'2026-11-05T08:00:00', last_login:'2026-12-08T11:00:00' },
+    { id:4, username:'siti_r',        nama:'Siti Rahayu',    jabatan:'Staff Administrasi', email:'siti@desa.com', dibuat:'2026-11-08T09:30:00', last_login:'2026-12-07T08:45:00' },
+    { id:5, username:'ahmad_fz',      nama:'Ahmad Fauzi',    jabatan:'Staff Pelayanan', email:'ahmad@desa.com', dibuat:'2026-11-10T10:00:00', last_login:'2026-12-06T16:20:00' },
+    { id:6, username:'dian_s',        nama:'Dian Sastro',    jabatan:'Staff Umum', email:'dian@desa.com', dibuat:'2026-11-12T11:00:00', last_login:'2026-12-05T10:00:00' },
+    { id:7, username:'budi_gunawan',  nama:'Budi Gunawan',   jabatan:'Kepala Urusan', email:'budi@desa.com', dibuat:'2026-11-15T08:30:00', last_login:'2026-12-04T13:30:00' },
 ];
 let nextId = 8;
 
@@ -272,14 +251,6 @@ function fmtDateTime(str) {
         day:'2-digit', month:'short', year:'numeric',
         hour:'2-digit', minute:'2-digit'
     });
-}
-
-function roleBadge(peran) {
-    const map = {
-        'Admin': 'bg-blue-50 text-primary border border-blue-100',
-        'Staff': 'bg-green-50 text-green-600 border border-green-100',
-    };
-    return map[peran] || 'bg-gray-50 text-gray-500';
 }
 
 // ── Render Table ───────────────────────────────────────────────────────
@@ -302,17 +273,15 @@ function renderTable() {
         empty.classList.add('hidden');
         tbody.innerHTML = slice.map((r, i) => `
             <tr class="hover:bg-gray-50 transition-colors">
-                <td class="px-6 py-3.5 text-gray-400 text-center text-sm">${s + i + 1}</td>
+                <td class="px-6 py-3.5 text-gray-400 text-sm">${s + i + 1}</td>
                 <td class="px-6 py-3.5">
-                    <span class="text-sm font-semibold text-gray-700">${r.username}</span>
+                    <span class="text-sm font-semibold text-gray-700">${escapeHtml(r.username)}</span>
                 </td>
-                <td class="px-6 py-3.5 text-sm text-gray-700">${r.nama}</td>
-                <td class="px-6 py-3.5">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${roleBadge(r.peran)}">
-                        ${r.peran}
-                    </span>
-                </td>
+                <td class="px-6 py-3.5 text-sm text-gray-700">${escapeHtml(r.nama)}</td>
+                <td class="px-6 py-3.5 text-sm text-gray-700">${escapeHtml(r.jabatan)}</td>
+                <td class="px-6 py-3.5 text-sm text-gray-700">${escapeHtml(r.email)}</td>
                 <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">${fmtDateTime(r.dibuat)}</td>
+                <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">${fmtDateTime(r.last_login)}</td>
                 <td class="px-6 py-3.5">
                     <div class="flex items-center justify-center gap-2">
                         <button onclick="openEditModal(${r.id})" title="Edit" class="w-8 h-8 rounded-lg bg-amber-50 hover:bg-amber-100 flex items-center justify-center transition-colors">
@@ -341,9 +310,20 @@ function renderTable() {
     renderPagination(pages);
 }
 
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
 // ── Pagination ─────────────────────────────────────────────────────────
 function renderPagination(pages) {
     const el = document.getElementById('pagination-controls');
+    if (!el) return;
     let h = '';
     h += `<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 bg-white hover:bg-primary hover:text-white hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500 transition-all" onclick="gp(${currentPage-1})" ${currentPage<=1?'disabled':''}>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
@@ -368,12 +348,10 @@ function gp(p) {
 
 // ── Filters ────────────────────────────────────────────────────────────
 function applyFilters() {
-    const q    = document.getElementById('search-input').value.toLowerCase();
-    const role = document.getElementById('filter-role').value;
+    const q = document.getElementById('search-input').value.toLowerCase();
     filtered = allData.filter(r => {
-        const mq = !q    || r.username.toLowerCase().includes(q) || r.nama.toLowerCase().includes(q);
-        const mr = !role || r.peran === role;
-        return mq && mr;
+        const mq = !q || r.username.toLowerCase().includes(q) || r.nama.toLowerCase().includes(q) || r.jabatan.toLowerCase().includes(q) || r.email.toLowerCase().includes(q);
+        return mq;
     });
     currentPage = 1;
     renderTable();
@@ -385,11 +363,9 @@ function togglePassword(inputId, eyeId) {
     const eyeIcon = document.getElementById(eyeId);
     
     if (passwordInput.type === 'password') {
-        // Ubah ke text (mata terbuka)
         passwordInput.type = 'text';
         eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />';
     } else {
-        // Ubah ke password (mata tertutup)
         passwordInput.type = 'password';
         eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />';
     }
@@ -406,32 +382,41 @@ function checkStrength(pw) {
 
 // ── Clear / Reset form errors 
 function clearErrors() {
-    ['err-username','err-nama','err-password','err-confirm','err-role'].forEach(id => {
+    const errorIds = ['err-username','err-nama','err-jabatan','err-email','err-password','err-confirm'];
+    errorIds.forEach(id => {
         const el = document.getElementById(id);
-        el.classList.add('hidden');
-        el.textContent = '';
+        if (el) {
+            el.classList.add('hidden');
+            el.textContent = '';
+        }
     });
     // Reset strength bars
-    ['str-1','str-2','str-3','str-4'].forEach(id => {
-        document.getElementById(id).className = 'h-1 flex-1 rounded-full bg-gray-100 transition-colors duration-300';
-    });
-    document.getElementById('str-label').textContent = '';
+    for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`str-${i}`);
+        if (el) el.className = 'h-1 flex-1 rounded-full bg-gray-100 transition-colors duration-300';
+    }
+    const strLabel = document.getElementById('str-label');
+    if (strLabel) strLabel.textContent = '';
 }
 
 function showError(fieldId, msg) {
     const el = document.getElementById(fieldId);
-    el.textContent = msg;
-    el.classList.remove('hidden');
+    if (el) {
+        el.textContent = msg;
+        el.classList.remove('hidden');
+    }
 }
 
 function setFieldError(inputId, hasError) {
     const el = document.getElementById(inputId);
-    if (hasError) {
-        el.classList.add('border-red-400', 'focus:ring-red-200', 'focus:border-red-400');
-        el.classList.remove('border-gray-200');
-    } else {
-        el.classList.remove('border-red-400', 'focus:ring-red-200', 'focus:border-red-400');
-        el.classList.add('border-gray-200');
+    if (el) {
+        if (hasError) {
+            el.classList.add('border-red-400', 'focus:ring-red-200', 'focus:border-red-400');
+            el.classList.remove('border-gray-200');
+        } else {
+            el.classList.remove('border-red-400', 'focus:ring-red-200', 'focus:border-red-400');
+            el.classList.add('border-gray-200');
+        }
     }
 }
 
@@ -439,18 +424,20 @@ function setFieldError(inputId, hasError) {
 function openAddModal() {
     isEditMode = false;
     document.getElementById('modal-title').textContent = 'Tambah Pengguna';
-    document.getElementById('edit-id').value           = '';
-    document.getElementById('form-username').value     = '';
-    document.getElementById('form-nama').value         = '';
-    document.getElementById('form-password').value     = '';
-    document.getElementById('form-confirm').value      = '';
-    document.getElementById('form-role').value         = '';
-    document.getElementById('form-username').disabled  = false;
+    document.getElementById('edit-id').value = '';
+    document.getElementById('form-username').value = '';
+    document.getElementById('form-nama').value = '';
+    document.getElementById('form-jabatan').value = '';
+    document.getElementById('form-email').value = '';
+    document.getElementById('form-password').value = '';
+    document.getElementById('form-confirm').value = '';
+    document.getElementById('form-username').disabled = false;
 
-    // Password required on add
-    document.getElementById('pass-required').classList.remove('hidden');
-    document.getElementById('pass-optional').classList.add('hidden');
-    document.getElementById('confirm-required').classList.remove('hidden');
+    // Tampilkan field password dan confirm untuk mode tambah
+    const passwordField = document.getElementById('password-field');
+    const confirmField = document.getElementById('confirm-field');
+    if (passwordField) passwordField.style.display = 'block';
+    if (confirmField) confirmField.style.display = 'block';
 
     clearErrors();
     showModal();
@@ -462,18 +449,20 @@ function openEditModal(id) {
     if (!r) return;
     isEditMode = true;
     document.getElementById('modal-title').textContent = 'Edit Pengguna';
-    document.getElementById('edit-id').value           = r.id;
-    document.getElementById('form-username').value     = r.username;
-    document.getElementById('form-nama').value         = r.nama;
-    document.getElementById('form-password').value     = '';
-    document.getElementById('form-confirm').value      = '';
-    document.getElementById('form-role').value         = r.peran;
-    document.getElementById('form-username').disabled  = false;
+    document.getElementById('edit-id').value = r.id;
+    document.getElementById('form-username').value = r.username;
+    document.getElementById('form-nama').value = r.nama;
+    document.getElementById('form-jabatan').value = r.jabatan;
+    document.getElementById('form-email').value = r.email;
+    document.getElementById('form-password').value = '';
+    document.getElementById('form-confirm').value = '';
+    document.getElementById('form-username').disabled = true; // readonly
 
-    // Password optional on edit
-    document.getElementById('pass-required').classList.add('hidden');
-    document.getElementById('pass-optional').classList.remove('hidden');
-    document.getElementById('confirm-required').classList.add('hidden');
+    // Sembunyikan field password dan confirm untuk mode edit
+    const passwordField = document.getElementById('password-field');
+    const confirmField = document.getElementById('confirm-field');
+    if (passwordField) passwordField.style.display = 'none';
+    if (confirmField) confirmField.style.display = 'none';
 
     clearErrors();
     showModal();
@@ -481,16 +470,20 @@ function openEditModal(id) {
 
 function showModal() {
     const overlay = document.getElementById('modal-overlay');
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal() {
     const overlay = document.getElementById('modal-overlay');
-    overlay.classList.add('hidden');
-    overlay.classList.remove('flex');
-    document.body.style.overflow = '';
+    if (overlay) {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
 }
 
 // ── Save Form ──────────────────────────────────────────────────────────
@@ -498,12 +491,13 @@ function saveForm() {
     clearErrors();
 
     const username = document.getElementById('form-username').value.trim();
-    const nama     = document.getElementById('form-nama').value.trim();
+    const nama = document.getElementById('form-nama').value.trim();
+    const jabatan = document.getElementById('form-jabatan').value.trim();
+    const email = document.getElementById('form-email').value.trim();
     const password = document.getElementById('form-password').value;
-    const confirm  = document.getElementById('form-confirm').value;
-    const role     = document.getElementById('form-role').value;
-    const editId   = document.getElementById('edit-id').value;
-    let   valid    = true;
+    const confirm = document.getElementById('form-confirm').value;
+    const editId = document.getElementById('edit-id').value;
+    let valid = true;
 
     // Username
     if (!username) {
@@ -530,64 +524,96 @@ function saveForm() {
         showError('err-nama', 'Nama lengkap wajib diisi.');
         setFieldError('form-nama', true);
         valid = false;
-    } else { setFieldError('form-nama', false); }
-
-    // Password validation
-    const passRequired = !isEditMode;
-    if (passRequired && !password) {
-        showError('err-password', 'Password wajib diisi.');
-        setFieldError('form-password', true);
-        valid = false;
-    } else if (password && password.length < 8) {
-        showError('err-password', 'Password minimal 8 karakter.');
-        setFieldError('form-password', true);
-        valid = false;
-    } else if (password && !/[a-zA-Z]/.test(password)) {
-        showError('err-password', 'Password harus mengandung huruf.');
-        setFieldError('form-password', true);
-        valid = false;
-    } else if (password && !/[0-9]/.test(password)) {
-        showError('err-password', 'Password harus mengandung angka.');
-        setFieldError('form-password', true);
-        valid = false;
-    } else if (password && !/[^a-zA-Z0-9]/.test(password)) {
-        showError('err-password', 'Password harus mengandung simbol.');
-        setFieldError('form-password', true);
-        valid = false;
     } else {
-        setFieldError('form-password', false);
+        setFieldError('form-nama', false);
     }
 
-    // Confirm password
-    if ((password || passRequired) && password !== confirm) {
-        showError('err-confirm', 'Konfirmasi password tidak cocok.');
-        setFieldError('form-confirm', true);
+    // Jabatan
+    if (!jabatan) {
+        showError('err-jabatan', 'Jabatan wajib diisi.');
+        setFieldError('form-jabatan', true);
         valid = false;
     } else {
-        setFieldError('form-confirm', false);
+        setFieldError('form-jabatan', false);
     }
 
-    // Role
-    if (!role) {
-        showError('err-role', 'Peran wajib dipilih.');
-        setFieldError('form-role', true);
+    // Email
+    if (!email) {
+        showError('err-email', 'Email wajib diisi.');
+        setFieldError('form-email', true);
         valid = false;
-    } else { setFieldError('form-role', false); }
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('err-email', 'Format email tidak valid.');
+        setFieldError('form-email', true);
+        valid = false;
+    } else {
+        const dup = allData.find(r => r.email === email && r.id !== parseInt(editId));
+        if (dup) {
+            showError('err-email', 'Email sudah digunakan.');
+            setFieldError('form-email', true);
+            valid = false;
+        } else {
+            setFieldError('form-email', false);
+        }
+    }
+
+    // Password validation (hanya untuk mode tambah)
+    if (!isEditMode) {
+        if (!password) {
+            showError('err-password', 'Password wajib diisi.');
+            setFieldError('form-password', true);
+            valid = false;
+        } else if (password.length < 8) {
+            showError('err-password', 'Password minimal 8 karakter.');
+            setFieldError('form-password', true);
+            valid = false;
+        } else if (!/[a-zA-Z]/.test(password)) {
+            showError('err-password', 'Password harus mengandung huruf.');
+            setFieldError('form-password', true);
+            valid = false;
+        } else if (!/[0-9]/.test(password)) {
+            showError('err-password', 'Password harus mengandung angka.');
+            setFieldError('form-password', true);
+            valid = false;
+        } else if (!/[^a-zA-Z0-9]/.test(password)) {
+            showError('err-password', 'Password harus mengandung simbol.');
+            setFieldError('form-password', true);
+            valid = false;
+        } else {
+            setFieldError('form-password', false);
+        }
+
+        // Confirm password
+        if (password !== confirm) {
+            showError('err-confirm', 'Konfirmasi password tidak cocok.');
+            setFieldError('form-confirm', true);
+            valid = false;
+        } else {
+            setFieldError('form-confirm', false);
+        }
+    }
 
     if (!valid) return;
+
+    // Generate random last_login timestamp dummy
+    const randomDate = new Date();
+    randomDate.setDate(randomDate.getDate() - Math.floor(Math.random() * 30));
+    randomDate.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
 
     if (editId) {
         const idx = allData.findIndex(r => r.id === parseInt(editId));
         if (idx !== -1) {
-            allData[idx] = { ...allData[idx], username, nama, peran: role };
+            allData[idx] = { ...allData[idx], username, nama, jabatan, email };
         }
     } else {
         allData.unshift({
             id: nextId++,
             username,
             nama,
-            peran: role,
-            dibuat: new Date().toISOString()
+            jabatan,
+            email,
+            dibuat: new Date().toISOString(),
+            last_login: randomDate.toISOString()
         });
     }
 
@@ -600,19 +626,24 @@ function openDelete(id) {
     const r = allData.find(x => x.id === id);
     if (!r) return;
     deleteTarget = id;
-    document.getElementById('delete-name').textContent = r.nama + ' (' + r.username + ')';
+    const deleteName = document.getElementById('delete-name');
+    if (deleteName) deleteName.textContent = r.nama + ' (' + r.username + ')';
     const overlay = document.getElementById('delete-overlay');
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeDelete() {
     deleteTarget = null;
     const overlay = document.getElementById('delete-overlay');
-    overlay.classList.add('hidden');
-    overlay.classList.remove('flex');
-    document.body.style.overflow = '';
+    if (overlay) {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
 }
 
 function confirmDelete() {
@@ -622,25 +653,37 @@ function confirmDelete() {
 }
 
 // ── Close on backdrop / Escape ─────────────────────────────────────────
-document.getElementById('modal-overlay').addEventListener('click',  function(e) { if(e.target===this) closeModal(); });
-document.getElementById('delete-overlay').addEventListener('click', function(e) { if(e.target===this) closeDelete(); });
+const modalOverlay = document.getElementById('modal-overlay');
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', function(e) { if(e.target === this) closeModal(); });
+}
+const deleteOverlay = document.getElementById('delete-overlay');
+if (deleteOverlay) {
+    deleteOverlay.addEventListener('click', function(e) { if(e.target === this) closeDelete(); });
+}
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeModal(); closeDelete(); }
 });
 
 // ── Password strength listener ─────────────────────────────────────────
-document.getElementById('form-password').addEventListener('input', function() {
-    const pw    = this.value;
-    const score = checkStrength(pw);
-    const bars  = ['str-1','str-2','str-3','str-4'];
-    const colors = ['bg-red-400','bg-orange-400','bg-yellow-400','bg-green-500'];
-    const labels = ['','Lemah','Sedang','Kuat','Sangat Kuat'];
-    bars.forEach((id, idx) => {
-        const el = document.getElementById(id);
-        el.className = `h-1 flex-1 rounded-full transition-colors duration-300 ${idx < score ? colors[score-1] : 'bg-gray-100'}`;
+const passwordInput = document.getElementById('form-password');
+if (passwordInput) {
+    passwordInput.addEventListener('input', function() {
+        const pw = this.value;
+        const score = checkStrength(pw);
+        const bars = ['str-1', 'str-2', 'str-3', 'str-4'];
+        const colors = ['bg-red-400', 'bg-orange-400', 'bg-yellow-400', 'bg-green-500'];
+        const labels = ['', 'Lemah', 'Sedang', 'Kuat', 'Sangat Kuat'];
+        bars.forEach((id, idx) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.className = `h-1 flex-1 rounded-full transition-colors duration-300 ${idx < score ? colors[score-1] : 'bg-gray-100'}`;
+            }
+        });
+        const strLabel = document.getElementById('str-label');
+        if (strLabel) strLabel.textContent = pw.length ? labels[score] : '';
     });
-    document.getElementById('str-label').textContent = pw.length ? labels[score] : '';
-});
+}
 
 // ── Init 
 renderTable();
