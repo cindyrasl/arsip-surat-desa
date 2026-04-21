@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('livewire.auth.login');
-});
+})->name('login');
+
+Route::view('/lupa-password', 'livewire.auth.reset-password')->name('lupa-password');
 
 Route::view('/dashboard', 'livewire.admin.dashboard')->name('dashboard');
 
