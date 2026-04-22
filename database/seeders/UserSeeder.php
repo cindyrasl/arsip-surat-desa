@@ -13,29 +13,35 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // User untuk Kepala Desa
-        User::firstOrCreate(
-            ['email' => 'kepaladesa@desa.com'],
+        $users = [
             [
                 'nama' => 'Slamet Riyadi',
                 'username' => 'kepala_desa',
+                'email' => 'kepaladesa@desa.com',
                 'password' => Hash::make('password123'),
                 'jabatan' => 'Kepala Desa',
-                'foto' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        User::firstOrCreate(
-            ['email' => 'operator@desa.com'],
+            ],
+            [
+                'nama' => 'Siti Aminah',
+                'username' => 'sekdes',
+                'email' => 'sekdes@desa.com',
+                'password' => Hash::make('password123'),
+                'jabatan' => 'Sekretaris Desa',
+            ],
             [
                 'nama' => 'Admin Sistem',
                 'username' => 'admin',
+                'email' => 'admin@desa.com',
                 'password' => Hash::make('password123'),
                 'jabatan' => 'Operator Sistem',
-                'foto' => null,
-            ]
-        );
+            ],
+        ];
+
+        foreach ($users as $user) {
+            User::firstOrCreate(
+                ['email' => $user['email']], // Cek berdasarkan email agar tidak duplikat
+                $user // Jika belum ada, buat dengan data lengkap
+            );
+        }
     }
 }
