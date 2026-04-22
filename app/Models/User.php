@@ -2,48 +2,62 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    // Primary key untuk tabel users
+    protected $primaryKey = 'id_user';
+    
+    // Kolom-kolom yang boleh diisi
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nama',           
+        'username',       
+        'email',         
+        'password',      
+        'jabatan',      
+        'foto',          
+        'last_login_at',  
+        'last_login_ip',  
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    // Kolom-kolom yang disembunyikan saat model diubah ke array/JSON
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password',        
+        'remember_token', 
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Tipe data casting untuk kolom tertentu
+        protected $casts = [
+        'email_verified_at' => 'datetime',  
+        'last_login_at' => 'datetime',     
+    ];
+
+    // Relasi: Satu user dapat mengelola banyak surat masuk (one-to-many)
+    public function suratMasuk()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(SuratMasuk::class, 'id_user');
+    }
+
+    // Relasi: Satu user dapat mengelola banyak surat keluar (one-to-many)
+    public function suratKeluar()
+    {
+        return $this->hasMany(SuratKeluar::class, 'id_user');
+    }
+
+    // Relasi: Satu user dapat melakukan banyak aktivitas (one-to-many)
+    public function riwayatAktivitas()
+    {
+        return $this->hasMany(RiwayatAktivitas::class, 'id_user');
+    }
+
+    // Ambil format last login yang sudah diformat
+    public function getLastLoginFormattedAttribute()
+    {
+        return $this->last_login_at?->format('d/m/Y H:i:s') ?? 'Belum pernah login';
     }
 }
