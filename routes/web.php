@@ -7,7 +7,8 @@ Route::get('/', function () {
     return view('livewire.auth.login');
 })->name('login');
 
-Route::view('/lupa-password', 'livewire.auth.reset-password')->name('lupa-password');
+Route::view('/lupa-password', 'livewire.auth.forgot-password')->name('lupa-password');
+Route::view('/reset-password', 'livewire.auth.reset-password')->name('reset-password');
 
 Route::view('/dashboard', 'livewire.admin.dashboard')->name('dashboard');
 
