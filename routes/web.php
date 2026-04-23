@@ -2,6 +2,8 @@
 // routes/web.php
 
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Admin\SuratMasuk\Form as SuratMasukForm;
+use App\Livewire\Admin\SuratKeluar\Form as SuratKeluarForm;
 
 Route::get('/', function () {
     return view('livewire.auth.login');
@@ -14,14 +16,14 @@ Route::view('/dashboard', 'livewire.admin.dashboard')->name('dashboard');
 
 // Route untuk Surat Masuk
 Route::view('/suratmasuk', 'livewire.admin.SuratMasuk.index')->name('suratmasuk.index');
-Route::view('/suratmasuk/create', 'livewire.admin.SuratMasuk.create')->name('suratmasuk.create');
-Route::view('/suratmasuk/edit', 'livewire.admin.SuratMasuk.edit')->name('suratmasuk.edit');
+Route::get('/suratmasuk/create', SuratMasukForm::class)->name('suratmasuk.create');
+Route::get('/suratmasuk/{id}/edit', SuratMasukForm::class)->name('suratmasuk.edit');
 Route::view('/suratmasuk/detail', 'livewire.admin.SuratMasuk.detail')->name('suratmasuk.detail');
 
 // Route untuk Surat Keluar
 Route::view('/suratkeluar', 'livewire.admin.SuratKeluar.index')->name('suratkeluar.index');
-Route::view('/suratkeluar/create', 'livewire.admin.SuratKeluar.create')->name('suratkeluar.create');
-Route::view('/suratkeluar/edit', 'livewire.admin.SuratKeluar.edit')->name('suratkeluar.edit');
+Route::get('/suratkeluar/create', SuratKeluarForm::class)->name('suratkeluar.create');
+Route::get('/suratkeluar/{id}/edit', SuratKeluarForm::class)->name('suratkeluar.edit');
 Route::view('/suratkeluar/detail', 'livewire.admin.SuratKeluar.detail')->name('suratkeluar.detail');
 
 // Route untuk Galeri Surat
@@ -38,4 +40,3 @@ Route::view('/pengguna', 'livewire.admin.Pengguna.index')->name('pengguna.index'
 
 // Route untuk Laporan
 Route::view('/laporan', 'livewire.admin.Laporan.index')->name('laporan.index');
-?>
