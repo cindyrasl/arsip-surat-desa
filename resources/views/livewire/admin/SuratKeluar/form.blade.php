@@ -66,7 +66,7 @@
                         Nomor Surat <span class="text-red-500">*</span>
                     </label>
                     <input type="text" wire:model="nomor" 
-                           class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nomor') border-red-500 @enderror" 
+                           class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nomor') border-red-500 @enderror" 
                            placeholder="001/SK/2026">
                     @error('nomor') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
@@ -76,7 +76,7 @@
                         Tujuan Surat <span class="text-red-500">*</span>
                     </label>
                     <input type="text" wire:model="tujuan" 
-                           class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('tujuan') border-red-500 @enderror" 
+                           class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('tujuan') border-red-500 @enderror" 
                            placeholder="Dinas Pendidikan Kabupaten">
                     @error('tujuan') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
@@ -86,7 +86,7 @@
                         Jenis Surat <span class="text-red-500">*</span>
                     </label>
                     <select wire:model="jenis_id" 
-                            class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('jenis_id') border-red-500 @enderror">
+                            class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('jenis_id') border-red-500 @enderror">
                         <option value="">Pilih Jenis Surat</option>
                         @foreach($jenisSuratOptions as $jenis)
                             <option value="{{ $jenis->id }}">{{ $jenis->nama_jenis }}</option>
@@ -103,7 +103,7 @@
                         Tanggal Surat <span class="text-red-500">*</span>
                     </label>
                     <input type="date" wire:model="tanggal_surat" 
-                           class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('tanggal_surat') border-red-500 @enderror">
+                           class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('tanggal_surat') border-red-500 @enderror">
                     @error('tanggal_surat') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 
@@ -112,7 +112,7 @@
                         Tanggal Kirim <span class="text-red-500">*</span>
                     </label>
                     <input type="date" wire:model="tanggal_kirim" 
-                           class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('tanggal_kirim') border-red-500 @enderror">
+                           class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('tanggal_kirim') border-red-500 @enderror">
                     @error('tanggal_kirim') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 
@@ -122,7 +122,7 @@
                         @if(!$isEdit)<span class="text-red-500">*</span>@endif
                     </label>
                     <input type="file" wire:model="lampiran" accept=".pdf,.doc,.docx" 
-                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 @error('lampiran') border-red-500 @enderror">
+                           class="w-full px-3 py-2 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 @error('lampiran') border-red-500 @enderror">
                     
                     @if($lampiran)
                         <p class="text-xs text-green-600 mt-1">
@@ -146,7 +146,7 @@
                     Perihal <span class="text-red-500">*</span>
                 </label>
                 <input type="text" wire:model="perihal" 
-                       class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('perihal') border-red-500 @enderror" 
+                       class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('perihal') border-red-500 @enderror" 
                        placeholder="Isi perihal surat">
                 @error('perihal') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
