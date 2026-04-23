@@ -21,12 +21,17 @@
                 <span>Profil Saya</span>
             </a>
             <hr class="border-gray-100">
-            <a href="#" onclick="logout()" class="flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>Keluar</span>
-            </a>
+            
+            <!-- FORM LOGOUT -->
+            <form action="{{ route('logout') }}" method="POST" class="block">
+                @csrf
+                <button type="submit" class="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors text-left">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Keluar</span>
+                </button>
+            </form>
         </div>
     </div>
 </header>
@@ -181,14 +186,6 @@
             if (arrow) arrow.style.transform = 'rotate(0deg)';
         }
     });
-    
-    // ==================== LOGOUT ====================
-    function logout() {
-        const confirmLogout = confirm('Apakah Anda yakin ingin keluar dari sistem?');
-        if (confirmLogout) {
-            window.location.href = '/';
-        }
-    }
     
     // ==================== MODAL PROFIL ====================
     let currentPhotoFile = null;

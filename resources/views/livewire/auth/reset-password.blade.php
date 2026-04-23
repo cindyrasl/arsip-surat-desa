@@ -133,10 +133,12 @@
                     </div>
 
                     <!-- Token hidden -->
-                    <input type="hidden" name="token" id="token" value="{{ $token ?? '' }}">
+                    <input type="hidden" name="token" value="{{ $token ?? '' }}">
+                    <input type="hidden" name="email" value="{{ $email ?? '' }}">
 
                     <!-- Form -->
-                    <form id="reset-form" class="w-full space-y-5" onsubmit="handleSubmit(event)" novalidate>
+                    <form method="POST" action="{{ route('password.update') }}" class="w-full space-y-5">
+                        @csrf
 
                         <!-- Email -->
                         <div class="animate-[fadeInUp_0.5s_ease_0.14s]">

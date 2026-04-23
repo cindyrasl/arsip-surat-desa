@@ -1,42 +1,137 @@
 <?php
-// routes/web.php
 
-use Illuminate\Support\Facades\Route;
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\GaleriSurat;
+use App\Livewire\Admin\JenisSurat;
+use App\Livewire\Admin\Laporan;
+use App\Livewire\Admin\Pengguna;
+use App\Livewire\Admin\RiwayatAktivitas;
+use App\Livewire\Admin\SuratKeluar\Detail as SuratKeluarDetail;
+use App\Livewire\Admin\SuratKeluar\Index as SuratKeluarIndex;
+use App\Livewire\Admin\SuratMasuk\Detail as SuratMasukDetail;
 use App\Livewire\Admin\SuratMasuk\Form as SuratMasukForm;
+use App\Livewire\Admin\SuratMasuk\Index as SuratMasukIndex;
 use App\Livewire\Admin\SuratKeluar\Form as SuratKeluarForm;
+use App\Livewire\Auth\Login;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
-Route::get('/', function () {
-    return view('livewire.auth.login');
-})->name('login');
+// ── AUTH ──────────────────────────────────────────────────────────────────
 
-Route::view('/lupa-password', 'livewire.auth.forgot-password')->name('lupa-password');
-Route::view('/reset-password', 'livewire.auth.reset-password')->name('reset-password');
+Route::middleware('guest')->group(function () {
+    Route::get('/login',          Login::class)->name('login');
 
-Route::view('/dashboard', 'livewire.admin.dashboard')->name('dashboard');
+    Route::get('/forgot-password', function () {
+        return view('livewire.auth.forgot-password');
+    })->name('password.request');
 
-// Route untuk Surat Masuk
-Route::view('/suratmasuk', 'livewire.admin.SuratMasuk.index')->name('suratmasuk.index');
-Route::get('/suratmasuk/create', SuratMasukForm::class)->name('suratmasuk.create');
-Route::get('/suratmasuk/{id}/edit', SuratMasukForm::class)->name('suratmasuk.edit');
-Route::view('/suratmasuk/detail', 'livewire.admin.SuratMasuk.detail')->name('suratmasuk.detail');
+    Route::get('/reset-password/{token}', function ($token) {
+        return view('livewire.auth.reset-password', [
+            'token' => $token,
+            'email' => request()->query('email') // ambil email dari query string
+        ]);
+    })->name('password.reset');
 
-// Route untuk Surat Keluar
-Route::view('/suratkeluar', 'livewire.admin.SuratKeluar.index')->name('suratkeluar.index');
-Route::get('/suratkeluar/create', SuratKeluarForm::class)->name('suratkeluar.create');
-Route::get('/suratkeluar/{id}/edit', SuratKeluarForm::class)->name('suratkeluar.edit');
-Route::view('/suratkeluar/detail', 'livewire.admin.SuratKeluar.detail')->name('suratkeluar.detail');
+    Route::post('/forgot-password', function (Request $request) {
+        $request->validate(['email' => 'required|email']);
+        
+        $status = Password::sendResetLink($request->only('email'));
+        
+        if ($status === Password::RESET_LINK_SENT) {
+            return back()->with(['status' => __($status)]);
+        }
+        
+        return back()->withErrors(['email' => __($status)]);
+    })->name('password.email');
+    
+    Route::post('/reset-password', function (Request $request) {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+        
+        // Cek token
+        $resetRecord = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->first();
+        
+        if (!$resetRecord) {
+            return back()->withErrors(['email' => 'Token tidak valid atau sudah kadaluarsa.']);
+        }
+        
+        // Update password
+        $user = \App\Models\User::where('email', $request->email)->first();
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+        
+        // Hapus token
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
 
-// Route untuk Galeri Surat
-Route::view('/galerisurat', 'livewire.admin.GaleriSurat.index')->name('galerisurat.index');
+        // Catat riwayat (gunakan logged_at, bukan created_at)
+        \App\Models\RiwayatAktivitas::create([
+            'user_id' => $user->id,
+            'aktivitas' => 'reset_password',
+            'deskripsi' => "User {$user->username} berhasil mereset password.",
+            'logged_at' => now(),
+        ]);
+        
+        return redirect()->route('login')->with('status', 'Password berhasil direset! Silakan login.');
+    })->name('password.update');
+});
 
-// Route untuk Riwayat Aktivitas
-Route::view('/riwayataktivitas', 'livewire.admin.RiwayatAktivitas.index')->name('riwayataktivitas.index');
+Route::post('/logout', function () {
+    // Log riwayat logout
+    if (Auth::check()) {
+        \App\Models\RiwayatAktivitas::create([
+            'user_id'   => Auth::id(),
+            'aktivitas' => 'logout',
+            'deskripsi' => 'User ' . Auth::user()->username . ' berhasil logout.',
+            'logged_at' => now(),
+        ]);
+    }
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect()->route('login');
+})->name('logout');
 
-// Route untuk Jenis Surat
-Route::view('/jenissurat', 'livewire.admin.JenisSurat.index')->name('jenissurat.index');
+// ── ADMIN PANEL (requires auth) ───────────────────────────────────────────
 
-// Route untuk Pengguna
-Route::view('/pengguna', 'livewire.admin.Pengguna.index')->name('pengguna.index');
+Route::middleware('auth')->group(function () {
 
-// Route untuk Laporan
-Route::view('/laporan', 'livewire.admin.Laporan.index')->name('laporan.index');
+    Route::get('/',         Dashboard::class)->name('dashboard');
+
+    // Surat Masuk
+    Route::get('/surat-masuk',             SuratMasukIndex::class)->name('suratmasuk.index');
+    Route::get('/surat-masuk/tambah',      SuratMasukForm::class)->name('suratmasuk.create');
+    Route::get('/surat-masuk/{id}/edit',   SuratMasukForm::class)->name('suratmasuk.edit');
+    Route::get('/surat-masuk/{id}',        SuratMasukDetail::class)->name('suratmasuk.detail');
+
+    // Surat Keluar
+    Route::get('/surat-keluar',            SuratKeluarIndex::class)->name('suratkeluar.index');
+    Route::get('/surat-keluar/tambah',     SuratKeluarForm::class)->name('suratkeluar.create');
+    Route::get('/surat-keluar/{id}/edit',  SuratKeluarForm::class)->name('suratkeluar.edit');
+    Route::get('/surat-keluar/{id}',       SuratKeluarDetail::class)->name('suratkeluar.detail');
+
+    // Jenis Surat
+    Route::get('/jenis-surat', JenisSurat::class)->name('jenissurat.index');
+
+    // Galeri Surat
+    Route::get('/galeri-surat', GaleriSurat::class)->name('galerisurat.index');
+
+    // Laporan
+    Route::get('/laporan', Laporan::class)->name('laporan.index');
+
+    // Pengguna
+    Route::get('/pengguna', Pengguna::class)->name('pengguna.index');
+
+    // Riwayat Aktivitas
+    Route::get('/riwayataktivitas', RiwayatAktivitas::class)->name('riwayataktivitas.index');
+});
