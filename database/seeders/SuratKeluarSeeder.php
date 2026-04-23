@@ -16,11 +16,11 @@ class SuratKeluarSeeder extends Seeder
      */
     public function run(): void
     {
-        $jenisIds = JenisSurat::pluck('id_jenis')->toArray();
-        $userIds = User::pluck('id_user')->toArray();
+        $jenisIds = JenisSurat::pluck('id')->toArray();
+        $userIds = User::pluck('id')->toArray();
 
-        if (empty($jenisIds) || empty($userIds)) {
-            $this->command->warn('Seeder SuratKeluar: Pastikan JenisSurat dan User sudah di-seed terlebih dahulu!');
+        if (!$jenisIds || !$userIds) {
+            $this->command->warn('Seeder SuratKeluar gagal: relasi kosong');
             return;
         }
 
@@ -51,20 +51,18 @@ class SuratKeluarSeeder extends Seeder
             ],
         ];
 
-        foreach ($suratKeluar as $index => $surat) {
+        foreach ($suratKeluar as $surat) {
             SuratKeluar::firstOrCreate(
-                ['no_surat' => $surat['no_surat']], // Cek berdasarkan no_surat agar tidak duplikat
+                ['no_surat' => $surat['no_surat']],
                 [
-                    'id_jenis' => $jenisIds[array_rand($jenisIds)],
-                    'id_user' => $userIds[array_rand($userIds)],
+                    'jenis_id' => $jenisIds[array_rand($jenisIds)],
+                    'user_id' => $userIds[array_rand($userIds)],
                     'tujuan_surat' => $surat['tujuan_surat'],
                     'perihal' => $surat['perihal'],
                     'tanggal_surat' => $surat['tanggal_surat'],
                     'tanggal_dikirim' => $surat['tanggal_dikirim'],
                     'keterangan' => $surat['keterangan'],
-                    'file_path' => 'dummy/surat-keluar/dummy.pdf', // Path dummy
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
+                    'file_path' => 'dummy/surat-keluar.pdf',
                 ]
             );
         }

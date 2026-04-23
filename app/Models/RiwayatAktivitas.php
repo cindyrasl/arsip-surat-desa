@@ -10,13 +10,13 @@ class RiwayatAktivitas extends Model
     use HasFactory;
 
     protected $table = 'riwayat_aktivitas';
-    protected $primaryKey = 'id_log';
+    
     public $timestamps = false;
 
     protected $fillable = [
-        'id_user',
-        'id_surat_masuk',
-        'id_surat_keluar',
+        'user_id',
+        'surat_masuk_id',
+        'surat_keluar_id',
         'aktivitas',
         'deskripsi',
         'logged_at',
@@ -26,8 +26,18 @@ class RiwayatAktivitas extends Model
         'logged_at' => 'datetime',
     ];
 
-    public function pengguna()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class);
+    }
+
+    public function suratMasuk()
+    {
+        return $this->belongsTo(SuratMasuk::class);
+    }
+
+    public function suratKeluar()
+    {
+        return $this->belongsTo(SuratKeluar::class);
     }
 }

@@ -9,9 +9,6 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
-    // Primary key untuk tabel users
-    protected $primaryKey = 'id_user';
     
     // Kolom-kolom yang boleh diisi
     protected $fillable = [
@@ -40,19 +37,19 @@ class User extends Authenticatable
     // Relasi: Satu user dapat mengelola banyak surat masuk (one-to-many)
     public function suratMasuk()
     {
-        return $this->hasMany(SuratMasuk::class, 'id_user');
+        return $this->hasMany(SuratMasuk::class);
     }
 
     // Relasi: Satu user dapat mengelola banyak surat keluar (one-to-many)
     public function suratKeluar()
     {
-        return $this->hasMany(SuratKeluar::class, 'id_user');
+        return $this->hasMany(SuratKeluar::class);
     }
 
     // Relasi: Satu user dapat melakukan banyak aktivitas (one-to-many)
     public function riwayatAktivitas()
     {
-        return $this->hasMany(RiwayatAktivitas::class, 'id_user');
+        return $this->hasMany(RiwayatAktivitas::class);
     }
 
     // Ambil format last login yang sudah diformat
