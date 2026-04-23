@@ -107,7 +107,8 @@
                     </div>
 
                     <!-- Form -->
-                    <form id="forgot-form" class="w-full space-y-5" onsubmit="handleSubmit(event)" novalidate>
+                    <form method="POST" action="{{ route('password.email') }}" class="w-full space-y-5">
+                        @csrf
 
                         <!-- Email -->
                         <div class="animate-[fadeInUp_0.5s_ease_0.18s]">
@@ -238,41 +239,6 @@
     </div>
 
     <script>
-        // ── Form Validation & Submit ─────────────────────────────────────
-        function handleSubmit(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('email');
-            const email      = emailInput.value.trim();
-
-            // Validate
-            if (!email) {
-                showError('Email wajib diisi.');
-                return;
-            }
-            if (!isValidEmail(email)) {
-                showError('Format email tidak valid. Contoh: nama@mail.com');
-                return;
-            }
-
-            // Loading state
-            const btn = document.getElementById('submit-btn');
-            btn.disabled   = true;
-            btn.innerHTML  = `
-                <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" opacity="0.3"/>
-                    <path d="M12 4a8 8 0 018 8h4C24 5.373 18.627 0 12 0v4z" fill="currentColor"/>
-                </svg>
-                Mengirim...`;
-
-            // Simulate API call (frontend dummy)
-            setTimeout(() => {
-                document.getElementById('sent-email').textContent = email;
-                document.getElementById('form-state').classList.add('hidden');
-                document.getElementById('success-state').classList.remove('hidden');
-                document.getElementById('success-state').classList.add('scale-in');
-            }, 1800);
-        }
-
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
