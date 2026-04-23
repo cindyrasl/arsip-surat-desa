@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('surat_masuk', function (Blueprint $table) {
-            $table->id('id_surat_masuk');
-            $table->foreignId('id_jenis')->constrained('jenis_surat', 'id_jenis')->onDelete('restrict');
-            $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('restrict');
+            $table->id();
+            $table->foreignId('jenis_id')->constrained('jenis_surat')->restrictOnDelete();
+            $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->string('no_surat', 100);
             $table->string('asal_surat', 150);
             $table->string('perihal', 255);
@@ -31,7 +31,6 @@ return new class extends Migration
             $table->index('asal_surat', 'idx_sm_asal_surat');
             $table->index('perihal', 'idx_sm_perihal');
             $table->index('tanggal_diterima', 'idx_sm_tanggal_diterima');
-            $table->index('deleted_at', 'idx_sm_deleted_at');
         });
     }
 

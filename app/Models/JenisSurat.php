@@ -8,12 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class JenisSurat extends Model
 {
     use HasFactory;
-
+    
     protected $table = 'jenis_surat';
-    protected $primaryKey = 'id_jenis';
     
     protected $fillable = [
         'nama_jenis',
         'keterangan',
     ];
+
+    public function suratMasuk()
+    {
+        return $this->hasMany(SuratMasuk::class);
+    }
+
+    public function suratKeluar()
+    {
+        return $this->hasMany(SuratKeluar::class);
+    }
 }

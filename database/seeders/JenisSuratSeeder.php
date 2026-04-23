@@ -24,7 +24,9 @@ class JenisSuratSeeder extends Seeder
         ];
 
         foreach ($jenisSurat as $jenis) {
-            JenisSurat::firstOrCreate($jenis);
+            JenisSurat::firstOrCreate([
+                'nama_jenis' => $jenis['nama_jenis']
+            ], $jenis);
         }
     }
 }

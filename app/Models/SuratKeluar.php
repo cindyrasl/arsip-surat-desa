@@ -11,11 +11,10 @@ class SuratKeluar extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'surat_keluar';
-    protected $primaryKey = 'id_surat_keluar';
-    
+
     protected $fillable = [
-        'id_jenis',
-        'id_user',
+        'jenis_id',
+        'user_id',
         'no_surat',
         'tujuan_surat',
         'perihal',
@@ -28,16 +27,15 @@ class SuratKeluar extends Model
     protected $casts = [
         'tanggal_surat' => 'date',
         'tanggal_dikirim' => 'date',
-        'deleted_at' => 'datetime',
     ];
 
     public function jenis()
     {
-        return $this->belongsTo(JenisSurat::class, 'id_jenis');
+        return $this->belongsTo(JenisSurat::class);
     }
 
     public function pengguna()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class);
     }
 }

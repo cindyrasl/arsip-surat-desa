@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('jenis_surat', function (Blueprint $table) {
-            $table->id('id_jenis');
+            $table->id();
             $table->string('nama_jenis', 100);
-            $table->string('keterangan')->nullable();
+            $table->string('keterangan', 255)->nullable();
             $table->timestamps();
             
             // Index untuk pencarian
