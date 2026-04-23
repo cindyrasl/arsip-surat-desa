@@ -61,7 +61,7 @@ class SuratMasukSeeder extends Seeder
                     'tanggal_surat' => $surat['tanggal_surat'],
                     'tanggal_diterima' => $surat['tanggal_diterima'],
                     'keterangan' => $surat['keterangan'],
-                    'file_path' => 'dummy/surat-masuk.pdf',
+                    'file_path' => 'storage/uploads/surat-masuk/' . $surat['no_surat'] . '.pdf',
                 ]
             );
         }

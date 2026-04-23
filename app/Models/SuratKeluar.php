@@ -34,8 +34,7 @@ class SuratKeluar extends Model
         return $this->belongsTo(JenisSurat::class);
     }
 
-    public function pengguna()
-    {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 }
