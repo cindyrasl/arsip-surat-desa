@@ -13,6 +13,8 @@ class RiwayatAktivitas extends Model
     
     public $timestamps = false;
 
+    protected $dates = ['logged_at'];
+
     protected $fillable = [
         'user_id',
         'surat_masuk_id',

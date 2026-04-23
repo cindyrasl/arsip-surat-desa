@@ -62,7 +62,7 @@ class SuratKeluarSeeder extends Seeder
                     'tanggal_surat' => $surat['tanggal_surat'],
                     'tanggal_dikirim' => $surat['tanggal_dikirim'],
                     'keterangan' => $surat['keterangan'],
-                    'file_path' => 'dummy/surat-keluar.pdf',
+                    'file_path' => 'storage/uploads/surat-keluar/' . $surat['no_surat'] . '.pdf',
                 ]
             );
         }

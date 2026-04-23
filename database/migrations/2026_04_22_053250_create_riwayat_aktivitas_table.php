@@ -24,6 +24,8 @@ return new class extends Migration
             $table->index('user_id');
             $table->index('aktivitas'); 
             $table->index('logged_at');    
+            $table->index(['user_id', 'logged_at'], 'idx_user_aktivitas');
+            $table->index(['aktivitas', 'logged_at'], 'idx_aktivitas_tanggal');
         });
     }
 
