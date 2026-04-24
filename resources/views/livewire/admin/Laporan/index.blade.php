@@ -53,7 +53,13 @@
                 <div class="shrink-0">
                     <label class="block text-xs font-semibold text-transparent mb-1.5 select-none">Export</label>
                     <button wire:click="exportExcel" 
-                        class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap">
+                        @if(!$dateStart || !$dateEnd)
+                            disabled
+                            class="flex items-center gap-2 bg-gray-300 cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap"
+                        @else
+                            class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap"
+                        @endif
+                        title="{{ (!$dateStart || !$dateEnd) ? 'Pilih rentang tanggal terlebih dahulu' : 'Export ke Excel' }}">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <rect x="3" y="3" width="18" height="18" rx="2"/>
                             <path d="M7 8h10M7 12h10M7 16h6"/>
@@ -142,14 +148,18 @@
     </div>
 
     <!-- Toast -->
-    <div x-data="{ show: false, message: '' }" 
-         x-on:show-toast.window="show = true; message = $event.detail.message; setTimeout(() => show = false, 3000)"
-         x-show="show"
-         x-cloak
-         class="fixed bottom-6 right-6 z-50">
-        <div class="flex items-center gap-3 bg-gray-900 text-white text-sm font-medium px-4 py-3 rounded-xl shadow-xl">
-            <svg class="w-4 h-4 text-green-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <div x-data="{ show: false, message: '', type: 'success' }" 
+        x-on:show-toast.window="show = true; message = $event.detail.message; type = $event.detail.type || 'success'; setTimeout(() => show = false, 3000)"
+        x-show="show"
+        x-cloak
+        class="fixed bottom-6 right-6 z-50">
+        <div class="flex items-center gap-3 text-white text-sm font-medium px-4 py-3 rounded-xl shadow-xl"
+            :class="type === 'error' ? 'bg-red-600' : 'bg-gray-900'">
+            <svg x-show="type === 'success'" class="w-4 h-4 text-green-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg x-show="type === 'error'" class="w-4 h-4 text-red-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span x-text="message"></span>
         </div>

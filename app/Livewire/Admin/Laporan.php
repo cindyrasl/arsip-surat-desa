@@ -20,55 +20,60 @@ class Laporan extends Component
     public function updatedDateStart() { $this->resetPage(); }
     public function updatedDateEnd() { $this->resetPage(); }
 
-    public function mount(): void
-    {
-        $this->dateStart = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $this->dateEnd = Carbon::now()->endOfMonth()->format('Y-m-d');
-    }
-
     public function exportExcel(): void
     {
+        // Cek apakah rentang tanggal sudah dipilih
+        if (!$this->dateStart || !$this->dateEnd) {
+            $this->dispatch('show-toast', message: 'Pilih rentang tanggal terlebih dahulu!');
+            return;
+        }
+
         $this->dispatch('show-toast', message: 'Fitur export Excel sedang dalam pengembangan');
     }
 
     public function getDataLaporanProperty()
     {
-        $dateStart = $this->dateStart ?: Carbon::now()->startOfMonth()->format('Y-m-d');
-        $dateEnd = $this->dateEnd ?: Carbon::now()->endOfMonth()->format('Y-m-d');
-
         $allData = collect();
 
         if ($this->jenis === 'all' || $this->jenis === 'masuk') {
-            $masuk = SuratMasuk::with('jenis')
-                ->whereBetween('tanggal_surat', [$dateStart, $dateEnd])
-                ->get()
-                ->map(function($item) {
-                    return [
-                        'id' => $item->id,
-                        'kategori' => 'masuk',
-                        'no_surat' => $item->no_surat,
-                        'perihal' => $item->perihal,
-                        'jenis_surat' => $item->jenis?->nama_jenis ?? '-',
-                        'tanggal_surat' => $item->tanggal_surat,
-                    ];
-                });
+            $query = SuratMasuk::with('jenis');
+            
+            // Filter hanya jika tanggal diisi
+            if ($this->dateStart && $this->dateEnd) {
+                $query->whereBetween('tanggal_surat', [$this->dateStart, $this->dateEnd]);
+            }
+            
+            $masuk = $query->get()->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'kategori' => 'masuk',
+                    'no_surat' => $item->no_surat,
+                    'perihal' => $item->perihal,
+                    'jenis_surat' => $item->jenis?->nama_jenis ?? '-',
+                    'tanggal_surat' => $item->tanggal_surat,
+                ];
+            });
             $allData = $allData->merge($masuk);
         }
 
         if ($this->jenis === 'all' || $this->jenis === 'keluar') {
-            $keluar = SuratKeluar::with('jenis')
-                ->whereBetween('tanggal_surat', [$dateStart, $dateEnd])
-                ->get()
-                ->map(function($item) {
-                    return [
-                        'id' => $item->id,
-                        'kategori' => 'keluar',
-                        'no_surat' => $item->no_surat,
-                        'perihal' => $item->perihal,
-                        'jenis_surat' => $item->jenis?->nama_jenis ?? '-',
-                        'tanggal_surat' => $item->tanggal_surat,
-                    ];
-                });
+            $query = SuratKeluar::with('jenis');
+            
+            // Filter hanya jika tanggal diisi
+            if ($this->dateStart && $this->dateEnd) {
+                $query->whereBetween('tanggal_surat', [$this->dateStart, $this->dateEnd]);
+            }
+            
+            $keluar = $query->get()->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'kategori' => 'keluar',
+                    'no_surat' => $item->no_surat,
+                    'perihal' => $item->perihal,
+                    'jenis_surat' => $item->jenis?->nama_jenis ?? '-',
+                    'tanggal_surat' => $item->tanggal_surat,
+                ];
+            });
             $allData = $allData->merge($keluar);
         }
 
