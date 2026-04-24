@@ -94,7 +94,7 @@
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nomor Surat</th>
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Perihal</th>
                             <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Jenis Surat</th>
-                            <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tanggal Dibuat</th>
+                            <th class="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tanggal Surat</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">

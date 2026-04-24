@@ -4,7 +4,8 @@ namespace App\Livewire\Admin;
 
 use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
-use Carbon\Carbon;
+use App\Exports\LaporanExport;         
+use Maatwebsite\Excel\Facades\Excel;   
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,15 +21,16 @@ class Laporan extends Component
     public function updatedDateStart() { $this->resetPage(); }
     public function updatedDateEnd() { $this->resetPage(); }
 
-    public function exportExcel(): void
+    public function exportExcel()
     {
-        // Cek apakah rentang tanggal sudah dipilih
         if (!$this->dateStart || !$this->dateEnd) {
-            $this->dispatch('show-toast', message: 'Pilih rentang tanggal terlebih dahulu!');
+            $this->dispatch('show-toast', message: 'Pilih rentang tanggal terlebih dahulu!', type: 'error');
             return;
         }
 
-        $this->dispatch('show-toast', message: 'Fitur export Excel sedang dalam pengembangan');
+        $fileName = 'laporan-surat-' . $this->dateStart . '-sampai-' . $this->dateEnd . '.xlsx';
+        
+        return Excel::download(new LaporanExport($this->jenis, $this->dateStart, $this->dateEnd), $fileName);
     }
 
     public function getDataLaporanProperty()
