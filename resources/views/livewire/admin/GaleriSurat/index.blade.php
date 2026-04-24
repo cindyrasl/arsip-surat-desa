@@ -55,7 +55,7 @@
                         @foreach($files as $file)
                         <div class="bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer" 
                              onclick="window.open('{{ asset('storage/' . $file['file_path']) }}', '_blank')">
-                            <div class="relative flex flex-col items-center justify-center py-10 px-4 flex-1 min-h-[160px]">
+                            <div class="relative flex flex-col items-center justify-center py-10 px-4 flex-1 min-h-40">
                                 <div class="w-20 h-20 rounded-2xl bg-white border border-white shadow-sm flex items-center justify-center mb-3">
                                     <svg class="w-11 h-11 text-primary" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                         <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
@@ -68,7 +68,7 @@
                                 <span class="text-xs font-semibold px-2 py-0.5 rounded-full 
                                     {{ $file['kategori'] === 'masuk' 
                                         ? 'bg-indigo-100 text-indigo-600 border border-indigo-200' 
-                                        : 'bg-yellow-100 text-yellow-600 border border-yellow-200' }}">
+                                        : 'bg-teal-100 text-teal-600 border border-yellow-200' }}">
                                     {{ $file['kategori'] === 'masuk' ? 'Surat Masuk' : 'Surat Keluar' }}
                                 </span>
                                 <p class="text-xs font-bold text-gray-800 truncate">{{ $file['no_surat'] }}</p>

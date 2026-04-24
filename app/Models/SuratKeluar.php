@@ -26,7 +26,7 @@ class SuratKeluar extends Model
 
     protected $casts = [
         'tanggal_surat' => 'date',
-        'tanggal_dikirim' => 'date',
+        'tanggal_dikirim' => 'datetime',
     ];
 
     public function jenis()

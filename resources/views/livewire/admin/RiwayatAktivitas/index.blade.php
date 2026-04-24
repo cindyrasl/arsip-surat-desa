@@ -66,8 +66,8 @@
                     $avColor = $colors[abs($colorIdx)];
                 @endphp
                 <div class="flex items-start gap-4 py-3 px-3 -mx-3 rounded-xl hover:bg-sky-50 transition-colors duration-150">
-                    <div class="flex flex-col items-center flex-shrink-0">
-                        <div class="w-9 h-9 rounded-xl {{ $avColor }} flex items-center justify-center font-bold text-sm flex-shrink-0 shadow-sm">
+                    <div class="flex flex-col items-center shrink-0">
+                        <div class="w-9 h-9 rounded-xl {{ $avColor }} flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
                             {{ $initial }}
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         </div>
                         <p class="text-sm text-gray-600 leading-relaxed">{{ $log->deskripsi }}</p>
                         <div class="flex items-center gap-1.5 mt-1.5">
-                            <svg class="w-3 h-3 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <svg class="w-3 h-3 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                             <span class="text-xs text-gray-400">{{ $log->logged_at?->format('d/m/Y H:i') }} WIB</span>
                         </div>
                     </div>

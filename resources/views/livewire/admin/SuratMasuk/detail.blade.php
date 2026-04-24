@@ -36,11 +36,11 @@
                 </div>
                 <div class="flex items-start gap-4 px-6 py-4">
                     <span class="w-36 text-sm text-gray-400 font-medium shrink-0">Tanggal Surat</span>
-                    <span class="text-sm font-semibold text-gray-800">{{ $surat->tanggal_surat?->format('d/m/Y') ?? '-' }}</span>
+                    <span class="text-sm font-semibold text-gray-800">{{ $surat->tanggal_surat?->format('m/d/Y') ?? '-' }}</span>
                 </div>
                 <div class="flex items-start gap-4 px-6 py-4">
                     <span class="w-36 text-sm text-gray-400 font-medium shrink-0">Tanggal Diterima</span>
-                    <span class="text-sm font-semibold text-gray-800">{{ $surat->tanggal_diterima?->format('d/m/Y') ?? '-' }}</span>
+                    <span class="text-sm font-semibold text-gray-800">{{ $surat->tanggal_diterima?->format('m/d/Y - H:i') ?? '-' }}</span>
                 </div>
                 <div class="flex items-start gap-4 px-6 py-4">
                     <span class="w-36 text-sm text-gray-400 font-medium shrink-0">Asal Surat</span>
