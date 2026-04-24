@@ -74,12 +74,7 @@ class Index extends Component
     {
         $suratMasuk = SuratMasuk::with(['jenis', 'user'])
             ->when($this->search, function ($query) {
-                $q = $this->search;
-                $query->where(function ($q2) use ($q) {
-                    $q2->where('no_surat',   'like', "%{$q}%")
-                       ->orWhere('asal_surat', 'like', "%{$q}%")
-                       ->orWhere('perihal',    'like', "%{$q}%");
-                });
+                $query->whereFullText(['no_surat', 'asal_surat', 'perihal'], $this->search);
             })
             ->when($this->dateStart, fn($query) =>
                 $query->where('tanggal_diterima', '>=', $this->dateStart)

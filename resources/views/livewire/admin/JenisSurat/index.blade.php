@@ -99,7 +99,7 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nama Jenis Surat <span class="text-red-500">*</span></label>
                 <input type="text" wire:model="nama_jenis" placeholder="Contoh: Surat Keterangan Usaha"
-                    class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nama_jenis') border-red-400 @enderror">
+                    class="w-full px-4 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nama_jenis') border-red-400 @enderror">
                 @error('nama_jenis') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
             <div>

@@ -26,7 +26,7 @@ class SuratMasuk extends Model
 
     protected $casts = [
         'tanggal_surat' => 'date',
-        'tanggal_diterima' => 'date',
+        'tanggal_diterima' => 'datetime',
     ];
 
     public function jenis()

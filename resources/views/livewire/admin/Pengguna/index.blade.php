@@ -116,30 +116,30 @@
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Username <span class="text-red-400">*</span></label>
                 <input type="text" wire:model="username" placeholder="Contoh: barbarapalvin"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('username') border-red-400 @enderror">
+                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('username') border-red-400 @enderror">
                 @error('username') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Nama Lengkap <span class="text-red-400">*</span></label>
                 <input type="text" wire:model="nama" placeholder="Nama lengkap pengguna"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nama') border-red-400 @enderror">
+                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nama') border-red-400 @enderror">
                 @error('nama') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Jabatan</label>
                 <input type="text" wire:model="jabatan" placeholder="Contoh: Kepala Desa, Sekretaris"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Email <span class="text-red-400">*</span></label>
                 <input type="email" wire:model="email" placeholder="contoh: email@domain.com"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('email') border-red-400 @enderror">
+                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('email') border-red-400 @enderror">
                 @error('email') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Password {{ $editId ? '(kosongkan jika tidak diubah)' : '*' }}</label>
                 <input type="password" wire:model="password" placeholder="Min. 8 karakter"
-                    class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('password') border-red-400 @enderror">
+                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('password') border-red-400 @enderror">
                 @error('password') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
             <div>

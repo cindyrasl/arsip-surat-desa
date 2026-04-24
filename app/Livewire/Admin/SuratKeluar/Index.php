@@ -71,20 +71,15 @@ class Index extends Component
     {
         $suratKeluar = SuratKeluar::with(['jenis', 'user'])
             ->when($this->search, function ($query) {
-                $q = $this->search;
-                $query->where(function ($q2) use ($q) {
-                    $q2->where('no_surat',     'like', "%{$q}%")
-                       ->orWhere('tujuan_surat', 'like', "%{$q}%")
-                       ->orWhere('perihal',      'like', "%{$q}%");
-                });
+                $query->whereFullText(['no_surat', 'tujuan_surat', 'perihal'], $this->search);
             })
             ->when($this->dateStart, fn($query) =>
-                $query->where('tanggal_surat', '>=', $this->dateStart)
+                $query->where('tanggal_dikirim', '>=', $this->dateStart)
             )
             ->when($this->dateEnd, fn($query) =>
-                $query->where('tanggal_surat', '<=', $this->dateEnd)
+                $query->where('tanggal_dikirim', '<=', $this->dateEnd)
             )
-            ->orderBy('tanggal_surat', $this->sortOrder)
+            ->orderBy('tanggal_dikirim', $this->sortOrder)
             ->paginate(10);
 
         return view('livewire.admin.SuratKeluar.index', compact('suratKeluar'))

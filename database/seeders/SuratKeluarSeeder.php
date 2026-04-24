@@ -30,7 +30,7 @@ class SuratKeluarSeeder extends Seeder
                 'tujuan_surat' => 'Dinas Kesehatan Kabupaten',
                 'perihal' => 'Pengiriman Data Kesehatan Masyarakat',
                 'tanggal_surat' => '2026-01-17',
-                'tanggal_dikirim' => '2026-01-18',
+                'tanggal_dikirim' => '2026-01-18 10:00:00',
                 'keterangan' => 'Dikirim melalui kurir desa',
             ],
             [
@@ -38,7 +38,7 @@ class SuratKeluarSeeder extends Seeder
                 'tujuan_surat' => 'Kecamatan Teluk Kapuas',
                 'perihal' => 'Laporan Kegiatan Desa',
                 'tanggal_surat' => '2026-01-22',
-                'tanggal_dikirim' => '2026-01-23',
+                'tanggal_dikirim' => '2026-01-23 14:00:00',
                 'keterangan' => null,
             ],
             [
@@ -46,7 +46,7 @@ class SuratKeluarSeeder extends Seeder
                 'tujuan_surat' => 'Dinas Sosial',
                 'perihal' => 'Pengajuan Bantuan Sosial',
                 'tanggal_surat' => '2026-02-07',
-                'tanggal_dikirim' => '2026-02-08',
+                'tanggal_dikirim' => '2026-02-08 09:00:00',
                 'keterangan' => 'Dengan hormat, kami ajukan',
             ],
         ];

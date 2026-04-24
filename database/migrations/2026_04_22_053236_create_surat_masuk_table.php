@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('asal_surat', 150);
             $table->string('perihal', 255);
             $table->date('tanggal_surat');
-            $table->date('tanggal_diterima');
+            $table->dateTime('tanggal_diterima');
             $table->string('keterangan')->nullable();
             $table->string('file_path');
 
@@ -31,6 +31,8 @@ return new class extends Migration
             $table->index('asal_surat', 'idx_sm_asal_surat');
             $table->index('perihal', 'idx_sm_perihal');
             $table->index('tanggal_diterima', 'idx_sm_tanggal_diterima');
+
+            $table->fullText(['no_surat', 'asal_surat', 'perihal'], 'ft_sm_search');
         });
     }
 
