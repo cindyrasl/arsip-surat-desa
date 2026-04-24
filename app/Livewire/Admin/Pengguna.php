@@ -29,16 +29,25 @@ class Pengguna extends Component
 
     protected function rules(): array
     {
-        $passwordRules = $this->editId
-            ? 'nullable|string|min:8|confirmed'
-            : 'required|string|min:8|confirmed';
-
         return [
-            'nama'                 => 'required|string|max:100',
-            'username'             => 'required|string|max:50|unique:users,username' . ($this->editId ? ",{$this->editId}" : ''),
-            'email'                => 'required|email|unique:users,email' . ($this->editId ? ",{$this->editId}" : ''),
+            'nama'     => 'required|string|max:100',
+            'username' => [
+                'required',
+                'string',
+                'max:50',
+                $this->editId 
+                    ? 'unique:users,username,' . $this->editId 
+                    : 'unique:users,username'
+            ],
+            'email'    => [
+                'required',
+                'email',
+                $this->editId 
+                    ? 'unique:users,email,' . $this->editId 
+                    : 'unique:users,email'
+            ],
             'jabatan'              => 'nullable|string|max:100',
-            'password'             => $passwordRules,
+            'password'             => $this->editId ? 'nullable|string|min:8|confirmed' : 'required|string|min:8|confirmed',
             'password_confirmation'=> $this->editId ? 'nullable' : 'required',
         ];
     }
@@ -93,6 +102,7 @@ class Pengguna extends Component
             'jabatan' => $this->jabatan,
         ];
 
+        // Hanya update password jika diisi
         if ($this->password) {
             $data['password'] = Hash::make($this->password);
         }

@@ -1,3 +1,4 @@
+<div>
 <div class="max-w-7xl mx-auto">
     <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-3">
@@ -60,8 +61,8 @@
                             <td class="px-6 py-3.5 text-sm text-gray-700">{{ $user->nama }}</td>
                             <td class="px-6 py-3.5 text-sm text-gray-700">{{ $user->jabatan ?? '-' }}</td>
                             <td class="px-6 py-3.5 text-sm text-gray-700">{{ $user->email }}</td>
-                            <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">{{ $user->created_at?->format('d/m/Y H:i') ?? '-' }}</td>
-                            <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">{{ $user->last_login_at?->format('d/m/Y H:i') ?? 'Belum login' }}</td>
+                            <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">{{ $user->created_at?->format('d/m/Y - H:i') . ' WIB' ?? '-' }}</td>
+                            <td class="px-6 py-3.5 text-sm text-gray-500 whitespace-nowrap">{{ $user->last_login_at ? $user->last_login_at->format('d/m/Y - H:i') . ' WIB' : 'Belum login' }}</td>
                             <td class="px-6 py-3.5">
                                 <div class="flex items-center justify-center gap-2">
                                     <button wire:click="openEditModal({{ $user->id }})" title="Edit" class="w-8 h-8 rounded-lg bg-amber-50 hover:bg-amber-100 flex items-center justify-center transition-colors">
@@ -113,40 +114,54 @@
             </button>
         </div>
         <div class="px-6 py-5 space-y-4">
+            <!-- Username - Readonly saat edit -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Username <span class="text-red-400">*</span></label>
                 <input type="text" wire:model="username" placeholder="Contoh: barbarapalvin"
-                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('username') border-red-400 @enderror">
+                    {{ $editId ? 'readonly' : '' }}
+                    class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all 
+                    {{ $editId ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : '' }}
+                    @error('username') border-red-400 @enderror">
                 @error('username') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
+            
+            <!-- Nama -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Nama Lengkap <span class="text-red-400">*</span></label>
                 <input type="text" wire:model="nama" placeholder="Nama lengkap pengguna"
                     class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('nama') border-red-400 @enderror">
                 @error('nama') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
+            
+            <!-- Jabatan -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Jabatan</label>
                 <input type="text" wire:model="jabatan" placeholder="Contoh: Kepala Desa, Sekretaris"
                     class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
             </div>
+            
+            <!-- Email -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Email <span class="text-red-400">*</span></label>
                 <input type="email" wire:model="email" placeholder="contoh: email@domain.com"
                     class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('email') border-red-400 @enderror">
                 @error('email') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
+            
+            <!-- Password & Konfirmasi - Hanya muncul saat tambah -->
+            @if(!$editId)
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Password {{ $editId ? '(kosongkan jika tidak diubah)' : '*' }}</label>
-                <input type="password" wire:model="password" placeholder="Min. 8 karakter"
+                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Password <span class="text-red-400">*</span></label>
+                <input type="password" wire:model="password" placeholder="Minimal 8 karakter"
                     class="w-full px-3 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all @error('password') border-red-400 @enderror">
                 @error('password') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Konfirmasi Password</label>
+                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Konfirmasi Password <span class="text-red-400">*</span></label>
                 <input type="password" wire:model="password_confirmation" placeholder="Ulangi password"
                     class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
             </div>
+            @endif
         </div>
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
             <button wire:click="closeModal" class="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-xl transition-colors">Batal</button>
@@ -174,3 +189,4 @@
     </div>
 </div>
 @endif
+</div>
