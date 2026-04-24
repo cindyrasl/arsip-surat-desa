@@ -1,3 +1,4 @@
+<div>
 <div class="max-w-7xl mx-auto">
     <div class="flex items-center gap-3 mb-5">
         <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md">
@@ -134,3 +135,4 @@
     </div>
 </div>
 @endif
+</div>
