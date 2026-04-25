@@ -43,14 +43,14 @@
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal (Dari)</label>
                 <input type="date" wire:model.live="dateStart"
-                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
             </div>
 
             <!-- Tanggal (Sampai) -->
             <div class="flex-2 min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal (Sampai)</label>
                 <input type="date" wire:model.live="dateEnd"
-                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
             </div>
         </div>
     </div>

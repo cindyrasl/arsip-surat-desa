@@ -2,11 +2,13 @@
     <div class="relative">
         <button onclick="toggleDropdown()" class="flex items-center gap-3 hover:bg-gray-50 rounded-xl px-3 py-2 transition-all">
             <div class="text-right">
-                <p class="text-sm font-bold text-gray-800 leading-tight" id="profile-name">Barbara Palvin</p>
-                <p class="text-xs text-gray-500 leading-tight" id="profile-role">Sekretaris</p>
+                <p class="text-sm font-bold text-gray-800 leading-tight">{{ Auth::user()->nama ?? 'User' }}</p>
+                <p class="text-xs text-gray-500 leading-tight">{{ Auth::user()->jabatan ?? 'Pengguna' }}</p>
             </div>
             <div class="w-10 h-10 rounded-full bg-primary-light overflow-hidden border-2 border-primary/30">
-                <img id="profile-image" src="{{ asset('storage/profiles/profil.jpg') }}" alt="Profile" class="w-full h-full object-cover">
+                <img src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->nama) . '&background=6366f1&color=fff&size=128' }}" 
+                    alt="Profile" class="w-full h-full object-cover"
+                    onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nama ?? 'User') }}&background=6366f1&color=fff&size=128'">
             </div>
             <svg id="dropdown-arrow" class="w-4 h-4 text-gray-500 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -37,6 +39,7 @@
 </header>
 
 <!-- MODAL PROFIL -->
+<!-- MODAL PROFIL -->
 <div id="profile-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl" onclick="event.stopPropagation()">
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
@@ -60,7 +63,9 @@
                 <div class="flex flex-col items-center">
                     <div class="relative">
                         <div class="w-28 h-28 rounded-full bg-primary-light overflow-hidden border-4 border-primary/30">
-                            <img id="modal-profile-img" src="{{ asset('storage/profiles/profil.jpg') }}" alt="Profile" class="w-full h-full object-cover">
+                            <img id="modal-profile-img" 
+                                src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->nama) . '&background=6366f1&color=fff&size=128' }}" 
+                                alt="Profile" class="w-full h-full object-cover">
                         </div>
                         <label for="profile-photo-input" class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary hover:bg-primary-dark cursor-pointer flex items-center justify-center shadow-md transition-colors">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -77,12 +82,17 @@
                 <div class="space-y-3">
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Lengkap</label>
-                        <input type="text" id="profile-fullname" value="Barbara Palvin" 
+                        <input type="text" value="{{ Auth::user()->nama ?? '' }}" 
                             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500" readonly disabled>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1"> Jabatan</label>
-                        <input type="text" id="profile-role-input" value="Sekretais" 
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Jabatan</label>
+                        <input type="text" value="{{ Auth::user()->jabatan ?? '-' }}" 
+                            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500" readonly disabled>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Email</label>
+                        <input type="text" value="{{ Auth::user()->email ?? '' }}" 
                             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 text-gray-500" readonly disabled>
                     </div>
                 </div>
@@ -101,8 +111,8 @@
                             <button type="button" onclick="togglePasswordVisibility('old-password', 'eye-icon-old')" 
                                 class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
                                 <svg id="eye-icon-old" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </button>
                         </div>
@@ -117,8 +127,8 @@
                             <button type="button" onclick="togglePasswordVisibility('new-password', 'eye-icon-new')" 
                                 class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
                                 <svg id="eye-icon-new" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </button>
                         </div>
@@ -133,8 +143,8 @@
                             <button type="button" onclick="togglePasswordVisibility('confirm-password', 'eye-icon-confirm')" 
                                 class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
                                 <svg id="eye-icon-confirm" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </button>
                         </div>
@@ -315,8 +325,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         const savedPhoto = localStorage.getItem('profile_photo');
         if (savedPhoto) {
-            document.getElementById('profile-image').src = savedPhoto;
-            document.getElementById('modal-profile-img').src = savedPhoto;
+            const profileImage = document.getElementById('profile-image');
+            const modalImage = document.getElementById('modal-profile-img');
+            
+            if (profileImage) profileImage.src = savedPhoto;
+            if (modalImage) modalImage.src = savedPhoto;
         }
     });
     

@@ -34,6 +34,16 @@ class User extends Authenticatable
         'last_login_at' => 'datetime',     
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            // Set foto default jika belum diisi
+            if (!$user->profile_photo) {
+                $user->profile_photo = 'profiles/profil.jpg';
+            }
+        });
+    }
+
     // Relasi: Satu user dapat mengelola banyak surat masuk (one-to-many)
     public function suratMasuk()
     {

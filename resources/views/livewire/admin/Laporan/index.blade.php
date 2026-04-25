@@ -22,14 +22,14 @@
                 <div class="flex-1 min-w-45">
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Dari)</label>
                     <input type="date" wire:model.live="dateStart"
-                        class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
                 </div>
 
                 <!-- Tanggal Surat (Sampai) -->
                 <div class="flex-1 min-w-45">
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Sampai)</label>
                     <input type="date" wire:model.live="dateEnd"
-                        class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
                 </div>
 
                 <!-- Kategori Surat -->
@@ -104,11 +104,11 @@
                                 <td class="px-6 py-3.5 text-gray-400 text-sm text-center">{{ $no++ }}</td>
                                 <td class="px-6 py-3.5">
                                     @if($item['kategori'] === 'masuk')
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-600 border border-indigo-200">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-100 text-sky-600 border border-sky-200">
                                             Surat Masuk
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-600 border border-yellow-200">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-teal-100 text-teal-600 border border-teal-200">
                                             Surat Keluar
                                         </span>
                                     @endif

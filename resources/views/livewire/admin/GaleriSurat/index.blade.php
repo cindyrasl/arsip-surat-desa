@@ -28,7 +28,7 @@
                 <!-- Kategori -->
                 <div class="flex-2 min-w-45">
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kategori Surat</label>
-                    <select wire:model.live="kategori" class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <select wire:model.live="kategori" class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer">
                         <option value="all">Semua Surat</option>
                         <option value="masuk">Surat Masuk</option>
                         <option value="keluar">Surat Keluar</option>
