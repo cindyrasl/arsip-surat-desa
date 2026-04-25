@@ -22,10 +22,10 @@
     @endif
 
     <!-- Filter Bar -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 mb-4">
-        <div class="flex flex-wrap items-end gap-4">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 md:px-6 py-4 md:py-5 mb-4">
+        <div class="flex flex-col md:flex-row md:flex-wrap md:items-end gap-3 md:gap-4">
             <!-- Search / Pencarian -->
-            <div class="flex-1 min-w-50">
+            <div class="flex-1 md:min-w-50">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Pencarian</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -40,14 +40,14 @@
             </div>
 
             <!-- Tanggal (Dari) -->
-            <div class="flex-2 min-w-45">
+            <div class="flex-1 md:flex-2 md:min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal (Dari)</label>
                 <input type="date" wire:model.live="dateStart"
                     class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
             </div>
 
             <!-- Tanggal (Sampai) -->
-            <div class="flex-2 min-w-45">
+            <div class="flex-1 md:flex-2 md:min-w-45">
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal (Sampai)</label>
                 <input type="date" wire:model.live="dateEnd"
                     class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
@@ -72,10 +72,10 @@
     <div wire:loading.remove wire:target="search, dateStart, dateEnd">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
             <!-- Card Header -->
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-b border-gray-100">
                 <h2 class="font-bold text-gray-800">Daftar Surat Masuk</h2>
                 <a href="{{ route('suratmasuk.create') }}"
-                    class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
+                    class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
                     </svg>
@@ -83,8 +83,8 @@
                 </a>
             </div>
 
-            <!-- Table -->
-            <div class="overflow-x-auto">
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="bg-gray-100 border-b border-gray-100">
@@ -155,9 +155,76 @@
                 </table>
             </div>
 
+            <!-- Mobile Card View -->
+            <div class="md:hidden divide-y divide-gray-100">
+                @forelse($suratMasuk as $i => $surat)
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <!-- Header Card: Nomor Surat + Badge Tanggal -->
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <p class="text-xs text-gray-500 mb-1">Nomor Surat</p>
+                                <p class="font-bold text-gray-800 text-sm">{{ $surat->no_surat }}</p>
+                            </div>
+                            <span class="px-2.5 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-lg whitespace-nowrap ml-2">
+                                {{ $surat->tanggal_diterima?->format('d/m/Y') ?? '-' }}
+                            </span>
+                        </div>
+
+                        <!-- Perihal -->
+                        <div class="mb-3">
+                            <p class="text-xs text-gray-500 mb-1">Perihal</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">{{ $surat->perihal }}</p>
+                        </div>
+
+                        <!-- Asal Surat dengan Icon -->
+                        <div class="mb-4">
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span>{{ $surat->asal_surat }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-2">
+                            <a href="{{ route('suratmasuk.detail', $surat->id) }}"
+                                class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-semibold rounded-lg transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                Detail
+                            </a>
+                            <a href="{{ route('suratmasuk.edit', $surat->id) }}"
+                                class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-600 text-sm font-semibold rounded-lg transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/>
+                                    <path d="M17.586 3.586a2 2 0 012.828 2.828L12 15l-4 1 1-4 8.586-8.414z"/>
+                                </svg>
+                                Edit
+                            </a>
+                            <button wire:click="openDelete({{ $surat->id }})"
+                                class="px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                @empty
+                    <div class="py-16 text-center">
+                        <svg class="w-12 h-12 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <p class="text-gray-400 text-sm font-medium">Tidak ada data surat masuk.</p>
+                    </div>
+                @endforelse
+            </div>
+
             <!-- Pagination Footer -->
-            <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
-                <p class="text-sm text-gray-500">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100">
+                <p class="text-sm text-gray-500 text-center md:text-left">
                     @if($suratMasuk->total() > 0)
                         Menampilkan <span class="font-semibold text-gray-700">{{ $suratMasuk->firstItem() }}</span> -
                         <span class="font-semibold text-gray-700">{{ $suratMasuk->lastItem() }}</span> dari
@@ -166,7 +233,7 @@
                         Menampilkan <b>0</b> data
                     @endif
                 </p>
-                <div class="flex items-center gap-1">
+                <div class="flex items-center justify-center gap-1">
                     {{ $suratMasuk->links('vendor.pagination.simple-tailwind') }}
                 </div>
             </div>

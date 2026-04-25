@@ -1,5 +1,12 @@
-<header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-end sticky top-0 z-10 shadow-sm">
-    <div class="relative">
+<header class="bg-white border-b border-gray-200 px-4 md:px-6 py-3 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+    <!-- Mobile Burger Button -->
+    <button @click="sidebarOpen = true" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors">
+        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+    </button>
+
+    <div class="relative ml-auto">
         <button onclick="toggleDropdown()" class="flex items-center gap-3 hover:bg-gray-50 rounded-xl px-3 py-2 transition-all">
             <div class="text-right">
                 <p class="text-sm font-bold text-gray-800 leading-tight">{{ Auth::user()->nama ?? 'User' }}</p>

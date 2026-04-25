@@ -30,6 +30,9 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; font-variant-ligatures: no-common-ligatures; }
 
+        /* Alpine.js cloak */
+        [x-cloak] { display: none !important; }
+
         /* Sidebar active item - PENTING! */
         .nav-item { transition: all 0.2s ease; }
         .nav-item:hover { background-color: rgba(76,131,172,0.15); color: #4C83AC; }
@@ -61,15 +64,15 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex">
+<body class="bg-gray-100 min-h-screen flex" x-data="{ sidebarOpen: false }">
 
     @include('layouts.sidebar')
 
-    <div class="flex-1 flex flex-col ml-64 min-h-screen">
+    <div class="flex-1 flex flex-col md:ml-64 min-h-screen">
 
         @include('layouts.header')
 
-        <main class="flex-1 p-6 bg-gray-50"> {{ $slot ?? '' }}
+        <main class="flex-1 p-4 md:p-6 bg-gray-50"> {{ $slot ?? '' }}
             @yield('content')
         </main>
 
