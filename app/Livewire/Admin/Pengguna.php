@@ -136,8 +136,12 @@ class Pengguna extends Component
     public function confirmDelete(): void
     {
         if (!$this->deleteId) return;
-        User::findOrFail($this->deleteId)->delete();
-        session()->flash('success', 'Pengguna berhasil dihapus.');
+        try {
+            User::findOrFail($this->deleteId)->delete();
+            session()->flash('success', 'Pengguna berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            session()->flash('error', 'Gagal menghapus! Pengguna ini masih terikat dengan dokumen surat atau aktivitas.');
+        }
         $this->closeDelete();
         $this->resetPage();
     }

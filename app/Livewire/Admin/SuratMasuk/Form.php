@@ -162,7 +162,8 @@ class Form extends Component
             return redirect()->route('suratmasuk.index');
             
         } catch (\Exception $e) {
-            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Error simpan surat masuk: ' . $e->getMessage());
+            session()->flash('error', 'Terjadi kesalahan internal pada server saat menyimpan data.');
         }
     }
     
