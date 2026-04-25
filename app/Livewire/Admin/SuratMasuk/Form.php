@@ -7,6 +7,7 @@ use App\Models\SuratMasuk;
 use App\Models\RiwayatAktivitas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
@@ -46,9 +47,9 @@ class Form extends Component
         ];
         
         if (!$this->isEdit) {
-            $rules['lampiran'] = 'required|file|mimes:pdf,doc,docx|max:10240';
+            $rules['lampiran'] = 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240';
         } else {
-            $rules['lampiran'] = 'nullable|file|mimes:pdf,doc,docx|max:10240';
+            $rules['lampiran'] = 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240';
         }
         
         return $rules;
@@ -64,7 +65,7 @@ class Form extends Component
             'tanggal_terima.required' => 'Tanggal diterima wajib diisi',
             'perihal.required' => 'Perihal wajib diisi',
             'lampiran.required' => 'Lampiran wajib diupload',
-            'lampiran.mimes' => 'Lampiran harus berupa file PDF atau Word',
+            'lampiran.mimes' => 'Lampiran harus berupa PDF, Word, atau gambar (JPG/JPEG/PNG)',
             'lampiran.max' => 'Ukuran lampiran maksimal 10MB',
         ];
     }
@@ -88,7 +89,7 @@ class Form extends Component
         $this->asal = $suratMasuk->asal_surat;
         $this->jenis_id = $suratMasuk->jenis_id;
         
-        // FIX: Gunakan Carbon jika sudah cast, atau konversi manual
+        // Format tanggal
         $this->tanggal_surat = $suratMasuk->tanggal_surat instanceof Carbon 
             ? $suratMasuk->tanggal_surat->format('Y-m-d')
             : date('Y-m-d', strtotime($suratMasuk->tanggal_surat));
@@ -140,7 +141,7 @@ class Form extends Component
                     'jenis_id' => $this->jenis_id,
                     'user_id' => Auth::id(),
                     'tanggal_surat' => $this->tanggal_surat,
-                    'tanggal_diterima' => $this->tanggal_terima,
+                    'tanggal_diterima' => $this->tanggal_terima . ' ' . now()->format('H:i:s'),
                     'perihal' => $this->perihal,
                     'keterangan' => $this->keterangan,
                     'file_path' => $filePath,
@@ -174,8 +175,12 @@ class Form extends Component
         if ($this->isEdit && $this->oldLampiran && Storage::disk('public')->exists($this->oldLampiran)) {
             Storage::disk('public')->delete($this->oldLampiran);
         }
+
+        // Format nama file: 20260425_143025_001_SK_2026.pdf
+        $extension = $this->lampiran->getClientOriginalExtension();
+        $safeNomor = preg_replace('/[^a-zA-Z0-9\-]/', '_', $this->nomor);
+        $fileName = date('Ymd_His') . '_' . $safeNomor . '.' . $extension;
         
-        $fileName = time() . '_' . $this->lampiran->getClientOriginalName();
         $filePath = $this->lampiran->storeAs('uploads/surat-masuk', $fileName, 'public');
         
         return $filePath;
@@ -192,7 +197,7 @@ class Form extends Component
         return redirect()->route('suratmasuk.index');
     }
     
-    // Render view TANPA layout terpisah
+    // Render view
     public function render()
     {
         return view('livewire.admin.SuratMasuk.form')->layout('layouts.app');

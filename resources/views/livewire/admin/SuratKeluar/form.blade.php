@@ -42,23 +42,6 @@
     <!-- Kartu Form -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden fade-up2">
         <form wire:submit.prevent="save" class="p-6 space-y-5">
-            <!-- Error Summary -->
-            @if ($errors->any())
-                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
-                    <div class="flex items-center mb-2">
-                        <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="text-red-700 font-medium">Mohon periksa kembali form berikut:</span>
-                    </div>
-                    <ul class="list-disc list-inside text-sm text-red-600">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <!-- Nomor Surat, Tujuan Surat, Jenis Surat -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -115,12 +98,29 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">
-                        Lampiran (PDF/Word, max 10MB)
+                        Lampiran (Gambar/WORD/PDF - max 10MB)
                         @if(!$isEdit)<span class="text-red-500">*</span>@endif
                     </label>
-                    <input type="file" wire:model="lampiran" accept=".pdf,.doc,.docx"
-                           class="w-full px-3 py-2 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 @error('lampiran') border-red-500 @enderror">
+                    <input type="file" wire:model="lampiran" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                           class="w-full px-3 py-2 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 @error('lampiran') border-red-500 @enderror" 
+                           onchange="validasiUkuran(this)">
 
+                    <!-- Popup Validasi file -->
+                    <div id="file-error-popup-sm" class="fixed top-6 right-6 z-50 hidden">
+                        <div class="bg-white rounded-2xl shadow-xl border border-red-100 w-full max-w-sm p-5">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-gray-800">File Terlalu Besar</h4>
+                                    <p class="text-xs text-gray-500 mt-1">Maksimal 10MB. Silakan pilih file lain.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @if($lampiran)
                         <p class="text-xs text-green-600 mt-1">File baru: {{ $lampiran->getClientOriginalName() }}</p>
                     @endif
@@ -175,6 +175,21 @@
         </form>
     </div>
 </div>
+
+<script>
+    function validasiUkuran(input) {
+        const maxSize = 10 * 1024 * 1024;
+        const popup = document.getElementById('file-error-popup-sm');
+        
+        if (input.files[0] && input.files[0].size > maxSize) {
+            input.value = '';
+            popup.classList.remove('hidden');
+        } else if (input.files[0]) {
+            // File valid, sembunyikan popup
+            popup.classList.add('hidden');
+        }
+    }
+</script>
 
 <style>
     .fade-up { animation: fadeUp 0.35s ease forwards; }
