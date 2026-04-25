@@ -34,6 +34,10 @@ class User extends Authenticatable
         'last_login_at' => 'datetime',     
     ];
 
+    protected $attributes = [
+        'profile_photo' => 'profiles/profil.jpg',
+    ];
+
     protected static function booted()
     {
         static::creating(function ($user) {

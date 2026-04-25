@@ -10,8 +10,8 @@ use Livewire\Component;
 
 class ResetPassword extends Component
 {
-    public string $token    = '';
-    public string $email    = '';
+    public string $token = '';
+    public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
 
@@ -30,9 +30,9 @@ class ResetPassword extends Component
         'password.confirmed' => 'Konfirmasi password tidak cocok.',
     ];
 
-    public function mount()
+    public function mount($token = null)
     {
-        $this->token = request()->query('token', '');
+        $this->token = $token ?? request()->route('token');
         $this->email = request()->query('email', '');
     }
 
@@ -58,7 +58,7 @@ class ResetPassword extends Component
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            session()->flash('success', 'Password berhasil direset. Silakan login.');
+            session()->flash('status', __($status));
             return redirect()->route('login');
         }
 

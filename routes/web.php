@@ -13,81 +13,19 @@ use App\Livewire\Admin\SuratMasuk\Form as SuratMasukForm;
 use App\Livewire\Admin\SuratMasuk\Index as SuratMasukIndex;
 use App\Livewire\Admin\SuratKeluar\Form as SuratKeluarForm;
 use App\Livewire\Auth\Login;
-use Illuminate\Http\Request;
+use App\Livewire\Auth\ForgotPassword;
+use App\Livewire\Auth\ResetPassword;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
 // ── AUTH ──────────────────────────────────────────────────────────────────
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login',          Login::class)->name('login');
-
-    Route::get('/forgot-password', function () {
-        return view('livewire.auth.forgot-password');
-    })->name('password.request');
-
-    Route::get('/reset-password/{token}', function ($token) {
-        return view('livewire.auth.reset-password', [
-            'token' => $token,
-            'email' => request()->query('email') // ambil email dari query string
-        ]);
-    })->name('password.reset');
-
-    Route::post('/forgot-password', function (Request $request) {
-        $request->validate(['email' => 'required|email']);
-        
-        $status = Password::sendResetLink($request->only('email'));
-        
-        if ($status === Password::RESET_LINK_SENT) {
-            return back()->with(['status' => __($status)]);
-        }
-        
-        return back()->withErrors(['email' => __($status)]);
-    })->name('password.email');
-    
-    Route::post('/reset-password', function (Request $request) {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:8|confirmed',
-        ]);
-        
-        // Cek token
-        $resetRecord = DB::table('password_reset_tokens')
-            ->where('email', $request->email)
-            ->where('token', $request->token)
-            ->first();
-        
-        if (!$resetRecord) {
-            return back()->withErrors(['email' => 'Token tidak valid atau sudah kadaluarsa.']);
-        }
-        
-        // Update password
-        $user = \App\Models\User::where('email', $request->email)->first();
-        $user->update([
-            'password' => Hash::make($request->password)
-        ]);
-        
-        // Hapus token
-        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
-
-        // Catat riwayat (gunakan logged_at, bukan created_at)
-        \App\Models\RiwayatAktivitas::create([
-            'user_id' => $user->id,
-            'aktivitas' => 'reset_password',
-            'deskripsi' => "User {$user->username} berhasil mereset password.",
-            'logged_at' => now(),
-        ]);
-        
-        return redirect()->route('login')->with('status', 'Password berhasil direset! Silakan login.');
-    })->name('password.update');
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
+    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
 Route::post('/logout', function () {
-    // Log riwayat logout
     if (Auth::check()) {
         \App\Models\RiwayatAktivitas::create([
             'user_id'   => Auth::id(),
