@@ -5,11 +5,12 @@ namespace App\Livewire\Admin\SuratKeluar;
 use App\Models\JenisSurat;
 use App\Models\SuratKeluar;
 use App\Models\RiwayatAktivitas;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Carbon\Carbon;
 
 class Form extends Component
 {
@@ -33,7 +34,7 @@ class Form extends Component
 
     protected function rules(): array
     {
-        return [
+        $rules = [
             'nomor'         => 'required|string|max:100',
             'tujuan'        => 'required|string|max:150',
             'jenis_id'      => 'required|exists:jenis_surat,id',
@@ -41,10 +42,16 @@ class Form extends Component
             'tanggal_kirim' => 'nullable|date',
             'perihal'       => 'required|string|max:255',
             'keterangan'    => 'nullable|string',
-            'lampiran'      => $this->isEdit
-                ? 'nullable|file|mimes:pdf,doc,docx|max:10240'
-                : 'required|file|mimes:pdf,doc,docx|max:10240',
         ];
+
+        // Validasi file: required saat tambah, nullable saat edit
+        if (!$this->isEdit) {
+            $rules['lampiran'] = 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240';
+        } else {
+            $rules['lampiran'] = 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240';
+        }
+
+        return $rules;
     }
 
     protected function messages(): array
@@ -56,8 +63,8 @@ class Form extends Component
             'tanggal_surat.required' => 'Tanggal surat wajib diisi.',
             'perihal.required'       => 'Perihal wajib diisi.',
             'lampiran.required'      => 'Lampiran wajib diupload.',
-            'lampiran.mimes'         => 'Lampiran harus berupa file PDF atau Word.',
-            'lampiran.max'           => 'Ukuran lampiran maksimal 10MB.',
+            'lampiran.mimes' => 'Lampiran harus berupa PDF, Word, atau gambar (JPG/JPEG/PNG)',
+            'lampiran.max' => 'Ukuran lampiran maksimal 10MB',
         ];
     }
 
@@ -79,14 +86,18 @@ class Form extends Component
         $this->nomor         = $surat->no_surat;
         $this->tujuan        = $surat->tujuan_surat;
         $this->jenis_id      = (string) $surat->jenis_id;
+
+        // Format tanggal
         $this->tanggal_surat = $surat->tanggal_surat instanceof Carbon
             ? $surat->tanggal_surat->format('Y-m-d')
             : date('Y-m-d', strtotime($surat->tanggal_surat));
+            
         $this->tanggal_kirim = $surat->tanggal_dikirim
             ? ($surat->tanggal_dikirim instanceof Carbon
                 ? $surat->tanggal_dikirim->format('Y-m-d')
                 : date('Y-m-d', strtotime($surat->tanggal_dikirim)))
             : '';
+
         $this->perihal       = $surat->perihal;
         $this->keterangan    = $surat->keterangan ?? '';
         $this->oldLampiran   = $surat->file_path;
@@ -99,6 +110,10 @@ class Form extends Component
         try {
             $filePath = $this->handleFileUpload();
 
+            $tanggalKirim = $this->tanggal_kirim 
+                ? $this->tanggal_kirim . ' ' . now()->format('H:i:s') 
+                : null;
+
             if ($this->isEdit) {
                 $surat = SuratKeluar::findOrFail($this->suratId);
                 $surat->update([
@@ -106,7 +121,7 @@ class Form extends Component
                     'tujuan_surat'   => $this->tujuan,
                     'jenis_id'       => $this->jenis_id,
                     'tanggal_surat'  => $this->tanggal_surat,
-                    'tanggal_dikirim'=> $this->tanggal_kirim ?: null,
+                    'tanggal_dikirim'=> $tanggalKirim,
                     'perihal'        => $this->perihal,
                     'keterangan'     => $this->keterangan,
                     'file_path'      => $filePath ?? $surat->file_path,
@@ -129,7 +144,7 @@ class Form extends Component
                     'jenis_id'       => $this->jenis_id,
                     'user_id'        => Auth::id(),
                     'tanggal_surat'  => $this->tanggal_surat,
-                    'tanggal_dikirim'=> $this->tanggal_kirim ?: null,
+                    'tanggal_dikirim'=> $tanggalKirim,
                     'perihal'        => $this->perihal,
                     'keterangan'     => $this->keterangan,
                     'file_path'      => $filePath,
@@ -155,14 +170,31 @@ class Form extends Component
 
     private function handleFileUpload(): ?string
     {
-        if (!$this->lampiran) return null;
+        if (!$this->lampiran) {
+            return null;
+        }
 
+        // Hapus file lama jika edit
         if ($this->isEdit && $this->oldLampiran && Storage::disk('public')->exists($this->oldLampiran)) {
             Storage::disk('public')->delete($this->oldLampiran);
         }
 
-        $fileName = time() . '_' . $this->lampiran->getClientOriginalName();
+        // Format nama file: 20260425_143025_001_SK_2026.pdf
+        $extension = $this->lampiran->getClientOriginalExtension();
+        $safeNomor = preg_replace('/[^a-zA-Z0-9\-]/', '_', $this->nomor);
+        $fileName = date('Ymd_His') . '_' . $safeNomor . '.' . $extension;
+        
         return $this->lampiran->storeAs('uploads/surat-keluar', $fileName, 'public');
+    }
+
+    public function updatedLampiran()
+    {
+        $this->validate([
+            'lampiran' => 'file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+        ], [
+            'lampiran.max' => 'Ukuran file terlalu besar. Maksimal 10MB.',
+            'lampiran.mimes' => 'File harus berupa PDF, Word, atau gambar (JPG/PNG).',
+        ]);
     }
 
     public function cancel()
