@@ -93,9 +93,7 @@
 
     <div class="w-full min-h-screen flex flex-col md:flex-row shadow-2xl overflow-hidden bg-white">
 
-        <!-- ══════════════════════════
-             LEFT PANEL (SAMA PERSIS DENGAN LOGIN)
-        ══════════════════════════ -->
+        <!-- LEFT PANEL -->
         <div class="hidden md:flex flex-col items-center justify-center w-1/2 min-h-screen relative overflow-hidden bg-[#ffffff]">
 
             <!-- Decorative blobs -->
@@ -103,25 +101,23 @@
             <div class="absolute w-337.5 h-300 bg-[#90CEFB] rounded-full top-1/2 -translate-y-1/2 -left-162.5"></div>
             <div class="absolute w-287.5 h-250 bg-[#4C83AC] rounded-full top-1/2 -translate-y-1/2 -left-125"></div>
 
-            <!-- Logo / Illustration area (sama dengan login) -->
+            <!-- Logo / Illustration area -->
             <div class="flex flex-col items-center gap-6 relative z-50">
                 <img src="{{ asset('logo.png') }}" class="w-96 xl:w-105 2xl:w-125 drop-shadow-xl -translate-x-20">
             </div>
         </div>
 
-        <!-- ══════════════════════════
-             RIGHT PANEL (form reset password)
-        ══════════════════════════ -->
+        <!-- RIGHT PANEL -->
         <div class="flex flex-col items-center justify-between w-full md:w-1/2 min-h-screen bg-white px-8 sm:px-16 xl:px-24 py-12">
 
             <div class="w-full flex flex-col items-center flex-1 justify-center max-w-sm mx-auto">
 
-                <!-- Logo Kantor (sama dengan login) -->
+                <!-- Logo Kantor -->
                 <div class="mb-5 animate-[fadeInUp_0.5s_ease]">
                     <img src="{{ asset('logo_kantor.png') }}" class="h-24 w-24 object-contain drop-shadow-md">
                 </div>
 
-                <!-- ── FORM STATE (default) ── -->
+                <!-- FORM STATE -->
                 <div id="form-state" class="w-full">
 
                     <!-- Title -->
@@ -159,7 +155,7 @@
                                     value="{{ $email ?? '' }}">
                             </div>
                             <p id="email-error" class="hidden mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                                <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                                 </svg>
                                 <span id="email-error-text"></span>
@@ -190,7 +186,7 @@
                                 </button>
                             </div>
                             <p id="password-error" class="hidden mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                                <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                                 </svg>
                                 <span id="password-error-text"></span>
@@ -221,7 +217,7 @@
                                 </button>
                             </div>
                             <p id="password_confirmation-error" class="hidden mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                                <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                                 </svg>
                                 <span id="password_confirmation-error-text"></span>
@@ -254,7 +250,7 @@
 
                 </div>
 
-                <!-- ── SUCCESS STATE ── -->
+                <!-- SUCCESS STATE -->
                 <div id="success-state" class="w-full hidden scale-in">
 
                     <!-- Success icon -->

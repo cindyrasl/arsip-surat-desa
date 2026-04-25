@@ -66,9 +66,7 @@
 
     <div class="w-full min-h-screen flex flex-col md:flex-row shadow-2xl overflow-hidden bg-white">
 
-        <!-- ══════════════════════════
-             LEFT PANEL (SAMA PERSIS DENGAN LOGIN)
-        ══════════════════════════ -->
+        <!-- LEFT PANEL -->
         <div class="hidden md:flex flex-col items-center justify-center w-1/2 min-h-screen relative overflow-hidden bg-[#ffffff]">
 
             <!-- Decorative blobs -->
@@ -76,25 +74,24 @@
             <div class="absolute w-337.5 h-300 bg-[#90CEFB] rounded-full top-1/2 -translate-y-1/2 -left-162.5"></div>
             <div class="absolute w-287.5 h-250 bg-[#4C83AC] rounded-full top-1/2 -translate-y-1/2 -left-125"></div>
 
-            <!-- Logo / Illustration area (sama dengan login) -->
+            <!-- Logo / Illustration -->
             <div class="flex flex-col items-center gap-6 relative z-50">
                 <img src="{{ asset('logo.png') }}" class="w-96 xl:w-105 2xl:w-125 drop-shadow-xl -translate-x-20">
+                <!-- <a href="http://www.freepik.com">Designed by macrovector / Freepik</a> -->
             </div>
         </div>
 
-        <!-- ══════════════════════════
-             RIGHT PANEL (form lupa password)
-        ══════════════════════════ -->
+        <!-- RIGHT PANEL -->
         <div class="flex flex-col items-center justify-between w-full md:w-1/2 min-h-screen bg-white px-8 sm:px-16 xl:px-24 py-12">
 
             <div class="w-full flex flex-col items-center flex-1 justify-center max-w-sm mx-auto">
 
-                <!-- Logo Kantor (sama dengan login) -->
+                <!-- Logo Kantor -->
                 <div class="mb-5 animate-[fadeInUp_0.5s_ease]">
                     <img src="{{ asset('logo_kantor.png') }}" class="h-24 w-24 object-contain drop-shadow-md">
                 </div>
 
-                <!-- ── FORM STATE (default) ── -->
+                <!-- FORM STATE -->
                 <div id="form-state" class="w-full">
 
                     <!-- Title -->
@@ -128,7 +125,7 @@
                                     autocomplete="email">
                             </div>
                             <p id="email-error" class="hidden mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                                <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                                 </svg>
                                 <span id="email-error-text"></span>
@@ -138,7 +135,7 @@
                         <!-- Submit Button -->
                         <div class="animate-[fadeInUp_0.5s_ease_0.26s]">
                             <button type="submit" id="submit-btn"
-                                class="btn-primary w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2">
+                                class="btn-primary w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                     <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round"/>
                                 </svg>
@@ -161,7 +158,7 @@
 
                 </div>
 
-                <!-- ── SUCCESS STATE (opsional, tetap dipertahankan) ── -->
+                <!-- SUCCESS STATE -->
                 <div id="success-state" class="w-full hidden scale-in">
 
                     <!-- Success icon -->
@@ -193,15 +190,15 @@
                         </p>
                         <ol class="text-xs text-gray-600 space-y-1 list-none pl-0">
                             <li class="flex items-start gap-2">
-                                <span class="w-4 h-4 rounded-full bg-[#4C83AC] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">1</span>
+                                <span class="w-4 h-4 rounded-full bg-[#4C83AC] text-white text-xs flex items-center justify-center shrink-0 mt-0.5 font-bold">1</span>
                                 Buka kotak masuk email Anda
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="w-4 h-4 rounded-full bg-[#4C83AC] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">2</span>
+                                <span class="w-4 h-4 rounded-full bg-[#4C83AC] text-white text-xs flex items-center justify-center shrink-0 mt-0.5 font-bold">2</span>
                                 Klik tautan yang dikirimkan (berlaku 60 menit)
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="w-4 h-4 rounded-full bg-[#4C83AC] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">3</span>
+                                <span class="w-4 h-4 rounded-full bg-[#4C83AC] text-white text-xs flex items-center justify-center shrink-0 mt-0.5 font-bold">3</span>
                                 Buat kata sandi baru yang kuat
                             </li>
                         </ol>

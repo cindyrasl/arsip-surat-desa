@@ -7,19 +7,21 @@
             <div class="absolute w-287.5 h-250 bg-[#4C83AC] rounded-full top-1/2 -translate-y-1/2 -left-125"></div>
             <div class="flex flex-col items-center gap-6 relative z-50">
                 <img src="{{ asset('logo.png') }}" class="w-96 xl:w-105 2xl:w-125 drop-shadow-xl -translate-x-20">
+                <!-- <a href="http://www.freepik.com">Designed by macrovector / Freepik</a> -->
             </div>
         </div>
 
         <!-- RIGHT PANEL -->
         <div class="flex flex-col items-center justify-between w-full md:w-1/2 min-h-screen bg-white px-8 sm:px-16 xl:px-24 py-12">
             <div class="w-full flex flex-col items-center flex-1 justify-center">
-                <!-- Logo -->
-                <div class="mb-5 animate-[fadeInUp_0.5s_ease]">
+                
+                <!-- Logo  -->
+                <div class="mb-5" style="animation: fadeInUp 0.5s ease forwards;">
                     <img src="{{ asset('logo_kantor.png') }}" class="h-24 w-24 object-contain drop-shadow-md">
                 </div>
 
                 <!-- Title -->
-                <div class="text-center mb-8 animate-[fadeInUp_0.5s_ease]">
+                <div class="text-center mb-8" style="animation: fadeInUp 0.5s ease 0.1s forwards; opacity: 0;">
                     <h1 class="text-3xl xl:text-4xl font-extrabold text-[#2d6e9e]">
                         Arsip Surat Digital
                     </h1>
@@ -30,37 +32,47 @@
 
                 <!-- FORM -->
                 <form wire:submit.prevent="login" class="w-full space-y-5">
+                    <!-- Error message -->
                     @if($errors->has('username'))
-                        <div class="px-4 py-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl">
+                        <div class="px-4 py-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl" style="animation: fadeInUp 0.4s ease forwards;">
                             {{ $errors->first('username') }}
                         </div>
                     @endif
 
-                    <div>
-                        <label class="text-sm font-semibold text-gray-700">Username</label>
+                    <!-- Username -->
+                    <div style="animation: fadeInUp 0.5s ease 0.18s forwards; opacity: 0;">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Username</label>
                         <input type="text" wire:model.blur="username"
-                            class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#4a90b8] focus:ring-4 focus:ring-[#4a90b82e] @error('username') border-red-400 @enderror"
+                            class="input-field w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:border-[#4a90b8] focus:ring-4 focus:ring-[#4a90b82e] text-sm transition-all @error('username') error @enderror"
                             placeholder="Masukkan username" autocomplete="username">
+                        @error('username')
+                            <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
-                    <div>
-                        <label class="text-sm font-semibold text-gray-700">Password</label>
+                    <!-- Password -->
+                    <div style="animation: fadeInUp 0.5s ease 0.26s forwards; opacity: 0;">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
                         <div class="relative">
                             <input id="password" type="password" wire:model.blur="password"
-                                class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#4a90b8] focus:ring-4 focus:ring-[#4a90b82e] @error('password') border-red-400 @enderror"
+                                class="input-field w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:border-[#4a90b8] focus:ring-4 focus:ring-[#4a90b82e] text-sm transition-all pr-10 @error('password') error @enderror"
                                 placeholder="Masukkan password" autocomplete="current-password">
-                            <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#4a90b8]">
+                            <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#4a90b8] cursor-pointer transition">
                                 <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </button>
                         </div>
+                        @error('password')
+                            <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <!-- Remember + Lupa Password -->
+                    <div class="flex justify-between items-center" style="animation: fadeInUp 0.5s ease 0.34s forwards; opacity: 0; cursor-pointer">
                         <label class="flex items-center gap-2 text-sm text-gray-600">
-                            <input type="checkbox" wire:model="remember" class="accent-[#4a90b8]">
+                            <input type="checkbox" wire:model="remember" class="accent-[#4a90b8] cursor-pointer">
                             Ingat saya
                         </label>
                         <a href="{{ route('password.request') }}" class="text-sm font-semibold text-[#4a90b8] hover:text-[#2d6e9e]">
@@ -68,15 +80,19 @@
                         </a>
                     </div>
 
-                    <button type="submit" wire:loading.attr="disabled"
-                        class="w-full py-3.5 rounded-xl text-white font-bold bg-linear-to-br from-[#4a90b8] to-[#2d6e9e] hover:from-[#3a7da8] hover:to-[#1e5a8a] hover:shadow-lg transition disabled:opacity-60">
-                        <span wire:loading.remove>Masuk</span>
-                        <span wire:loading>Sedang masuk...</span>
-                    </button>
+                    <!-- Submit Button -->
+                    <div style="animation: fadeInUp 0.5s ease 0.42s forwards; opacity: 0;">
+                        <button type="submit"  wire:loading.attr="disabled"
+                            class="w-full py-3.5 rounded-xl text-white font-bold bg-linear-to-br cursor-pointer from-[#4a90b8] to-[#2d6e9e] hover:from-[#3a7da8] hover:to-[#1e5a8a] hover:shadow-lg transition disabled:opacity-60">
+                            <span wire:loading.remove>Masuk</span>
+                            <span wire:loading>Sedang masuk...</span>
+                        </button>
+                    </div>
                 </form>
             </div>
 
-            <p class="text-xs text-gray-400">
+            <!-- Footer  -->
+            <p class="text-xs text-gray-400" style="animation: fadeInUp 0.5s ease 0.5s forwards; opacity: 0;">
                 © {{ date('Y') }} Kantor Desa Teluk Kapuas
             </p>
         </div>
@@ -102,8 +118,5 @@
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(18px); }
         to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-\[fadeInUp_0\.5s_ease\] {
-        animation: fadeInUp 0.5s ease forwards;
     }
 </style>
