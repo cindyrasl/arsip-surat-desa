@@ -17,9 +17,6 @@ class GaleriSurat extends Component
     public string $dateEnd         = '';
     public string $kategori        = 'all';
 
-    public bool   $showPreview     = false;
-    public ?array $previewData     = null;
-
     protected $queryString = [
         'search'    => ['except' => ''],
         'dateStart' => ['except' => ''],
@@ -31,46 +28,7 @@ class GaleriSurat extends Component
     public function updatedDateStart(): void { $this->resetPage(); }
     public function updatedDateEnd():   void { $this->resetPage(); }
     public function updatedKategori():  void { $this->resetPage(); }
-
-    public function openPreview(int $id, string $type): void
-    {
-        if ($type === 'masuk') {
-            $item = SuratMasuk::with('jenis')->findOrFail($id);
-            $this->previewData = [
-                'id'           => $item->id,
-                'type'         => 'masuk',
-                'nomor'        => $item->no_surat,
-                'asal_tujuan'  => $item->asal_surat,
-                'tanggal'      => $item->tanggal_surat ? Carbon::parse($item->tanggal_surat)->format('d/m/Y') : '-',
-                'perihal'      => $item->perihal,
-                'file_path'    => $item->file_path,
-                'file_name'    => $item->file_path ? basename($item->file_path) : '-',
-                'jenis'        => $item->jenis?->nama_jenis ?? 'Surat Masuk',
-            ];
-        } else {
-            $item = SuratKeluar::with('jenis')->findOrFail($id);
-            $this->previewData = [
-                'id'           => $item->id,
-                'type'         => 'keluar',
-                'nomor'        => $item->no_surat,
-                'asal_tujuan'  => $item->tujuan_surat,
-                'tanggal'      => $item->tanggal_surat ? Carbon::parse($item->tanggal_surat)->format('d/m/Y') : '-',
-                'perihal'      => $item->perihal,
-                'file_path'    => $item->file_path,
-                'file_name'    => $item->file_path ? basename($item->file_path) : '-',
-                'jenis'        => $item->jenis?->nama_jenis ?? 'Surat Keluar',
-            ];
-        }
-
-        $this->showPreview = true;
-    }
-
-    public function closePreview(): void
-    {
-        $this->showPreview = false;
-        $this->previewData = null;
-    }
-
+    
     public function render()
     {
         // Query Surat Masuk
