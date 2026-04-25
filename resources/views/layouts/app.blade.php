@@ -72,6 +72,8 @@
 
         @include('layouts.header')
 
+        <livewire:auth.profile />
+
         <main class="flex-1 p-4 md:p-6 bg-gray-50"> {{ $slot ?? '' }}
             @yield('content')
         </main>
