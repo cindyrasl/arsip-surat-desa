@@ -16,24 +16,24 @@
         </div>
 
         <!-- Filter Bar -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 mb-4">
-            <div class="flex flex-wrap items-end gap-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 md:px-6 py-4 md:py-5 mb-4">
+            <div class="flex flex-col md:flex-row md:flex-wrap md:items-end gap-3 md:gap-4">
                 <!-- Tanggal Surat (Dari) -->
-                <div class="flex-1 min-w-45">
+                <div class="flex-1 md:min-w-45">
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Dari)</label>
                     <input type="date" wire:model.live="dateStart"
                         class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
                 </div>
 
                 <!-- Tanggal Surat (Sampai) -->
-                <div class="flex-1 min-w-45">
+                <div class="flex-1 md:min-w-45">
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Tanggal Surat (Sampai)</label>
                     <input type="date" wire:model.live="dateEnd"
                         class="w-full pl-4 pr-5 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all cursor-pointer">
                 </div>
 
                 <!-- Kategori Surat -->
-                <div class="flex-1 min-w-45">
+                <div class="flex-1 md:min-w-45">
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kategori Surat</label>
                     <div class="relative">
                         <select wire:model.live="jenis" class="w-full pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all appearance-none cursor-pointer">
@@ -50,14 +50,14 @@
                 </div>
 
                 <!-- Export Excel Button -->
-                <div class="shrink-0">
-                    <label class="block text-xs font-semibold text-transparent mb-1.5 select-none">Export</label>
+                <div class="w-full md:w-auto md:shrink-0">
+                    <label class="hidden md:block text-xs font-semibold text-transparent mb-1.5 select-none">Export</label>
                     <button wire:click="exportExcel" 
                         @if(!$dateStart || !$dateEnd)
                             disabled
-                            class="flex items-center gap-2 bg-gray-300 cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap"
+                            class="w-full md:w-auto flex items-center justify-center gap-2 bg-gray-300 cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap"
                         @else
-                            class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap"
+                            class="w-full md:w-auto flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm whitespace-nowrap"
                         @endif
                         title="{{ (!$dateStart || !$dateEnd) ? 'Pilih rentang tanggal terlebih dahulu' : 'Export ke Excel' }}">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -74,7 +74,7 @@
         <!-- Report Table Card -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
             <!-- Card Header -->
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-b border-gray-100">
                 <div class="flex items-center gap-2">
                     <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/>
@@ -84,8 +84,8 @@
                 <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{{ $dataLaporan->total() }} Data</span>
             </div>
 
-            <!-- Table -->
-            <div class="overflow-x-auto">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="bg-gray-100 border-b border-gray-100">
@@ -135,12 +135,66 @@
                 </table>
             </div>
 
+            <!-- Mobile Card View -->
+            <div class="md:hidden divide-y divide-gray-100">
+                @php $no = ($dataLaporan->currentPage() - 1) * $dataLaporan->perPage() + 1; @endphp
+                @forelse($dataLaporan as $item)
+                    <div class="p-4 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <p class="text-xs text-gray-500 mb-1">Nomor Surat</p>
+                                <p class="font-bold text-gray-800 text-sm">{{ $item['no_surat'] }}</p>
+                            </div>
+                            @if($item['kategori'] === 'masuk')
+                                <span class="px-2.5 py-1 bg-sky-100 text-sky-600 text-xs font-semibold rounded-lg whitespace-nowrap ml-2">
+                                    Surat Masuk
+                                </span>
+                            @else
+                                <span class="px-2.5 py-1 bg-teal-100 text-teal-600 text-xs font-semibold rounded-lg whitespace-nowrap ml-2">
+                                    Surat Keluar
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="mb-3">
+                            <p class="text-xs text-gray-500 mb-1">Perihal</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">{{ $item['perihal'] }}</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <p class="text-xs text-gray-500 mb-1">Jenis Surat</p>
+                            <p class="text-sm text-gray-600">{{ $item['jenis_surat'] }}</p>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <span>{{ \Carbon\Carbon::parse($item['tanggal_surat'])->format('d/m/Y') }}</span>
+                        </div>
+                    </div>
+                @empty
+                    <div class="py-16 text-center">
+                        <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-400 text-sm font-medium">Tidak ada data laporan.</p>
+                        <p class="text-gray-300 text-xs mt-1">Coba ubah rentang tanggal atau kategori surat.</p>
+                    </div>
+                @endforelse
+            </div>
+
             <!-- Pagination Footer -->
-            <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
-                <p class="text-sm text-gray-500">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100">
+                <p class="text-sm text-gray-500 text-center md:text-left">
                     Menampilkan {{ $dataLaporan->firstItem() ?? 0 }} - {{ $dataLaporan->lastItem() ?? 0 }} dari {{ $dataLaporan->total() }} data
                 </p>
-                <div>
+                <div class="flex justify-center">
                     {{ $dataLaporan->links() }}
                 </div>
             </div>

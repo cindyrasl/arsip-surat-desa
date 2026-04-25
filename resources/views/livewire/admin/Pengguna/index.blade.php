@@ -31,15 +31,16 @@
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-b border-gray-100">
             <h2 class="font-bold text-gray-800">Daftar Nama Pengguna</h2>
-            <button wire:click="openAddModal" class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
+            <button wire:click="openAddModal" class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
                 Tambah Pengguna
             </button>
         </div>
 
-        <div class="overflow-x-auto">
+        <!-- Desktop Table View -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="bg-gray-100 border-b border-gray-100">
@@ -88,13 +89,73 @@
             </table>
         </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
-            <p class="text-sm text-gray-500">
+        <!-- Mobile Card View -->
+        <div class="md:hidden divide-y divide-gray-100">
+            @forelse($pengguna as $i => $user)
+                <div class="p-4 hover:bg-gray-50 transition-colors">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <p class="text-xs text-gray-500 mb-1">Username</p>
+                            <p class="font-bold text-gray-800 text-sm">{{ $user->username }}</p>
+                        </div>
+                        <span class="px-2.5 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-lg whitespace-nowrap ml-2">
+                            {{ $user->jabatan ?? 'Staff' }}
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-500 mb-1">Nama Lengkap</p>
+                        <p class="text-sm text-gray-700">{{ $user->nama }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                            </svg>
+                            <span>{{ $user->email }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 text-xs text-gray-500">
+                        <p>Dibuat: {{ $user->created_at?->format('d/m/Y H:i') ?? '-' }}</p>
+                        <p>Login terakhir: {{ $user->last_login_at ? $user->last_login_at->format('d/m/Y H:i') : 'Belum login' }}</p>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button wire:click="openEditModal({{ $user->id }})"
+                            class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-600 text-sm font-semibold rounded-lg transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/>
+                                <path d="M17.586 3.586a2 2 0 012.828 2.828L12 15l-4 1 1-4 8.586-8.414z"/>
+                            </svg>
+                            Edit
+                        </button>
+                        <button wire:click="openDelete({{ $user->id }})"
+                            class="px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            @empty
+                <div class="py-16 text-center">
+                    <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                    </div>
+                    <p class="text-gray-400 text-sm font-medium">Tidak ada pengguna ditemukan.</p>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100">
+            <p class="text-sm text-gray-500 text-center md:text-left">
                 @if($pengguna->total() > 0)
                     Menampilkan <span class="font-semibold text-gray-700">{{ $pengguna->firstItem() }}</span>–<span class="font-semibold text-gray-700">{{ $pengguna->lastItem() }}</span> dari <span class="font-semibold text-gray-700">{{ $pengguna->total() }}</span> data
                 @else Menampilkan <b>0</b> data @endif
             </p>
-            <div class="flex items-center gap-1">{{ $pengguna->links('vendor.pagination.simple-tailwind') }}</div>
+            <div class="flex items-center justify-center gap-1">{{ $pengguna->links('vendor.pagination.simple-tailwind') }}</div>
         </div>
     </div>
 </div>

@@ -17,7 +17,7 @@
     @endif
 
     <div class="flex flex-wrap items-center gap-3 mb-5">
-        <div class="relative w-1/2">
+        <div class="relative flex-1 min-w-[200px]">
             <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
@@ -29,15 +29,16 @@
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-b border-gray-100">
             <h2 class="font-bold text-gray-800">Daftar Jenis Surat</h2>
-            <button wire:click="openAddModal" class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
+            <button wire:click="openAddModal" class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
                 Tambah Jenis Surat
             </button>
         </div>
 
-        <div class="overflow-x-auto">
+        <!-- Desktop Table View -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="bg-gray-100 border-b border-gray-100">
@@ -71,13 +72,53 @@
             </table>
         </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-t border-gray-100">
-            <p class="text-sm text-gray-500">
+        <!-- Mobile Card View -->
+        <div class="md:hidden divide-y divide-gray-100">
+            @forelse($jenisSurat as $i => $jenis)
+                <div class="p-4 hover:bg-gray-50 transition-colors">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <p class="text-xs text-gray-500 mb-1">Nama Jenis Surat</p>
+                            <p class="font-bold text-gray-800 text-sm">{{ $jenis->nama_jenis }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <p class="text-xs text-gray-500 mb-1">Keterangan</p>
+                        <p class="text-sm text-gray-700">{{ $jenis->keterangan ?: '-' }}</p>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button wire:click="openEditModal({{ $jenis->id }})"
+                            class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-600 text-sm font-semibold rounded-lg transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/>
+                                <path d="M17.586 3.586a2 2 0 012.828 2.828L12 15l-4 1 1-4 8.586-8.414z"/>
+                            </svg>
+                            Edit
+                        </button>
+                        <button wire:click="openDelete({{ $jenis->id }})"
+                            class="px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            @empty
+                <div class="py-16 text-center">
+                    <p class="text-gray-400 text-sm font-medium">Tidak ada jenis surat yang tersedia.</p>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100">
+            <p class="text-sm text-gray-500 text-center md:text-left">
                 @if($jenisSurat->total() > 0)
                     Menampilkan <span class="font-semibold text-gray-700">{{ $jenisSurat->firstItem() }}</span> - <span class="font-semibold text-gray-700">{{ $jenisSurat->lastItem() }}</span> dari <span class="font-semibold text-gray-700">{{ $jenisSurat->total() }}</span> data
                 @else Menampilkan <b>0</b> data @endif
             </p>
-            <div class="flex items-center gap-1">{{ $jenisSurat->links('vendor.pagination.simple-tailwind') }}</div>
+            <div class="flex items-center justify-center gap-1">{{ $jenisSurat->links('vendor.pagination.simple-tailwind') }}</div>
         </div>
     </div>
 </div>
