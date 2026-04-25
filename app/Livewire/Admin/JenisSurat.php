@@ -95,8 +95,12 @@ class JenisSurat extends Component
     public function confirmDelete(): void
     {
         if (!$this->deleteId) return;
-        JenisSuratModel::findOrFail($this->deleteId)->delete();
-        session()->flash('success', 'Jenis surat berhasil dihapus.');
+        try {
+            JenisSuratModel::findOrFail($this->deleteId)->delete();
+            session()->flash('success', 'Jenis surat berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            session()->flash('error', 'Gagal menghapus! Data ini masih digunakan pada dokumen surat.');
+        }
         $this->closeDelete();
         $this->resetPage();
     }

@@ -27,9 +27,6 @@ return new class extends Migration
             $table->timestamps();
             
             // Index untuk pencarian cepat
-            $table->index('no_surat', 'idx_sk_no_surat');
-            $table->index('tujuan_surat', 'idx_sk_tujuan_surat');
-            $table->index('perihal', 'idx_sk_perihal');
             $table->index('tanggal_dikirim', 'idx_sk_tanggal_dikirim');
 
             $table->fullText(['no_surat', 'tujuan_surat', 'perihal'], 'ft_sk_search');

@@ -76,10 +76,7 @@ class GaleriSurat extends Component
         // Query Surat Masuk
         $masukQuery = SuratMasuk::whereNotNull('file_path')
             ->when($this->search, function ($q) {
-                $s = $this->search;
-                $q->where('no_surat', 'like', "%{$s}%")
-                  ->orWhere('asal_surat', 'like', "%{$s}%")
-                  ->orWhere('perihal', 'like', "%{$s}%");
+                $q->whereFullText(['no_surat', 'asal_surat', 'perihal'], $this->search);
             })
             ->when($this->dateStart, fn($q) => $q->where('tanggal_surat', '>=', $this->dateStart))
             ->when($this->dateEnd, fn($q) => $q->where('tanggal_surat', '<=', $this->dateEnd));
@@ -87,10 +84,7 @@ class GaleriSurat extends Component
         // Query Surat Keluar
         $keluarQuery = SuratKeluar::whereNotNull('file_path')
             ->when($this->search, function ($q) {
-                $s = $this->search;
-                $q->where('no_surat', 'like', "%{$s}%")
-                  ->orWhere('tujuan_surat', 'like', "%{$s}%")
-                  ->orWhere('perihal', 'like', "%{$s}%");
+                $q->whereFullText(['no_surat', 'tujuan_surat', 'perihal'], $this->search);
             })
             ->when($this->dateStart, fn($q) => $q->where('tanggal_surat', '>=', $this->dateStart))
             ->when($this->dateEnd, fn($q) => $q->where('tanggal_surat', '<=', $this->dateEnd));

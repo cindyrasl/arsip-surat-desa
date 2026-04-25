@@ -35,15 +35,15 @@ class User extends Authenticatable
     ];
 
     protected $attributes = [
-        'profile_photo' => 'profiles/profil.jpg',
+        'foto' => 'profiles/profil.jpg',
     ];
 
     protected static function booted()
     {
         static::creating(function ($user) {
             // Set foto default jika belum diisi
-            if (!$user->profile_photo) {
-                $user->profile_photo = 'profiles/profil.jpg';
+            if (!$user->foto) {
+                $user->foto = 'profiles/profil.jpg';
             }
         });
     }
