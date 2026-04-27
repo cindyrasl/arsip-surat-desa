@@ -14,7 +14,8 @@ Aplikasi **Arsip Surat Digital** adalah sistem manajemen arsip surat masuk dan s
 | **📤 Surat Keluar** | Kelola surat keluar dengan fitur yang sama lengkapnya seperti surat masuk. |
 | **🏷️ Jenis Surat** | Pengelompokan dan manajemen kategori jenis surat untuk klasifikasi dokumen. |
 | **🖼️ Galeri Surat** | Tampilan galeri visual dari seluruh dokumen surat yang telah diarsipkan. |
-| **📑 Laporan** | Generasi laporan arsip surat untuk kebutuhan evaluasi dan pelaporan administrasi. |
+| **📑 Laporan & Ekspor** | Generasi laporan arsip surat dengan fitur ekspor data ke format Excel (XLSX) untuk kebutuhan evaluasi dan pelaporan. |
+| **🚀 Keamanan & Performa** | Dilengkapi perlindungan terhadap SQL Injection, optimasi N+1 query, serta indeks database untuk performa maksimal. |
 | **👤 Manajemen Pengguna** | Pengaturan akun pengguna sistem dengan informasi jabatan dan foto profil. |
 | **📜 Riwayat Aktivitas** | Pencatatan log aktivitas pengguna (login, logout, reset password, CRUD) secara otomatis. |
 
@@ -28,12 +29,14 @@ Aplikasi **Arsip Surat Digital** adalah sistem manajemen arsip surat masuk dan s
 | PHP | `^8.2` | Bahasa pemrograman server-side |
 | Laravel Framework | `^12.0` | Framework PHP utama |
 | Livewire | `^4.2` | Library full-stack framework untuk komponen dinamis tanpa JavaScript tambahan |
+| Laravel Excel | `^3.1` | Fitur ekspor dan impor data dalam format Excel (`maatwebsite/excel`) |
 | Laravel Tinker | `^2.10.1` | REPL interaktif untuk Laravel |
 
 ### Frontend
 | Paket | Versi | Keterangan |
 |-------|-------|------------|
 | Tailwind CSS | `^4.2.2` | Framework CSS utility-first |
+| Alpine.js | `^3.15` | Framework JavaScript minimalis untuk interaktivitas frontend |
 | Vite | `^7.0.7` | Build tool dan dev server |
 | Laravel Vite Plugin | `^2.0.0` | Integrasi Vite untuk Laravel |
 | Axios | `^1.11.0` | HTTP client untuk request asynchronous |
@@ -171,8 +174,6 @@ Setelah menjalankan seeder (`php artisan db:seed`), Anda dapat login menggunakan
 
 | Username | Password | Jabatan |
 |----------|----------|---------|
-| `kepala_desa` | `password123` | Kepala Desa |
-| `sekdes` | `password123` | Sekretaris Desa |
 | `admin` | `password123` | Operator Sistem |
 
 ---
