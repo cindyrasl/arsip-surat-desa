@@ -106,8 +106,8 @@
                                 <div class="px-3 py-3 bg-white border-t border-gray-100 flex flex-col gap-1.5">
                                     <span class="text-xs font-semibold px-2 py-0.5 rounded-full 
                                         {{ $file['kategori'] === 'masuk' 
-                                            ? 'bg-indigo-100 text-indigo-600 border border-indigo-200' 
-                                            : 'bg-yellow-100 text-yellow-600 border border-yellow-200' }}">
+                                            ? 'bg-sky-100 text-sky-600 border border-sky-200' 
+                                            : 'bg-teal-100 text-teal-600 border border-teal-200' }}">
                                         {{ $file['kategori'] === 'masuk' ? 'Surat Masuk' : 'Surat Keluar' }}
                                     </span>
                                     <p class="text-xs font-bold text-gray-800 truncate">{{ $file['no_surat'] }}</p>
