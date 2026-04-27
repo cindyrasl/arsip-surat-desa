@@ -18,9 +18,6 @@ class JenisSuratSeeder extends Seeder
             ['nama_jenis' => 'Surat Undangan', 'keterangan' => 'Undangan rapat atau acara'],
             ['nama_jenis' => 'Surat Tugas', 'keterangan' => 'Penugasan untuk pegawai'],
             ['nama_jenis' => 'Surat Keterangan', 'keterangan' => 'Surat keterangan domisili, usaha, dll'],
-            ['nama_jenis' => 'Nota Dinas', 'keterangan' => 'Komunikasi internal antar bagian'],
-            ['nama_jenis' => 'Surat Dinas', 'keterangan' => 'Surat resmi antar instansi'],
-            ['nama_jenis' => 'Laporan', 'keterangan' => 'Laporan kegiatan atau keuangan'],
         ];
 
         foreach ($jenisSurat as $jenis) {

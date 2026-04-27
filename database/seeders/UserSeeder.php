@@ -15,20 +15,6 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'nama' => 'Slamet Riyadi',
-                'username' => 'kepala_desa',
-                'email' => 'kepaladesa@desa.com',
-                'password' => Hash::make('password123'),
-                'jabatan' => 'Kepala Desa',
-            ],
-            [
-                'nama' => 'Siti Aminah',
-                'username' => 'sekdes',
-                'email' => 'sekdes@desa.com',
-                'password' => Hash::make('password123'),
-                'jabatan' => 'Sekretaris Desa',
-            ],
-            [
                 'nama' => 'Admin Sistem',
                 'username' => 'admin',
                 'email' => 'admin@desa.com',

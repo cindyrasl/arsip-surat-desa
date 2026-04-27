@@ -31,23 +31,32 @@ class GaleriSurat extends Component
     
     public function render()
     {
-        // Query Surat Masuk
+        // Query Surat Masuk dengan LIKE (bukan fulltext)
         $masukQuery = SuratMasuk::whereNotNull('file_path')
             ->when($this->search, function ($q) {
-                $q->whereFullText(['no_surat', 'asal_surat', 'perihal'], $this->search);
+                $search = $this->search;
+                $q->where(function ($query) use ($search) {
+                    $query->where('no_surat', 'like', "%{$search}%")
+                          ->orWhere('asal_surat', 'like', "%{$search}%")
+                          ->orWhere('perihal', 'like', "%{$search}%");
+                });
             })
             ->when($this->dateStart, fn($q) => $q->where('tanggal_surat', '>=', $this->dateStart))
             ->when($this->dateEnd, fn($q) => $q->where('tanggal_surat', '<=', $this->dateEnd));
 
-        // Query Surat Keluar
+        // Query Surat Keluar dengan LIKE (bukan fulltext)
         $keluarQuery = SuratKeluar::whereNotNull('file_path')
             ->when($this->search, function ($q) {
-                $q->whereFullText(['no_surat', 'tujuan_surat', 'perihal'], $this->search);
+                $search = $this->search;
+                $q->where(function ($query) use ($search) {
+                    $query->where('no_surat', 'like', "%{$search}%")
+                          ->orWhere('tujuan_surat', 'like', "%{$search}%")
+                          ->orWhere('perihal', 'like', "%{$search}%");
+                });
             })
             ->when($this->dateStart, fn($q) => $q->where('tanggal_surat', '>=', $this->dateStart))
             ->when($this->dateEnd, fn($q) => $q->where('tanggal_surat', '<=', $this->dateEnd));
 
-        // Ambil data sebagai array (bukan object) agar tidak error
         $masukItems = collect();
         $keluarItems = collect();
 
@@ -79,12 +88,10 @@ class GaleriSurat extends Component
             });
         }
 
-        // Gabungkan dan urutkan
-        $allFiles = $masukItems->merge($keluarItems)
-            ->sortByDesc('tanggal_surat')
-            ->values();
+        $allFiles = collect($masukItems)->merge(collect($keluarItems))
+        ->sortByDesc('tanggal_surat')
+        ->values();
 
-        // Pagination manual
         $perPage = 12;
         $currentPage = $this->getPage();
         $total = $allFiles->count();
