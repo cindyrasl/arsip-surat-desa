@@ -14,13 +14,13 @@ class Login extends Component
 
     protected $rules = [
         'username' => 'required|string',
-        'password' => 'required|string|min:6',
+        'password' => 'required|string|min:8',
     ];
 
     protected $messages = [
         'username.required' => 'Username wajib diisi.',
         'password.required' => 'Password wajib diisi.',
-        'password.min'      => 'Password minimal 6 karakter.',
+        'password.min'      => 'Password minimal 8 karakter.',
     ];
 
     public function login()
