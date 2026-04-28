@@ -22,8 +22,6 @@ return new class extends Migration
             $table->dateTime('tanggal_dikirim');
             $table->string('keterangan')->nullable();
             $table->string('file_path');
-
-            $table->softDeletes();
             $table->timestamps();
             
             // Index untuk pencarian cepat
