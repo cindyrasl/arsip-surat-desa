@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\SuratMasuk;
 use App\Models\RiwayatAktivitas;
 use App\Models\SuratMasuk;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,7 +18,6 @@ class Index extends Component
     public string $dateEnd   = '';
     public string $sortOrder = 'desc';
 
-    // Delete state
     public ?int $deleteId = null;
 
     protected $queryString = [
@@ -28,9 +28,20 @@ class Index extends Component
     ];
 
     // Reset halaman jika filter berubah
-    public function updatedSearch():    void { $this->resetPage(); }
-    public function updatedDateStart(): void { $this->resetPage(); }
-    public function updatedDateEnd():   void { $this->resetPage(); }
+    public function updatedSearch(): void 
+    { 
+        $this->resetPage(); 
+    }
+    
+    public function updatedDateStart(): void 
+    { 
+        $this->resetPage(); 
+    }
+    
+    public function updatedDateEnd(): void 
+    { 
+        $this->resetPage(); 
+    }
 
     public function toggleSort(): void
     {
@@ -55,7 +66,12 @@ class Index extends Component
         if (!$this->deleteId) return;
 
         $surat = SuratMasuk::findOrFail($this->deleteId);
+        
+        if ($surat->file_path && Storage::disk('public')->exists($surat->file_path)) {
+            Storage::disk('public')->delete($surat->file_path);
+        }
 
+        // Catat riwayat sebelum hapus
         RiwayatAktivitas::create([
             'user_id'       => Auth::id(),
             'surat_masuk_id'=> $surat->id,
@@ -64,7 +80,8 @@ class Index extends Component
             'logged_at'     => now(),
         ]);
 
-        $surat->delete(); // SoftDelete
+        // HARD DELETE (bukan soft delete)
+        $surat->delete();
 
         $this->closeDelete();
         session()->flash('success', 'Surat masuk berhasil dihapus.');
@@ -73,15 +90,8 @@ class Index extends Component
     public function render()
     {
         $suratMasuk = SuratMasuk::with(['jenis', 'user'])
-            ->when($this->search, function ($query) {
-                $query->whereFullText(['no_surat', 'asal_surat', 'perihal'], $this->search);
-            })
-            ->when($this->dateStart, fn($query) =>
-                $query->where('tanggal_diterima', '>=', $this->dateStart)
-            )
-            ->when($this->dateEnd, fn($query) =>
-                $query->where('tanggal_diterima', '<=', $this->dateEnd)
-            )
+            ->search($this->search)
+            ->dateRange($this->dateStart, $this->dateEnd)
             ->orderBy('tanggal_diterima', $this->sortOrder)
             ->paginate(10);
 

@@ -14,18 +14,17 @@ return new class extends Migration
         Schema::create('riwayat_aktivitas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('surat_masuk_id')->nullable()->constrained('surat_masuk')->nullOnDelete();
-            $table->foreignId('surat_keluar_id')->nullable()->constrained('surat_keluar')->nullOnDelete();
+            $table->foreignId('surat_masuk_id')->nullable()->constrained('surat_masuk')->onDelete('set null'); 
+            $table->foreignId('surat_keluar_id')->nullable()->constrained('surat_keluar')->onDelete('set null'); 
             $table->enum('aktivitas', ['tambah', 'edit', 'hapus', 'restore', 'login', 'logout', 'upload', 'download']);
             $table->text('deskripsi');
             $table->timestamp('logged_at')->useCurrent();
             
-            // Index untuk query cepat
             $table->index('user_id');
             $table->index('aktivitas'); 
             $table->index('logged_at');    
-            $table->index(['user_id', 'logged_at'], 'idx_user_aktivitas');
-            $table->index(['aktivitas', 'logged_at'], 'idx_aktivitas_tanggal');
+            
+            $table->index(['logged_at', 'aktivitas'], 'idx_logged_aktivitas'); // Ganti composite index
         });
     }
 
