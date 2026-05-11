@@ -130,8 +130,20 @@
                         @endforeach
                     </div>
                     
-                    <div class="mt-6">
-                        {{ $files->links() }}
+                    {{-- Pagination Footer --}}
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-2 py-4 border-t border-gray-100 mt-4">
+                        <p class="text-sm text-gray-500 text-center md:text-left">
+                            @if($files->total() > 0)
+                                Menampilkan <span class="font-semibold text-gray-700">{{ $files->firstItem() }}</span> -
+                                <span class="font-semibold text-gray-700">{{ $files->lastItem() }}</span> dari
+                                <span class="font-semibold text-gray-700">{{ $files->total() }}</span> file
+                            @else
+                                Menampilkan <b>0</b> file
+                            @endif
+                        </p>
+                        <div class="flex items-center justify-center gap-1">
+                            {{ $files->links('vendor.pagination.simple-tailwind') }}
+                        </div>
                     </div>
                 @else
                     <div class="py-16 text-center">
