@@ -28,13 +28,29 @@ class SuratMasuk extends Model
         'tanggal_diterima' => 'datetime:Y-m-d H:i:s',
     ];
 
-    // Scope untuk optimasi query
+    public function scopeSelectMinimal($query)
+    {
+        return $query->select([
+            'id',
+            'no_surat',
+            'asal_surat', 
+            'perihal',
+            'tanggal_diterima',
+            'jenis_id',
+            'user_id',
+        ]);
+    }
+
     public function scopeSearch($query, $search)
     {
-        if ($search) {
-            return $query->whereFullText(['no_surat', 'asal_surat', 'perihal'], $search);
-        }
-        return $query;
+        if (empty($search)) return $query;
+        
+        $searchTerm = '%' . $search . '%';
+        return $query->where(function($q) use ($searchTerm) {
+            $q->where('no_surat', 'like', $searchTerm)
+              ->orWhere('asal_surat', 'like', $searchTerm)
+              ->orWhere('perihal', 'like', $searchTerm);
+        });
     }
 
     public function scopeDateRange($query, $start, $end)
@@ -48,14 +64,14 @@ class SuratMasuk extends Model
         return $query;
     }
 
-    public function jenis()
+     public function jenis()
     {
-        return $this->belongsTo(JenisSurat::class);
+        return $this->belongsTo(JenisSurat::class)->select(['id', 'nama_jenis']);
     }
 
     public function user() 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select(['id', 'nama']);
     }
 
     public function riwayatAktivitas()

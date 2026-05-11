@@ -80,7 +80,6 @@ class Index extends Component
             'logged_at'     => now(),
         ]);
 
-        // HARD DELETE (bukan soft delete)
         $surat->delete();
 
         $this->closeDelete();
@@ -89,7 +88,12 @@ class Index extends Component
 
     public function render()
     {
-        $suratMasuk = SuratMasuk::with(['jenis', 'user'])
+        $suratMasuk = SuratMasuk::query()
+            ->selectMinimal()
+            ->with([
+                'jenis:id,nama_jenis',  
+                'user:id,nama'         
+            ])
             ->search($this->search)
             ->dateRange($this->dateStart, $this->dateEnd)
             ->orderBy('tanggal_diterima', $this->sortOrder)

@@ -85,7 +85,12 @@ class Index extends Component
 
     public function render()
     {
-        $suratKeluar = SuratKeluar::with(['jenis', 'user'])
+        $suratKeluar = SuratKeluar::query()
+            ->selectMinimal()
+            ->with([
+                'jenis:id,nama_jenis',
+                'user:id,nama' 
+            ])
             ->search($this->search)
             ->dateRange($this->dateStart, $this->dateEnd)
             ->orderBy('tanggal_dikirim', $this->sortOrder)

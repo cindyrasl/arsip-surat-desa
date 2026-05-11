@@ -192,10 +192,16 @@
             <!-- Pagination Footer -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100">
                 <p class="text-sm text-gray-500 text-center md:text-left">
-                    Menampilkan {{ $dataLaporan->firstItem() ?? 0 }} - {{ $dataLaporan->lastItem() ?? 0 }} dari {{ $dataLaporan->total() }} data
+                    @if($dataLaporan->total() > 0)
+                        Menampilkan <span class="font-semibold text-gray-700">{{ $dataLaporan->firstItem() }}</span> -
+                        <span class="font-semibold text-gray-700">{{ $dataLaporan->lastItem() }}</span> dari
+                        <span class="font-semibold text-gray-700">{{ $dataLaporan->total() }}</span> data
+                    @else
+                        Menampilkan <b>0</b> data
+                    @endif
                 </p>
-                <div class="flex justify-center">
-                    {{ $dataLaporan->links() }}
+                <div class="flex items-center justify-center gap-1">
+                    {{ $dataLaporan->links('vendor.pagination.simple-tailwind') }}
                 </div>
             </div>
         </div>
