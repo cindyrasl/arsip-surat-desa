@@ -20,14 +20,25 @@ class JenisSurat extends Component
     public string $nama_jenis  = '';
     public string $keterangan  = '';
 
-    protected $rules = [
-        'nama_jenis'  => 'required|string|max:150',
-        'keterangan'  => 'nullable|string|max:500',
-    ];
+    protected function rules(): array
+    {
+        return [
+            'nama_jenis' => [
+                'required',
+                'string',
+                'max:150',
+                $this->editId
+                    ? 'unique:jenis_surat,nama_jenis,' . $this->editId
+                    : 'unique:jenis_surat,nama_jenis',
+            ],
+            'keterangan' => 'nullable|string|max:500',
+        ];
+    }
 
     protected $messages = [
         'nama_jenis.required' => 'Nama jenis surat wajib diisi.',
         'nama_jenis.max'      => 'Nama jenis surat maksimal 150 karakter.',
+        'nama_jenis.unique'   => 'Jenis surat sudah ada.',
     ];
 
     public function updatedSearch(): void { $this->resetPage(); }

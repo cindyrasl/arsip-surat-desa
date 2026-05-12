@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,20 +36,20 @@ class Pengguna extends Component
                 'required',
                 'string',
                 'max:50',
-                $this->editId 
-                    ? 'unique:users,username,' . $this->editId 
-                    : 'unique:users,username'
+                $this->editId
+                    ? Rule::unique('users', 'username')->ignore($this->editId)
+                    : Rule::unique('users', 'username'),
             ],
             'email'    => [
                 'required',
                 'email',
-                $this->editId 
-                    ? 'unique:users,email,' . $this->editId 
-                    : 'unique:users,email'
+                $this->editId
+                    ? Rule::unique('users', 'email')->ignore($this->editId)
+                    : Rule::unique('users', 'email'),
             ],
-            'jabatan'              => 'nullable|string|max:100',
-            'password'             => $this->editId ? 'nullable|string|min:8|confirmed' : 'required|string|min:8|confirmed',
-            'password_confirmation'=> $this->editId ? 'nullable' : 'required',
+            'jabatan'               => 'nullable|string|max:100',
+            'password'              => $this->editId ? 'nullable|string|min:8|confirmed' : 'required|string|min:8|confirmed',
+            'password_confirmation' => $this->editId ? 'nullable' : 'required',
         ];
     }
 
