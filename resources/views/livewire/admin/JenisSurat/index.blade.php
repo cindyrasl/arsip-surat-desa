@@ -16,6 +16,10 @@
         <div class="mb-4 px-4 py-3 bg-green-50 border border-green-200 text-green-700 text-sm rounded-xl">{{ session('success') }}</div>
     @endif
 
+    @if(session('error'))
+        <div class="mb-4 px-4 py-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl">{{ session('error') }}</div>
+    @endif
+
     <div class="flex flex-wrap items-center gap-3 mb-5">
         <div class="relative flex-1 min-w-[200px]">
             <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
